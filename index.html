@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Covert Coffee — Brooklyn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&family=Averia+Serif+Libre:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:    #F2E4BB;
+      --tan:      #D9C2A7;
+      --blush:    #EDD9BC;
+      --linen:    #F0E8DC;
+      --espresso: #5C4A38;
+      --bark:     #7A5C3E;
+      --ink:      #2B1F15;
+      --mono:     "JetBrains Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: var(--linen);
+      color: var(--ink);
+      font-family: "IM Fell French Canon", Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ── GRAIN ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px;
+    }
+
+    /* ══════════════════════════════
+       NAV
+    ══════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 56px;
+      background: rgba(240,232,220,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(92,74,56,0.08);
+    }
+
+    .nav-logo img {
+      height: 22px;
+      width: auto;
+      display: block;
+      opacity: 0.82;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--espresso);
+      text-decoration: none;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* ══════════════════════════════
+       PAGE HEADER (replaces hero)
+    ══════════════════════════════ */
+    .page-header {
+      padding: 96px 32px 0;
+      max-width: 660px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .page-header-logo {
+      height: 28px;
+      width: auto;
+      display: block;
+      opacity: 0.88;
+      animation: fadeUp 0.9s ease both 0.1s;
+    }
+    .page-header-address {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--espresso);
+      opacity: 0.32;
+      text-align: right;
+      line-height: 1.7;
+      animation: fadeUp 0.9s ease both 0.2s;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════
+       DIVIDER
+    ══════════════════════════════ */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(92,74,56,0.14), transparent);
+      margin: 0 32px;
+    }
+
+    /* ══════════════════════════════
+       SHARED SECTION SHELL
+    ══════════════════════════════ */
+    .section {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 72px 32px;
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--espresso);
+      opacity: 0.32;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .kicker::before { content: '//'; opacity: 0.5; }
+
+    h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--espresso);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .body-text {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 1.92;
+      color: var(--ink);
+      opacity: 0.72;
+    }
+    .body-text + .body-text { margin-top: 1em; }
+
+    /* ══════════════════════════════
+       FIND US
+    ══════════════════════════════ */
+    .address-display {
+      margin-bottom: 20px;
+    }
+    .address-big {
+      font-size: clamp(1.25rem, 3.6vw, 1.75rem);
+      font-style: italic;
+      color: var(--espresso);
+      line-height: 1.3;
+    }
+    .address-note {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.07em;
+      color: var(--espresso);
+      opacity: 0.35;
+      margin-top: 7px;
+    }
+
+    .map-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+      margin-bottom: 36px;
+    }
+    .map-link {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      text-decoration: none;
+      border: 1px solid rgba(92,74,56,0.2);
+      background: rgba(92,74,56,0.03);
+      padding: 6px 13px;
+      border-radius: 2px;
+      transition: background 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .map-link:hover { background: rgba(92,74,56,0.08); border-color: rgba(92,74,56,0.38); }
+
+    /* info table */
+    .info-table {
+      border-top: 1px solid rgba(92,74,56,0.1);
+      width: 100%;
+    }
+    .info-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(92,74,56,0.07);
+      align-items: baseline;
+    }
+    .info-key {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.07em;
+      color: var(--espresso);
+      opacity: 0.32;
+      padding-top: 1px;
+    }
+    .info-val {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      color: var(--espresso);
+      opacity: 0.82;
+      line-height: 1.6;
+    }
+    .info-val a {
+      color: inherit;
+      border-bottom: 1px solid rgba(92,74,56,0.18);
+      text-decoration: none;
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+    .info-val a:hover { border-color: var(--espresso); }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pill {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      border: 1px solid rgba(92,74,56,0.2);
+      padding: 4px 10px;
+      border-radius: 2px;
+      text-decoration: none;
+      opacity: 0.65;
+      transition: opacity 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pill:hover { opacity: 1; border-color: rgba(92,74,56,0.42); }
+
+    /* ══════════════════════════════
+       TRANSIT
+    ══════════════════════════════ */
+    .transit-wrap {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 0 32px 72px;
+    }
+
+    .transit-box {
+      border: 1px solid rgba(92,74,56,0.12);
+      background: rgba(92,74,56,0.025);
+      overflow: hidden;
+    }
+
+    /* subway panel */
+    .transit-subway {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(92,74,56,0.1);
+    }
+
+    .transit-row-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .route-bullet {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #8B6914;
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 400;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .route-tag {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.03em;
+      color: #fff;
+      background: #2060A8;
+      padding: 3px 7px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .transit-stop-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      opacity: 0.45;
+      line-height: 1.3;
+      flex: 1;
+    }
+    .transit-stop-label strong {
+      font-weight: 400;
+      opacity: 1;
+      color: var(--espresso);
+    }
+
+    .status-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(92,74,56,0.18);
+      transition: background 0.5s;
+      flex-shrink: 0;
+    }
+    .status-dot.live { background: #7aab6a; }
+
+    /* directions grid */
+    .dirs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .dir-col { padding: 0 4px; }
+    .dir-col:first-child { padding-left: 0; border-right: 1px solid rgba(92,74,56,0.07); padding-right: 14px; }
+    .dir-col:last-child { padding-left: 14px; padding-right: 0; }
+
+    .dir-label {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      color: var(--espresso);
+      opacity: 0.28;
+      margin-bottom: 8px;
+    }
+
+    .arrivals { display: flex; flex-direction: column; gap: 5px; min-height: 54px; }
+
+    .arr-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .arr-route {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--espresso);
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+    .arr-time {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--espresso);
+      opacity: 0.85;
+      white-space: nowrap;
+    }
+    .arr-time.now { color: #6B4E2A; opacity: 1; font-weight: 400; }
+    .arr-empty {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--espresso);
+      opacity: 0.2;
+      letter-spacing: 0.06em;
+    }
+
+    /* bus panels row */
+    .transit-buses {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .bus-panel {
+      padding: 16px 18px;
+      border-right: 1px solid rgba(92,74,56,0.08);
+    }
+    .bus-panel:last-child { border-right: none; }
+
+    .bus-head {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bus-stop-line {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      color: var(--espresso);
+      opacity: 0.32;
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    /* footer bar */
+    .transit-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 18px;
+      border-top: 1px solid rgba(92,74,56,0.08);
+      background: rgba(92,74,56,0.02);
+    }
+    .transit-ts {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+      color: var(--espresso);
+      opacity: 0.22;
+    }
+    .transit-refresh {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+      color: var(--espresso);
+      opacity: 0.3;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 0;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.2s;
+    }
+    .transit-refresh:hover { opacity: 0.7; }
+
+    /* bus direction toggles */
+    .bus-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 8px;
+      border: 1px solid rgba(92,74,56,0.14);
+      border-radius: 2px;
+      overflow: hidden;
+      align-self: flex-start;
+    }
+    .bus-tab {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+      color: var(--espresso);
+      background: none;
+      border: none;
+      padding: 4px 9px;
+      cursor: pointer;
+      opacity: 0.28;
+      transition: opacity 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1;
+    }
+    .bus-tab:first-child { border-right: 1px solid rgba(92,74,56,0.14); }
+    .bus-tab.active {
+      background: rgba(92,74,56,0.07);
+      opacity: 0.75;
+    }
+    .bus-tab:hover { opacity: 0.55; }
+    .bus-dir { display: none; }
+    .bus-dir.active { display: flex; flex-direction: column; gap: 5px; min-height: 54px; }
+
+    /* ══════════════════════════════
+       QUOTE BLOCK
+    ══════════════════════════════ */
+    .quote-block {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 0 32px 72px;
+    }
+    .quote-inner {
+      padding: 24px 24px 20px;
+      border-left: 2px solid var(--tan);
+      background: rgba(217,194,167,0.08);
+    }
+    .quote-text {
+      font-size: clamp(0.92rem, 2.4vw, 1.05rem);
+      font-style: italic;
+      color: var(--espresso);
+      line-height: 1.85;
+      opacity: 0.7;
+    }
+    .quote-attr {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.08em;
+      color: var(--espresso);
+      opacity: 0.3;
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* ══════════════════════════════
+       ARCHIVE CTA — dark strip
+    ══════════════════════════════ */
+    .archive-strip {
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+    .archive-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 150px;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .archive-strip-inner {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 60px 32px 64px;
+      position: relative;
+    }
+    .archive-strip .kicker { color: var(--tan); opacity: 0.4; }
+    .archive-strip h2 { color: var(--cream); }
+    .archive-strip .body-text { color: var(--blush); opacity: 0.48; margin-bottom: 28px; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      border: 1px solid rgba(242,228,187,0.28);
+      padding: 11px 22px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(242,228,187,0.07);
+      border-color: rgba(242,228,187,0.5);
+    }
+    .btn-outline .arr { transition: transform 0.2s; display: inline-block; }
+    .btn-outline:hover .arr { transform: translateX(3px); }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      padding: 36px 32px calc(36px + env(safe-area-inset-bottom));
+      text-align: center;
+      border-top: 1px solid rgba(92,74,56,0.07);
+    }
+    .footer-logo {
+      height: 20px;
+      opacity: 0.18;
+      margin: 0 auto 12px;
+      display: block;
+    }
+    .footer-line {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      color: var(--espresso);
+      opacity: 0.2;
+    }
+    .footer-line a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(92,74,56,0.15);
+    }
+
+    /* ══════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 600px) {
+      nav { padding: 0 18px; }
+      .nav-links { gap: 18px; }
+      .section { padding: 48px 20px; }
+      .transit-wrap, .quote-block { padding-left: 20px; padding-right: 20px; }
+      .archive-strip-inner { padding: 48px 20px 52px; }
+      footer { padding: 30px 20px calc(30px + env(safe-area-inset-bottom)); }
+      .page-header { padding: 80px 20px 0; flex-direction: column; align-items: flex-start; gap: 6px; }
+      .page-header-address { text-align: left; }
+
+      .dirs-grid { gap: 10px; }
+      .transit-buses { grid-template-columns: 1fr 1fr; }
+      .bus-panel { padding: 14px 14px; }
+      .bus-panel:nth-child(2) { border-right: none; }
+      .bus-panel:nth-child(3) { border-top: 1px solid rgba(92,74,56,0.08); grid-column: 1 / -1; border-right: none; }
+
+      .info-row { grid-template-columns: 68px 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .transit-buses { grid-template-columns: 1fr; }
+      .bus-panel { border-right: none; border-top: 1px solid rgba(92,74,56,0.08); }
+      .bus-panel:first-child { border-top: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#top">
+      <img src="logo.png" alt="Covert Coffee">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#visit">visit</a></li>
+      <li><a href="history.html">archive</a></li>
+      <li><a href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">instagram</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header" id="top">
+    <img class="page-header-logo" src="logo.png" alt="Covert Coffee">
+    <div class="page-header-address">1643 Broadway · cor. Covert St<br>Bushwick, Brooklyn NY 11207</div>
+  </div>
+
+  <div class="section-divider" style="margin-top:28px;"></div>
+
+  <!-- INFO -->
+  <div class="section reveal" id="visit">
+
+    <div class="address-display">
+      <div class="address-big">1643 Broadway</div>
+      <div class="address-note">corner of Covert St · Bushwick–Bed-Stuy borderline · same block since 1889</div>
+    </div>
+
+    <div class="map-links">
+      <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">↗ apple maps</a>
+      <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">↗ google maps</a>
+      <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">↗ corner.inc</a>
+    </div>
+
+    <div class="info-table">
+      <div class="info-row">
+        <span class="info-key">transit</span>
+        <span class="info-val">J · Z — Halsey St · 4 min walk · B20 · Q24 · B60 on Broadway</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">instagram</span>
+        <span class="info-val"><a href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">@covertcoffeebk</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">wholesale</span>
+        <span class="info-val"><a href="https://www.covert.coffee" target="_blank">covert.coffee</a> — coming soon</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">owner</span>
+        <span class="info-val"><a href="https://www.linkedin.com/in/aaron-mounier-4639271a0/" target="_blank" rel="noopener">Aaron Mounier</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIVE TRANSIT -->
+  <div class="transit-wrap reveal">
+    <div class="transit-box">
+
+      <!-- SUBWAY: J/Z at Halsey St — two separate direction columns -->
+      <div class="transit-subway">
+        <div class="transit-row-head">
+          <span class="route-bullet">J</span>
+          <span class="route-bullet">Z</span>
+          <span class="transit-stop-label"><strong>Halsey St</strong> · ~4 min walk</span>
+          <span class="status-dot" id="dot-subway"></span>
+        </div>
+        <div class="dirs-grid">
+          <div class="dir-col">
+            <div class="dir-label">→ manhattan</div>
+            <div class="arrivals" id="arr-N">
+              <span class="arr-empty">loading…</span>
+            </div>
+          </div>
+          <div class="dir-col">
+            <div class="dir-label">→ jamaica</div>
+            <div class="arrivals" id="arr-S">
+              <span class="arr-empty">loading…</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUSES (live via MTA BusTime SIRI API) — direction toggles per line -->
+      <div class="transit-buses">
+
+        <div class="bus-panel">
+          <div class="bus-head">
+            <span class="route-tag">B20</span>
+            <span class="status-dot" id="dot-bus"></span>
+          </div>
+          <div class="bus-tabs">
+            <button class="bus-tab active" onclick="busTab('b20','N',this)">← williamsburg</button>
+            <button class="bus-tab" onclick="busTab('b20','S',this)">spring creek →</button>
+          </div>
+          <div class="bus-dir active" id="arr-b20-N"><span class="arr-empty">loading…</span></div>
+          <div class="bus-dir" id="arr-b20-S"><span class="arr-empty">loading…</span></div>
+        </div>
+
+        <div class="bus-panel">
+          <div class="bus-head">
+            <span class="route-tag">Q24</span>
+          </div>
+          <div class="bus-tabs">
+            <button class="bus-tab active" onclick="busTab('q24','N',this)">← flushing</button>
+            <button class="bus-tab" onclick="busTab('q24','S',this)">jamaica →</button>
+          </div>
+          <div class="bus-dir active" id="arr-q24-N"><span class="arr-empty">loading…</span></div>
+          <div class="bus-dir" id="arr-q24-S"><span class="arr-empty">loading…</span></div>
+        </div>
+
+        <div class="bus-panel">
+          <div class="bus-head">
+            <span class="route-tag">B60</span>
+          </div>
+          <div class="bus-tabs">
+            <button class="bus-tab active" onclick="busTab('b60','N',this)">← williamsburg</button>
+            <button class="bus-tab" onclick="busTab('b60','S',this)">canarsie →</button>
+          </div>
+          <div class="bus-dir active" id="arr-b60-N"><span class="arr-empty">loading…</span></div>
+          <div class="bus-dir" id="arr-b60-S"><span class="arr-empty">loading…</span></div>
+        </div>
+
+      </div>
+
+      <div class="transit-footer">
+        <span class="transit-ts" id="transit-ts">—</span>
+        <button class="transit-refresh" onclick="doRefresh()">↺ refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ABOUT -->
+  <div class="section reveal">
+    <p class="kicker">about</p>
+    <h2>The corner of Broadway &amp; Covert St</h2>
+    <p class="body-text">Covert Coffee sits in a four-story brick building that went up between 1888 and 1889 — back when this block was still the Covert family farm. Since then it's been a grocery empire, a fruit stand, a luncheonette, a corner bodega, and now a coffee shop.</p>
+    <p class="body-text">Right where Bushwick bleeds into Bed-Stuy. The kind of spot you stumble into once and keep coming back to.</p>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-block reveal">
+    <div class="quote-inner">
+      <p class="quote-text">"I was born and brought up in Brooklyn and am proud of it and always found it a beautiful place. We had no crime, murder and other badness. We were taught to love God and our neighbors."</p>
+      <span class="quote-attr">— Mrs. Edgar A. Steup, Woodhaven · Brooklyn Daily Eagle, Feb 1945</span>
+    </div>
+  </div>
+
+  <!-- ARCHIVE CTA -->
+  <div class="archive-strip reveal">
+    <div class="archive-strip-inner">
+      <p class="kicker">136 years of documentation</p>
+      <h2>The Archive</h2>
+      <p class="body-text">Newspaper clippings back to 1887. Sanborn fire insurance maps. Photographs of the block across a century. Everything dug up about this building and this corner.</p>
+      <a href="history.html" class="btn-outline">enter the archive <span class="arr">→</span></a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <img class="footer-logo" src="logo.png" alt="Covert Coffee">
+    <p class="footer-line">© covert coffee · brooklyn · <a href="https://www.covert.nyc">covert.nyc</a></p>
+  </footer>
+
+  <script>
+  // ═══════════════════════════════════════════════════════
+  // MTA GTFS-RT SUBWAY — direct fetch, no proxy, no key
+  // URL encoding: %2F instead of / in path (required)
+  // ═══════════════════════════════════════════════════════
+
+  const SUBWAY_FEED = 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-jz';
+  // Halsey St: J27N = Manhattan-bound, J27S = Jamaica-bound
+  const STOP_N = 'J27N';
+  const STOP_S = 'J27S';
+
+  // MTA BusTime SIRI API (free developer key)
+  const BUS_API  = 'https://bustime.mta.info/api/siri/stop-monitoring.json';
+  const BUS_KEY  = '53062abc-6f6a-47a7-a95a-56dfe9e1d0ab';
+
+  // Bus stop IDs — two directions per line (N = one end, S = other end)
+  // B20: Schaefer St/Broadway — toward Williamsburg (N) or Spring Creek (S)
+  // Q24: Broadway/Schaefer St — toward Flushing (N) or Jamaica (S)
+  // B60: Rockaway Av/Broadway — toward Williamsburg (N) or Canarsie (S)
+  const BUS_STOPS = {
+    b20: { N: '302019', S: '302018' },  // N=toward Williamsburg, S=toward Spring Creek
+    q24: { N: '302193', S: '302194' },  // N=toward Flushing, S=toward Jamaica
+    b60: { N: '304978', S: '304979' },  // N=toward Williamsburg, S=toward Canarsie
+  };
+
+  // ── Protobuf parser (minimal, inline) ──────────────────
+
+  // varint: read byte first, then check MSB — p increments exactly once per byte
+  function varint(b, p) {
+    let v = 0, s = 0, byte_;
+    do { byte_ = b[p++]; v |= (byte_ & 0x7f) << s; s += 7; } while (byte_ & 0x80);
+    return { v: v >>> 0, p };
+  }
+
+  function tag(b, p) {
+    const { v, p: p2 } = varint(b, p);
+    return { f: v >>> 3, w: v & 7, p: p2 };
+  }
+
+  function skip(b, p, w) {
+    if (w === 0) return varint(b, p).p;
+    if (w === 1) return p + 8;
+    if (w === 2) { const r = varint(b, p); return r.p + r.v; }
+    if (w === 5) return p + 4;
+    return p + 1;
+  }
+
+  function bytes(b, p) {
+    const { v: len, p: p2 } = varint(b, p);
+    return { data: b.slice(p2, p2 + len), p: p2 + len };
+  }
+
+  function str(b, p) {
+    const r = bytes(b, p);
+    return { s: new TextDecoder().decode(r.data), p: r.p };
+  }
+
+  function int64(b, p) {
+    let n = BigInt(0), s = BigInt(0), byte_;
+    do { byte_ = b[p++]; n |= BigInt(byte_ & 0x7f) << s; s += 7n; } while (byte_ & 0x80);
+    return { v: Number(n), p };
+  }
+
+  // StopTimeUpdate: stop_id=f4, arrival=f1, departure=f2; StopTimeEvent: time=f2
+  function parseSTU(b, end) {
+    let p = 0, stopId = null, t = null;
+    while (p < end) {
+      const g = tag(b, p); p = g.p;
+      if (g.w === 2 && g.f === 4) { const r = str(b, p); p = r.p; stopId = r.s; }
+      else if (g.w === 2 && (g.f === 1 || g.f === 2)) {
+        const r = bytes(b, p); p = r.p;
+        let ap = 0;
+        while (ap < r.data.length) {
+          const ag = tag(r.data, ap); ap = ag.p;
+          if (ag.w === 0 && ag.f === 2) { const tv = int64(r.data, ap); ap = tv.p; if (!t) t = tv.v; }
+          else ap = skip(r.data, ap, ag.w);
+        }
+      } else p = skip(b, p, g.w);
+    }
+    return { stopId, t };
+  }
+
+  function parseTU(b, end) {
+    let p = 0, routeId = null;
+    const stus = [];
+    while (p < end) {
+      const g = tag(b, p); p = g.p;
+      if (g.w === 2 && g.f === 1) { // trip descriptor
+        const r = bytes(b, p); p = r.p;
+        let tp = 0;
+        while (tp < r.data.length) {
+          const tg = tag(r.data, tp); tp = tg.p;
+          if (tg.w === 2 && tg.f === 5) { const rs = str(r.data, tp); tp = rs.p; routeId = rs.s; }
+          else tp = skip(r.data, tp, tg.w);
+        }
+      } else if (g.w === 2 && g.f === 2) { // stop_time_update
+        const r = bytes(b, p); p = r.p;
+        const s = parseSTU(r.data, r.data.length);
+        if (s.stopId) stus.push(s);
+      } else p = skip(b, p, g.w);
+    }
+    return { routeId, stus };
+  }
+
+  function parseGTFS(buf) {
+    const b = new Uint8Array(buf);
+    const out = [];
+    let p = 0;
+    while (p < b.length) {
+      const g = tag(b, p); p = g.p;
+      if (g.w === 2 && g.f === 2) { // entity
+        const er = bytes(b, p); p = er.p;
+        let ep = 0;
+        while (ep < er.data.length) {
+          const eg = tag(er.data, ep); ep = eg.p;
+          if (eg.w === 2 && eg.f === 3) { // trip_update = field 3 in FeedEntity
+            const tr = bytes(er.data, ep); ep = tr.p;
+            const tu = parseTU(tr.data, tr.data.length);
+            for (const s of tu.stus) out.push({ r: tu.routeId, stopId: s.stopId, t: s.t });
+          } else ep = skip(er.data, ep, eg.w);
+        }
+      } else p = skip(b, p, g.w);
+    }
+    return out;
+  }
+
+  // ── Format time ────────────────────────────────────────
+
+  function fmt(epochSec) {
+    const d = epochSec - Math.floor(Date.now() / 1000);
+    if (d < 25)  return { txt: 'now', now: true };
+    if (d < 60)  return { txt: '< 1 min', now: false };
+    return { txt: Math.round(d / 60) + ' min', now: false };
+  }
+
+  function renderArrivals(id, items) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (!items || !items.length) {
+      el.innerHTML = '<span class="arr-empty">—</span>';
+      return;
+    }
+    el.innerHTML = items.slice(0, 3).map(item => {
+      const { txt, now } = fmt(item.t);
+      return `<div class="arr-row">
+        <span class="arr-route">${item.r || ''}</span>
+        <span class="arr-time${now ? ' now' : ''}">${txt}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function setDot(id, live) {
+    const el = document.getElementById(id);
+    if (el) el.className = 'status-dot' + (live ? ' live' : '');
+  }
+
+  function setErr(id, msg) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `<span class="arr-empty">${msg}</span>`;
+  }
+
+  // ── Bus direction tab toggle ────────────────────────────
+
+  function busTab(line, dir, btn) {
+    // toggle active tab buttons
+    const panel = btn.closest('.bus-panel');
+    panel.querySelectorAll('.bus-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // toggle active dir panel
+    panel.querySelectorAll('.bus-dir').forEach(d => d.classList.remove('active'));
+    const target = panel.querySelector(`#arr-${line}-${dir}`);
+    if (target) target.classList.add('active');
+  }
+
+  // ── Subway fetch ────────────────────────────────────────
+
+  async function fetchSubway() {
+    try {
+      const resp = await fetch(SUBWAY_FEED, { cache: 'no-store' });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const buf = await resp.arrayBuffer();
+      const all = parseGTFS(buf);
+      const now = Math.floor(Date.now() / 1000);
+      const future = all.filter(a => a.t && a.t > now - 30);
+
+      const N = future.filter(a => a.stopId === STOP_N).sort((a,b) => a.t - b.t).slice(0,3);
+      const S = future.filter(a => a.stopId === STOP_S).sort((a,b) => a.t - b.t).slice(0,3);
+
+      renderArrivals('arr-N', N);
+      renderArrivals('arr-S', S);
+      setDot('dot-subway', N.length || S.length);
+    } catch(e) {
+      console.warn('subway:', e);
+      setErr('arr-N', 'unavailable');
+      setErr('arr-S', 'unavailable');
+      setDot('dot-subway', false);
+    }
+  }
+
+  // ── Bus fetch (MTA BusTime SIRI, direct with API key) ───
+  // Fetches both directions for a line and populates both dir panels
+
+  async function fetchBusLine(line) {
+    const stops = BUS_STOPS[line];
+    let anyLive = false;
+    await Promise.allSettled(
+      ['N','S'].map(async dir => {
+        const stopId = stops[dir];
+        const arrId  = `arr-${line}-${dir}`;
+        try {
+          const url = `${BUS_API}?key=${BUS_KEY}&MonitoringRef=${stopId}&MaximumStopVisits=5`;
+          const resp = await fetch(url, { cache: 'no-store' });
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          const data = await resp.json();
+          const delivery = data?.Siri?.ServiceDelivery?.StopMonitoringDelivery?.[0];
+          if (delivery?.ErrorCondition) throw new Error('API error');
+          const visits = delivery?.MonitoredStopVisit || [];
+          const now = Math.floor(Date.now() / 1000);
+          const items = visits.map(v => {
+            const mvj = v.MonitoredVehicleJourney;
+            const call = mvj?.MonitoredCall;
+            const eat = call?.ExpectedArrivalTime || call?.AimedArrivalTime;
+            return { r: mvj?.PublishedLineName || '', t: eat ? Math.floor(new Date(eat).getTime() / 1000) : null };
+          }).filter(i => i.t && i.t > now - 30).sort((a,b) => a.t - b.t);
+          if (items.length) { renderArrivals(arrId, items); anyLive = true; }
+          else setErr(arrId, 'no service');
+        } catch(e) {
+          console.warn('bus', line, dir, e);
+          setErr(arrId, 'unavailable');
+        }
+      })
+    );
+    if (anyLive) setDot('dot-bus', true);
+  }
+
+  // ── Timestamp ──────────────────────────────────────────
+
+  function tick() {
+    const el = document.getElementById('transit-ts');
+    if (!el) return;
+    const now = new Date();
+    el.textContent = 'updated ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
+  }
+
+  // ── Refresh all ────────────────────────────────────────
+
+  let refreshTimer;
+
+  async function doRefresh() {
+    const ts = document.getElementById('transit-ts');
+    if (ts) ts.textContent = 'updating…';
+    setDot('dot-bus', false);
+
+    await Promise.allSettled([
+      fetchSubway(),
+      fetchBusLine('b20'),
+      fetchBusLine('q24'),
+      fetchBusLine('b60'),
+    ]);
+
+    tick();
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(doRefresh, 60000);
+  }
+
+  // ── Scroll reveal ──────────────────────────────────────
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── Boot ───────────────────────────────────────────────
+  doRefresh();
+  </script>
+
+</body>
+</html>
