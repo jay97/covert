@@ -99,9 +99,6 @@
     }
     .nav-links a:hover { opacity: 1; }
 
-    /* first section gets nav clearance */
-    .section-first { padding-top: 92px; }
-
     /* ══════════════════════════════
        DIVIDER
     ══════════════════════════════ */
@@ -697,73 +694,35 @@
       line-height: 1.35;
     }
 
-    /* dock visual grid */
-    .bike-dock-grid {
+    /* bike counts text display */
+    .bike-counts {
       display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
-      margin-bottom: 10px;
-    }
-    .dock-slot {
-      width: 10px;
-      height: 14px;
-      border-radius: 1px;
-      position: relative;
-      flex-shrink: 0;
-    }
-    /* empty dock — faint outline */
-    .dock-slot.empty {
-      border: 1px solid rgba(92,74,56,0.15);
-      background: transparent;
-    }
-    /* classic bike — warm espresso */
-    .dock-slot.classic {
-      background: rgba(92,74,56,0.45);
-      border: none;
-    }
-    /* ebike — blue accent */
-    .dock-slot.ebike {
-      background: #3a6fc4;
-      border: none;
-      opacity: 0.82;
-    }
-
-    /* legend row */
-    .bike-legend {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .bike-legend-item {
-      display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 4px;
     }
-    .bike-legend-swatch {
-      width: 7px;
-      height: 10px;
-      border-radius: 1px;
-      flex-shrink: 0;
+    .bike-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
     }
-    .bike-legend-swatch.classic { background: rgba(92,74,56,0.45); }
-    .bike-legend-swatch.ebike   { background: #3a6fc4; opacity: 0.82; }
-    .bike-legend-swatch.empty   { border: 1px solid rgba(92,74,56,0.15); }
-    .bike-legend-label {
+    .bike-row-label {
       font-family: var(--mono);
-      font-size: 0.44rem;
-      letter-spacing: 0.07em;
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
       color: var(--espresso);
       opacity: 0.35;
       text-transform: uppercase;
-      white-space: nowrap;
     }
-    .bike-legend-count {
+    .bike-row-num {
       font-family: var(--mono);
-      font-size: 0.44rem;
+      font-size: 0.72rem;
       color: var(--espresso);
-      opacity: 0.55;
+      opacity: 0.82;
     }
+    .bike-row-num.zero { opacity: 0.22; }
+    .bike-row.docks .bike-row-label { opacity: 0.22; }
+    .bike-row.docks .bike-row-num   { opacity: 0.38; }
 
     .bike-status-offline {
       font-family: var(--mono);
@@ -964,6 +923,367 @@
     /* ══════════════════════════════
        RESPONSIVE
     ══════════════════════════════ */
+    /* ══════════════════════════════
+       WEATHER TICKER
+    ══════════════════════════════ */
+    .weather-bar {
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      z-index: 790;
+      height: 26px;
+      background: rgba(240,232,220,0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(92,74,56,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 0 24px;
+      overflow: hidden;
+    }
+    .weather-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .weather-icon {
+      font-size: 0.7rem;
+      opacity: 0.6;
+    }
+    .weather-val {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.06em;
+      color: var(--espresso);
+      opacity: 0.48;
+      white-space: nowrap;
+    }
+    .weather-sep {
+      width: 1px;
+      height: 10px;
+      background: rgba(92,74,56,0.15);
+      flex-shrink: 0;
+    }
+    .section-first { padding-top: calc(56px + 26px + 36px); }
+
+    /* ══════════════════════════════
+       ON BAR TODAY
+    ══════════════════════════════ */
+    .bar-today {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px 14px;
+      padding: 7px 12px 6px;
+      border: 1px solid rgba(92,74,56,0.1);
+      background: rgba(92,74,56,0.02);
+      margin-bottom: 20px;
+    }
+    .bar-today-kicker {
+      font-family: var(--mono);
+      font-size: 0.44rem;
+      letter-spacing: 0.12em;
+      color: var(--espresso);
+      opacity: 0.28;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .bar-today-bean {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--espresso);
+      opacity: 0.82;
+      flex-shrink: 0;
+    }
+    .bar-today-origin {
+      font-family: var(--mono);
+      font-size: 0.44rem;
+      letter-spacing: 0.05em;
+      color: var(--espresso);
+      opacity: 0.3;
+      flex-shrink: 0;
+    }
+    .bar-today-settings {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 10px;
+      margin-left: auto;
+    }
+    .bar-setting {
+      display: flex;
+      gap: 3px;
+      align-items: baseline;
+    }
+    .bar-setting-label {
+      font-family: var(--mono);
+      font-size: 0.4rem;
+      letter-spacing: 0.07em;
+      color: var(--espresso);
+      opacity: 0.24;
+      text-transform: uppercase;
+    }
+    .bar-setting-val {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      color: var(--espresso);
+      opacity: 0.55;
+    }
+
+    /* ══════════════════════════════
+       PHOTO SLIDER
+    ══════════════════════════════ */
+    .shop-slider {
+      position: relative;
+      width: 100%;
+      margin-bottom: 22px;
+      overflow: hidden;
+      border-radius: 1px;
+      background: var(--tan);
+      max-height: 72vh;
+    }
+
+    /* film grain + faded colour via CSS filter + overlay */
+    .shop-slider::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      /* grain texture */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size: 120px;
+      opacity: 0.18;
+      mix-blend-mode: multiply;
+    }
+    /* warm vignette */
+    .shop-slider::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(43,22,8,0.52) 100%);
+    }
+
+    .shop-slides {
+      display: flex;
+      width: 100%;
+      transition: transform 0.7s cubic-bezier(0.45, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .shop-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .shop-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      /* desaturate + warm tone to feel analogue */
+      filter: saturate(0.45) sepia(0.35) brightness(0.88) contrast(1.08);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .shop-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .shop-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(242,228,187,0.4);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      flex-shrink: 0;
+    }
+    .shop-dot.active {
+      background: rgba(242,228,187,0.9);
+      transform: scale(1.3);
+    }
+
+    /* inline info row (instagram · wholesale) */
+    .info-val-inline {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0 6px;
+    }
+    .info-inline-sep {
+      opacity: 0.3;
+    }
+
+    /* ══════════════════════════════
+       NEON SIGN
+    ══════════════════════════════ */
+    .neon-sign {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 3px 8px 2px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      transition: color 0.4s, text-shadow 0.4s, border-color 0.4s;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+    .neon-sign.open {
+      color: #7adb78;
+      border-color: rgba(122,219,120,0.3);
+      text-shadow:
+        0 0 4px #7adb78,
+        0 0 10px rgba(122,219,120,0.8),
+        0 0 20px rgba(122,219,120,0.4);
+      animation: neon-flicker 6s ease-in-out infinite;
+    }
+    .neon-sign.closed {
+      color: #e07070;
+      border-color: rgba(224,112,112,0.25);
+      text-shadow:
+        0 0 4px #e07070,
+        0 0 10px rgba(224,112,112,0.6),
+        0 0 18px rgba(224,112,112,0.3);
+    }
+    @keyframes neon-flicker {
+      0%,100% { opacity: 1; }
+      92%      { opacity: 1; }
+      93%      { opacity: 0.6; }
+      94%      { opacity: 1; }
+      96%      { opacity: 0.7; }
+      97%      { opacity: 1; }
+    }
+
+    /* ══════════════════════════════
+       POSTCARD LOCATION
+    ══════════════════════════════ */
+    .postcard {
+      display: flex;
+      gap: 0;
+      border: 1px solid rgba(92,74,56,0.18);
+      background: rgba(242,228,187,0.18);
+      max-width: 340px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* aged paper texture on the card */
+    .postcard::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 90px;
+      opacity: 0.06;
+    }
+    .postcard-left {
+      width: 44px;
+      flex-shrink: 0;
+      border-right: 1px solid rgba(92,74,56,0.12);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 10px;
+    }
+    .postcard-stamp {
+      width: 26px;
+      height: 32px;
+      border: 1px solid rgba(92,74,56,0.25);
+      background: rgba(92,74,56,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      position: relative;
+    }
+    /* perforated stamp edge */
+    .postcard-stamp::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border: 2px dotted rgba(92,74,56,0.2);
+    }
+    .postcard-right {
+      flex: 1;
+      padding: 10px 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .postcard-address {
+      border-left: 2px solid rgba(92,74,56,0.14);
+      padding-left: 8px;
+    }
+    .postcard-line {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.8rem;
+      color: var(--espresso);
+      opacity: 0.75;
+      line-height: 1.55;
+    }
+    .postcard-name {
+      font-family: "IM Fell French Canon", serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      opacity: 0.85;
+    }
+    .postcard-coords {
+      font-family: var(--mono);
+      font-size: 0.42rem;
+      letter-spacing: 0.07em;
+      color: var(--espresso);
+      opacity: 0.28;
+      margin-top: 4px;
+    }
+    .postcard-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .postcard-links .map-link {
+      font-size: 0.5rem;
+      padding: 3px 8px;
+    }
+
+    /* bigger menu button */
+    .menu-btn-hero {
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      padding: 11px 24px;
+      border-color: rgba(92,74,56,0.3);
+      opacity: 0.78;
+    }
+    .menu-btn-hero:hover { opacity: 1; }
+
+    /* ── e-bike glow icon ── */
+    .ebike-icon {
+      display: inline-block;
+      font-style: normal;
+      margin-right: 3px;
+      color: #7aab6a;
+      text-shadow: 0 0 5px rgba(122,171,106,0.9), 0 0 12px rgba(122,171,106,0.5);
+      animation: ebike-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes ebike-pulse {
+      0%, 100% { text-shadow: 0 0 4px rgba(122,171,106,0.8), 0 0 10px rgba(122,171,106,0.4); }
+      50%       { text-shadow: 0 0 8px rgba(122,171,106,1),   0 0 20px rgba(122,171,106,0.7); }
+    }
+
     @media (max-width: 600px) {
       nav { padding: 0 18px; }
       .nav-address { display: none; }
@@ -972,7 +1292,7 @@
       .transit-wrap, .quote-block { padding-left: 20px; padding-right: 20px; }
       .archive-strip-inner { padding: 48px 20px 52px; }
       footer { padding: 30px 20px calc(30px + env(safe-area-inset-bottom)); }
-      .section-first { padding-top: 76px; }
+      .section-first { padding-top: calc(56px + 26px + 24px); }
 
       .dirs-grid { gap: 10px; }
       .transit-buses { grid-template-columns: 1fr 1fr; }
@@ -998,34 +1318,59 @@
       <img src="logo.png" alt="Covert Coffee">
     </a>
     <span class="nav-address">1643 Broadway · Bushwick, Brooklyn</span>
+    <span class="neon-sign" id="neon-sign"></span>
     <ul class="nav-links">
       <li><a href="#top">visit</a></li>
-      <li><a href="history.html">archive</a></li>
+      <li><a href="history.html">history</a></li>
+      <li><a href="parks.html">parks</a></li>
       <li><a href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">instagram</a></li>
     </ul>
   </nav>
 
+  <!-- WEATHER TICKER -->
+  <div class="weather-bar" id="weather-bar">
+    <div class="weather-item"><span class="weather-val" id="wx-temp">—</span></div>
+    <div class="weather-sep"></div>
+    <div class="weather-item"><span class="weather-icon" id="wx-icon">☁</span><span class="weather-val" id="wx-desc">loading</span></div>
+    <div class="weather-sep"></div>
+    <div class="weather-item"><span class="weather-val" id="wx-wind">—</span></div>
+  </div>
+
   <!-- INFO -->
   <div class="section section-first reveal" id="top">
 
-    <div class="address-display">
-      <div class="address-big">1643 Broadway</div>
-      <div class="address-note">corner of Covert St · Bushwick–Bed-Stuy</div>
+    <!-- PHOTO SLIDER -->
+    <div class="shop-slider" id="shop-slider">
+      <div class="shop-slides" id="shop-slides">
+        <!-- slides injected by JS from photos/homepage gallery/ -->
+      </div>
+      <div class="shop-dots" id="shop-dots"></div>
     </div>
 
-    <div class="map-links">
-      <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">↗ apple maps</a>
-      <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">↗ google maps</a>
-      <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">↗ corner.inc</a>
+
+    <!-- ON BAR TODAY -->
+    <div class="bar-today">
+      <div class="bar-today-kicker">on bar today</div>
+      <div>
+        <div class="bar-today-bean" id="bar-bean">—</div>
+        <div class="bar-today-origin" id="bar-origin"></div>
+      </div>
+      <div class="bar-today-settings" id="bar-settings"></div>
     </div>
 
     <div class="info-table">
 
       <div class="info-row">
+        <span class="info-key">menu</span>
+        <span class="info-val">
+          <button class="menu-btn menu-btn-hero" onclick="document.getElementById('menu-lightbox').classList.add('open')">view menu ↗</button>
+        </span>
+      </div>
+
+      <div class="info-row">
         <span class="info-key">hours</span>
         <span class="info-val">
           <div class="hours-sign">
-            <div class="hours-sign-title">hours</div>
             <table>
               <tr><td>Mon – Fri</td><td>8:00 am – 5:00 pm</td></tr>
               <tr><td colspan="2"><div class="hours-divider"></div></td></tr>
@@ -1038,20 +1383,8 @@
       </div>
 
       <div class="info-row">
-        <span class="info-key">menu</span>
-        <span class="info-val">
-          <button class="menu-btn" onclick="document.getElementById('menu-lightbox').classList.add('open')">view menu ↗</button>
-        </span>
-      </div>
-
-      <div class="info-row">
         <span class="info-key">phone</span>
         <span class="info-val"><a href="tel:+17184841555">(718) 484-1555</a></span>
-      </div>
-
-      <div class="info-row">
-        <span class="info-key">transit</span>
-        <span class="info-val">J · Z — Halsey St · 4 min walk · B20 · Q24 · B60 on Broadway</span>
       </div>
 
       <div class="info-row">
@@ -1060,8 +1393,27 @@
       </div>
 
       <div class="info-row">
-        <span class="info-key">wholesale</span>
-        <span class="info-val"><a href="https://www.covert.coffee" target="_blank">covert.coffee</a> — coming soon</span>
+        <span class="info-key">location</span>
+        <span class="info-val">
+          <div class="postcard">
+            <div class="postcard-left">
+              <div class="postcard-stamp">☕</div>
+            </div>
+            <div class="postcard-right">
+              <div class="postcard-address">
+                <div class="postcard-line postcard-name">Covert Coffee</div>
+                <div class="postcard-line">1643 Broadway</div>
+                <div class="postcard-line">Brooklyn, NY 11207</div>
+                <div class="postcard-coords">40.6896° N · 73.9197° W</div>
+              </div>
+              <div class="postcard-links">
+                <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
+                <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">google maps</a>
+                <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">corner.inc</a>
+              </div>
+            </div>
+          </div>
+        </span>
       </div>
 
     </div>
@@ -1110,7 +1462,7 @@
   <div class="transit-wrap reveal">
     <div class="transit-box">
 
-      <!-- SUBWAY: J/Z at Halsey St — two separate direction columns -->
+      <!-- SUBWAY: J/Z at Halsey St -->
       <div class="transit-subway">
         <div class="transit-row-head">
           <span class="route-bullet">J</span>
@@ -1128,6 +1480,29 @@
           <div class="dir-col">
             <div class="dir-label">→ jamaica</div>
             <div class="arrivals" id="arr-S">
+              <span class="arr-empty">loading…</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBWAY: J at Chauncey St -->
+      <div class="transit-subway">
+        <div class="transit-row-head">
+          <span class="route-bullet">J</span>
+          <span class="transit-stop-label"><strong>Chauncey St</strong> · ~7 min walk</span>
+          <span class="status-dot" id="dot-subway-chauncey"></span>
+        </div>
+        <div class="dirs-grid">
+          <div class="dir-col">
+            <div class="dir-label">→ manhattan</div>
+            <div class="arrivals" id="arr-chauncey-N">
+              <span class="arr-empty">loading…</span>
+            </div>
+          </div>
+          <div class="dir-col">
+            <div class="dir-label">→ jamaica</div>
+            <div class="arrivals" id="arr-chauncey-S">
               <span class="arr-empty">loading…</span>
             </div>
           </div>
@@ -1187,7 +1562,7 @@
         </div>
         <div class="bike-stations">
           <div class="bike-station" id="bike-station-0">
-            <div class="bike-station-name">Broadway &amp; Cooper St</div>
+            <div class="bike-station-name">Halsey St &amp; Broadway</div>
             <div class="bike-counts" id="bike-counts-0">
               <span class="bike-status-offline">loading…</span>
             </div>
@@ -1208,21 +1583,13 @@
     </div>
   </div>
 
-  <!-- QUOTE -->
-  <div class="quote-block reveal">
-    <div class="quote-inner">
-      <p class="quote-text">"I was born and brought up in Brooklyn and am proud of it and always found it a beautiful place. We had no crime, murder and other badness. We were taught to love God and our neighbors."</p>
-      <span class="quote-attr">— Mrs. Edgar A. Steup, Woodhaven · Brooklyn Daily Eagle, Feb 1945</span>
-    </div>
-  </div>
-
   <!-- ARCHIVE CTA -->
   <div class="archive-strip reveal">
     <div class="archive-strip-inner">
       <p class="kicker">136 years of documentation</p>
-      <h2>The Archive</h2>
+      <h2>History</h2>
       <p class="body-text">Newspaper clippings back to 1887. Sanborn fire insurance maps. Photographs of the block across a century. Everything dug up about this building and this corner.</p>
-      <a href="history.html" class="btn-outline">enter the archive <span class="arr">→</span></a>
+      <a href="history.html" class="btn-outline">explore the history <span class="arr">→</span></a>
     </div>
   </div>
 
@@ -1230,9 +1597,128 @@
   <footer>
     <img class="footer-logo" src="logo.png" alt="Covert Coffee">
     <p class="footer-line">© covert coffee · brooklyn · <a href="https://www.covert.nyc">covert.nyc</a></p>
+    <p class="footer-line" style="margin-top:6px;"><a href="https://www.covert.coffee" target="_blank">wholesale → covert.coffee</a></p>
   </footer>
 
   <script>
+  // ═══════════════════════════════════════════════════════
+  // ON BAR TODAY — edit this object to update the board
+  // ═══════════════════════════════════════════════════════
+  const ON_BAR = {
+    bean:     'Finca La Providencia',
+    origin:   'Guatemala · washed · light roast',
+    settings: [
+      { label: 'dose',   val: '18 g'    },
+      { label: 'yield',  val: '36 g'    },
+      { label: 'time',   val: '28 s'    },
+      { label: 'temp',   val: '93 °C'   },
+    ],
+  };
+
+  // Populate on bar today panel
+  (function renderBarToday() {
+    const beanEl    = document.getElementById('bar-bean');
+    const originEl  = document.getElementById('bar-origin');
+    const settingsEl = document.getElementById('bar-settings');
+    if (beanEl)    beanEl.textContent   = ON_BAR.bean;
+    if (originEl)  originEl.textContent = ON_BAR.origin;
+    if (settingsEl) {
+      settingsEl.innerHTML = ON_BAR.settings.map(s =>
+        `<div class="bar-setting">
+          <span class="bar-setting-label">${s.label}</span>
+          <span class="bar-setting-val">${s.val}</span>
+        </div>`
+      ).join('');
+    }
+  })();
+
+  // ═══════════════════════════════════════════════════════
+  // WEATHER — wttr.in JSONP (works from file://, no key)
+  // Zip 11207, Brooklyn NY
+  // ═══════════════════════════════════════════════════════
+
+  // wttr.in weather-code → description
+  function wxDesc(code) {
+    const n = parseInt(code, 10);
+    if (n === 113) return 'clear';
+    if (n === 116) return 'partly cloudy';
+    if (n === 119 || n === 122) return 'overcast';
+    if (n >= 143 && n <= 248) return 'fog';
+    if (n >= 263 && n <= 281) return 'drizzle';
+    if (n >= 293 && n <= 321) return 'rain';
+    if (n >= 323 && n <= 377) return 'snow';
+    if (n >= 386 && n <= 395) return 'thunderstorm';
+    if (n >= 176 && n <= 186) return 'showers';
+    return 'cloudy';
+  }
+
+  function wxIcon(code) {
+    const n = parseInt(code, 10);
+    if (n === 113) return '◌';
+    if (n === 116) return '◑';
+    if (n === 119 || n === 122) return '●';
+    if (n >= 143 && n <= 248) return '≋';
+    if (n >= 263 && n <= 281) return '·';
+    if (n >= 293 && n <= 321) return '⌇';
+    if (n >= 323 && n <= 377) return '*';
+    if (n >= 386 && n <= 395) return '↯';
+    return '●';
+  }
+
+  function windArrow(deg) {
+    const dirs = ['↑','↗','→','↘','↓','↙','←','↖'];
+    return dirs[Math.round(deg / 45) % 8];
+  }
+
+  // JSONP callback — called by wttr.in script tag
+  window._wxCallback = function(data) {
+    try {
+      const c = data.current_condition[0];
+      const temp    = c.temp_F;
+      const code    = c.weatherCode;
+      const wind    = Math.round(parseFloat(c.windspeedMiles));
+      const windDir = parseInt(c.winddirDegree, 10);
+      const hum     = c.humidity;
+      const desc    = wxDesc(code);
+      const icon    = wxIcon(code);
+      const arrow   = windArrow(windDir);
+
+      const el = id => document.getElementById(id);
+      if (el('wx-temp'))  el('wx-temp').textContent  = `${temp}°f`;
+      if (el('wx-icon'))  el('wx-icon').textContent  = icon;
+      if (el('wx-desc'))  el('wx-desc').textContent  = desc;
+      if (el('wx-wind'))  el('wx-wind').textContent  = `${arrow} ${wind} mph`;
+    } catch(e) {
+      console.warn('weather parse:', e);
+      wxHide();
+    }
+    // clean up script tag
+    const s = document.getElementById('wx-script');
+    if (s) s.remove();
+  };
+
+  function wxHide() {
+    const bar = document.getElementById('weather-bar');
+    if (bar) bar.style.display = 'none';
+    const sf = document.querySelector('.section-first');
+    if (sf) sf.style.paddingTop = 'calc(56px + 36px)';
+  }
+
+  function fetchWeather() {
+    // Abort and hide if previous script didn't fire within 5s
+    const timeout = setTimeout(wxHide, 5000);
+    const orig = window._wxCallback;
+    window._wxCallback = function(data) {
+      clearTimeout(timeout);
+      orig(data);
+    };
+    const s = document.createElement('script');
+    s.id = 'wx-script';
+    s.src = 'https://wttr.in/11207?format=j1&callback=_wxCallback';
+    s.onerror = () => { clearTimeout(timeout); wxHide(); s.remove(); };
+    document.head.appendChild(s);
+  }
+
   // ═══════════════════════════════════════════════════════
   // MTA GTFS-RT SUBWAY — direct fetch, no proxy, no key
   // URL encoding: %2F instead of / in path (required)
@@ -1242,6 +1728,9 @@
   // Halsey St: J27N = Manhattan-bound, J27S = Jamaica-bound
   const STOP_N = 'J27N';
   const STOP_S = 'J27S';
+  // Chauncey St: J28N = Manhattan-bound, J28S = Jamaica-bound
+  const STOP_CHAUNCEY_N = 'J28N';
+  const STOP_CHAUNCEY_S = 'J28S';
 
   // MTA BusTime SIRI API (free developer key)
   const BUS_API  = 'https://bustime.mta.info/api/siri/stop-monitoring.json';
@@ -1428,11 +1917,21 @@
       renderArrivals('arr-N', N);
       renderArrivals('arr-S', S);
       setDot('dot-subway', N.length || S.length);
+
+      // Reuse same feed data for Chauncey St (same J/Z feed, already parsed)
+      const CN = future.filter(a => a.stopId === STOP_CHAUNCEY_N).sort((a,b) => a.t - b.t).slice(0,3);
+      const CS = future.filter(a => a.stopId === STOP_CHAUNCEY_S).sort((a,b) => a.t - b.t).slice(0,3);
+      renderArrivals('arr-chauncey-N', CN);
+      renderArrivals('arr-chauncey-S', CS);
+      setDot('dot-subway-chauncey', CN.length || CS.length);
     } catch(e) {
       console.warn('subway:', e);
       setErr('arr-N', 'unavailable');
       setErr('arr-S', 'unavailable');
       setDot('dot-subway', false);
+      setErr('arr-chauncey-N', 'unavailable');
+      setErr('arr-chauncey-S', 'unavailable');
+      setDot('dot-subway-chauncey', false);
     }
   }
 
@@ -1483,68 +1982,26 @@
   const GBFS_INFO   = 'https://gbfs.citibikenyc.com/gbfs/en/station_information.json';
   const GBFS_STATUS = 'https://gbfs.citibikenyc.com/gbfs/en/station_status.json';
 
-  // Preferred station IDs — will be verified against the live station_information feed
-  const BIKE_PREFERRED = [
-    { id: '5380', label: 'Broadway & Cooper St',           el: 0 },
-    { id: '7059', label: 'Thomas S. Boyland St & Macon St', el: 1 },
+  // Station UUIDs — verified against live GBFS feed 2026-03-08
+  // Lyft migrated from numeric IDs to UUIDs; old IDs 5380 / 7059 no longer work
+  const BIKE_STATIONS = [
+    { id: 'fd081854-3f37-420a-9785-ea63c09c12ad', label: 'Halsey St & Broadway',           el: 0 },
+    { id: '7779e057-b33e-46a7-8a1e-8c28bcd9a558', label: 'Thomas S. Boyland St & Macon St', el: 1 },
   ];
 
-  function renderBikeStation(idx, classicBikes, ebikes, docks, isRenting) {
+  function renderBikeStation(idx, classic, ebikes, docks, isRenting) {
     const el = document.getElementById(`bike-counts-${idx}`);
     if (!el) return;
     if (!isRenting) {
       el.innerHTML = '<span class="bike-status-offline">station closed</span>';
       return;
     }
-
-    const total = classicBikes + ebikes + docks;
-
-    // Build dock slot array: ebikes first (blue), then classic bikes, then empty docks
-    const slots = [];
-    for (let i = 0; i < ebikes;       i++) slots.push('ebike');
-    for (let i = 0; i < classicBikes; i++) slots.push('classic');
-    for (let i = 0; i < docks;        i++) slots.push('empty');
-
-    // Cap display at 30 slots max to keep it compact; scale if needed
-    const MAX = 30;
-    let displaySlots = slots;
-    let scaled = false;
-    if (total > MAX) {
-      // Proportionally sample down to MAX slots
-      displaySlots = [];
-      const step = total / MAX;
-      for (let i = 0; i < MAX; i++) {
-        displaySlots.push(slots[Math.min(Math.round(i * step), slots.length - 1)]);
-      }
-      scaled = true;
-    }
-
-    const gridHTML = displaySlots.map(type =>
-      `<div class="dock-slot ${type}" title="${type === 'ebike' ? 'e-bike' : type === 'classic' ? 'classic bike' : 'empty dock'}"></div>`
-    ).join('');
-
-    el.innerHTML = `
-      <div class="bike-dock-grid">${gridHTML}</div>
-      <div class="bike-legend">
-        ${ebikes > 0 ? `
-        <div class="bike-legend-item">
-          <div class="bike-legend-swatch ebike"></div>
-          <span class="bike-legend-count">${ebikes}</span>
-          <span class="bike-legend-label">e-bike</span>
-        </div>` : ''}
-        ${classicBikes > 0 ? `
-        <div class="bike-legend-item">
-          <div class="bike-legend-swatch classic"></div>
-          <span class="bike-legend-count">${classicBikes}</span>
-          <span class="bike-legend-label">classic</span>
-        </div>` : ''}
-        <div class="bike-legend-item">
-          <div class="bike-legend-swatch empty"></div>
-          <span class="bike-legend-count">${docks}</span>
-          <span class="bike-legend-label">dock${docks !== 1 ? 's' : ''}</span>
-        </div>
-      </div>
-    `;
+    const rows = [];
+    if (ebikes > 0)  rows.push(`<div class="bike-row"><span class="bike-row-label"><i class="ebike-icon">⚡</i>e-bike</span><span class="bike-row-num${ebikes  === 0 ? ' zero' : ''}">${ebikes}</span></div>`);
+    if (classic > 0) rows.push(`<div class="bike-row"><span class="bike-row-label">classic</span><span class="bike-row-num${classic === 0 ? ' zero' : ''}">${classic}</span></div>`);
+    if (ebikes === 0 && classic === 0) rows.push(`<div class="bike-row"><span class="bike-row-label">bikes</span><span class="bike-row-num zero">0</span></div>`);
+    rows.push(`<div class="bike-row docks"><span class="bike-row-label">docks free</span><span class="bike-row-num${docks === 0 ? ' zero' : ''}">${docks}</span></div>`);
+    el.innerHTML = `<div class="bike-counts">${rows.join('')}</div>`;
   }
 
   async function fetchBike() {
@@ -1569,16 +2026,14 @@
 
       let anyLive = false;
 
-      BIKE_PREFERRED.forEach(({ id, label, el: idx }) => {
-        // Verify the station still exists in the live feed; log name if found
+      BIKE_STATIONS.forEach(({ id, label, el: idx }) => {
+        // Update station label from live feed name (stays current if Lyft renames)
         const info = infoMap[id];
         if (info) {
-          console.log(`[citibike] station ${id} confirmed: "${info.name}"`);
-          // Update station label to match live feed name (in case Lyft renames it)
           const nameEl = document.querySelector(`#bike-station-${idx} .bike-station-name`);
           if (nameEl) nameEl.textContent = info.name;
         } else {
-          console.warn(`[citibike] station ${id} ("${label}") NOT found in live feed — may have been renumbered`);
+          console.warn(`[citibike] station ${id} ("${label}") not in live feed`);
         }
 
         const st = statusMap[id];
@@ -1629,7 +2084,7 @@
     const ts = document.getElementById('transit-ts');
     if (ts) ts.textContent = 'updating…';
     // Reset all dots while refreshing
-    ['dot-b20', 'dot-q24', 'dot-b60', 'dot-bike'].forEach(id => setDot(id, false));
+    ['dot-subway', 'dot-subway-chauncey', 'dot-b20', 'dot-q24', 'dot-b60', 'dot-bike'].forEach(id => setDot(id, false));
 
     await Promise.allSettled([
       fetchSubway(),
@@ -1653,8 +2108,126 @@
   }, { threshold: 0.06 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+  // ── Homepage gallery — auto-pull from folder ──────────
+  (function buildGallery() {
+    const GALLERY_PHOTOS = [
+      'photos/homepage gallery/webp/IMG_2424.webp',
+      'photos/homepage gallery/webp/IMG_3323.webp',
+      'photos/homepage gallery/webp/IMG_3837.webp',
+      'photos/homepage gallery/webp/IMG_4713.webp',
+      'photos/homepage gallery/webp/IMG_5439.webp',
+      'photos/homepage gallery/webp/IMG_7144.webp',
+      'photos/homepage gallery/webp/IMG_8839.webp',
+      'photos/homepage gallery/webp/IMG_9079.webp',
+      'photos/homepage gallery/webp/IMG_9683.webp',
+      'photos/homepage gallery/webp/IMG_9732.webp',
+      'photos/homepage gallery/webp/IMG_9733.webp',
+      'photos/homepage gallery/webp/IMG_9862.webp',
+    ];
+    const slides = document.getElementById('shop-slides');
+    if (!slides) return;
+    GALLERY_PHOTOS.forEach(src => {
+      const div = document.createElement('div');
+      div.className = 'shop-slide';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';
+      img.loading = 'lazy';
+      div.appendChild(img);
+      slides.appendChild(div);
+    });
+  })();
+
+  // ── Photo slider ───────────────────────────────────────
+  (function initSlider() {
+    const slides = document.getElementById('shop-slides');
+    const dotsEl = document.getElementById('shop-dots');
+    if (!slides || !dotsEl) return;
+
+    const total = slides.children.length;
+    let cur = 0, timer, startX = 0, isDragging = false;
+
+    // Build dots
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.className = 'shop-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      d.addEventListener('click', () => go(i));
+      dotsEl.appendChild(d);
+    }
+
+    function go(n) {
+      cur = (n + total) % total;
+      slides.style.transform = `translateX(-${cur * 100}%)`;
+      dotsEl.querySelectorAll('.shop-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === cur));
+      clearTimeout(timer);
+      timer = setTimeout(next, 4800);
+    }
+
+    function next() { go(cur + 1); }
+
+    // Touch / drag support
+    const wrap = document.getElementById('shop-slider');
+    wrap.addEventListener('pointerdown', e => { startX = e.clientX; isDragging = true; clearTimeout(timer); });
+    wrap.addEventListener('pointerup',   e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 40) go(dx < 0 ? cur + 1 : cur - 1);
+      else timer = setTimeout(next, 4800);
+    });
+    wrap.addEventListener('pointerleave', () => { if (isDragging) { isDragging = false; timer = setTimeout(next, 4800); } });
+
+    // Start
+    timer = setTimeout(next, 4800);
+  })();
+
+  // ── Neon OPEN / CLOSED sign (EST/EDT) ──────────────────
+  // Hours: Mon–Sat 8am–5pm, Sun 9am–5pm
+  const HOURS = {
+    0: { open: 9,  close: 17 }, // Sun
+    1: { open: 8,  close: 17 }, // Mon
+    2: { open: 8,  close: 17 }, // Tue
+    3: { open: 8,  close: 17 }, // Wed
+    4: { open: 8,  close: 17 }, // Thu
+    5: { open: 8,  close: 17 }, // Fri
+    6: { open: 8,  close: 17 }, // Sat
+  };
+
+  function updateNeonSign() {
+    const sign = document.getElementById('neon-sign');
+    if (!sign) return;
+    // Convert to America/New_York regardless of visitor's timezone
+    const now = new Date();
+    const nyStr = now.toLocaleString('en-US', { timeZone: 'America/New_York', hour12: false,
+      weekday: 'short', hour: 'numeric', minute: 'numeric' });
+    // Parse: e.g. "Mon, 14:32"
+    const parts = now.toLocaleString('en-US', { timeZone: 'America/New_York', hour12: false,
+      weekday: 'short', hour: '2-digit', minute: '2-digit' }).split(', ');
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const dayIdx = dayNames.indexOf(parts[0]);
+    const timeParts = parts[1].split(':');
+    const h = parseInt(timeParts[0], 10);  // 0–23
+    const m = parseInt(timeParts[1], 10);
+
+    const hrsToday = HOURS[dayIdx >= 0 ? dayIdx : 0];
+    const minuteOfDay = h * 60 + m;
+    const openMin  = hrsToday.open  * 60;
+    const closeMin = hrsToday.close * 60;
+    const isOpen = minuteOfDay >= openMin && minuteOfDay < closeMin;
+
+    sign.textContent = isOpen ? 'open' : 'closed';
+    sign.className   = 'neon-sign ' + (isOpen ? 'open' : 'closed');
+  }
+
+  updateNeonSign();
+  setInterval(updateNeonSign, 30 * 1000); // recheck every 30 s
+
   // ── Boot ───────────────────────────────────────────────
   doRefresh();
+  fetchWeather();
+  setInterval(fetchWeather, 10 * 60 * 1000); // refresh weather every 10 min
   </script>
 
 </body>

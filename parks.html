@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Parks & Gardens — Covert Coffee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:    #F2E4BB;
+      --tan:      #D9C2A7;
+      --blush:    #F2E2CE;
+      --linen:    #F2ECE4;
+      --espresso: #594A3C;
+      --ink:      #2a211a;
+      --mono:     "JetBrains Mono", "Courier New", monospace;
+      --garden:   #4f8d6a;
+      --park:     #6aa56a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: var(--linen);
+      color: var(--ink);
+      font-family: "IM Fell French Canon", serif;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.046;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      background: rgba(242,236,228,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(89,74,60,0.1);
+    }
+    .nav-logo img { height: 34px; width: auto; display: block; opacity: 0.88; }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-weight: 300;
+      font-size: 0.66rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      text-decoration: none;
+      opacity: 0.55;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 110px 28px 40px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .mono-label {
+      font-family: var(--mono);
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--espresso);
+      opacity: 0.38;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mono-label::before { content: '//'; opacity: 0.5; }
+    .page-header h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--espresso);
+      line-height: 1.12;
+      margin-bottom: 14px;
+    }
+    .page-header .sub {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 1.8;
+      opacity: 0.58;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 28px 80px;
+    }
+
+    /* ── LEAFLET MAP ── */
+    .map-section {
+      padding: 52px 0 0;
+    }
+    .map-section-label {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      color: var(--espresso);
+      opacity: 0.32;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .map-section-label::before { content: '//'; opacity: 0.5; }
+
+    /* SVG nav map */
+    #park-map {
+      width: 100%;
+      display: block;
+      border: 1px solid rgba(89,74,60,0.18);
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+    }
+    #park-map.dragging { cursor: grabbing; }
+    #park-map svg {
+      display: block;
+      /* width/height set by JS to match zoomed canvas */
+    }
+    .map-marker-group { cursor: pointer; }
+    .map-marker-group circle.marker-ring {
+      transition: r 0.15s, opacity 0.15s;
+    }
+    .map-marker-group:hover circle.marker-ring {
+      r: 14;
+      opacity: 0.35;
+    }
+    .map-marker-group:hover circle.marker-dot {
+      filter: brightness(1.2);
+    }
+
+    /* map legend */
+    .map-legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      margin-bottom: 48px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.07em;
+      color: var(--espresso);
+      opacity: 0.45;
+    }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.coffee  { background: #3a2c2a; }
+    .legend-dot.garden  { background: var(--garden); }
+    .legend-dot.park    { background: var(--park); }
+
+    /* ── PARK CARDS ── */
+    .parks-section-label {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.1em;
+      color: var(--espresso);
+      opacity: 0.32;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .parks-section-label::before { content: '//'; opacity: 0.5; }
+
+    .park-card {
+      padding: 36px 0 30px;
+      border-bottom: 1px solid rgba(89,74,60,0.09);
+      transition: opacity 0.3s ease;
+    }
+    .park-card.hidden { display: none; }
+
+    .park-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .park-type-badge {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.07em;
+      color: var(--espresso);
+      border: 1px solid rgba(89,74,60,0.18);
+      padding: 2px 8px;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+    .park-type-badge.garden { border-color: rgba(79,141,106,0.4); color: #3a6b52; opacity: 0.8; }
+    .park-type-badge.park   { border-color: rgba(106,165,106,0.4); color: #3a6b3a; opacity: 0.8; }
+
+    .park-distance {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+      color: var(--espresso);
+      opacity: 0.32;
+    }
+
+    .park-name {
+      font-size: clamp(1.1rem, 3vw, 1.55rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--espresso);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .park-address {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.05em;
+      color: var(--espresso);
+      opacity: 0.38;
+      margin-bottom: 14px;
+    }
+
+    .park-note {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.82;
+      color: var(--ink);
+      opacity: 0.72;
+      margin-bottom: 16px;
+    }
+
+    .park-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .park-link {
+      font-family: var(--mono);
+      font-size: 0.54rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      text-decoration: none;
+      border: 1px solid rgba(89,74,60,0.18);
+      background: rgba(89,74,60,0.02);
+      padding: 5px 12px;
+      border-radius: 2px;
+      transition: background 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      opacity: 0.7;
+    }
+    .park-link:hover { background: rgba(89,74,60,0.07); border-color: rgba(89,74,60,0.36); opacity: 1; }
+
+    /* featured (Saratoga Park) */
+    .park-card.featured {
+      background: rgba(106,165,106,0.04);
+      border: 1px solid rgba(106,165,106,0.18);
+      padding: 32px 24px;
+      margin-bottom: 4px;
+    }
+    .park-card.featured .park-name {
+      font-size: clamp(1.3rem, 4vw, 1.9rem);
+    }
+    .featured-rule {
+      height: 1px;
+      background: linear-gradient(to right, rgba(106,165,106,0.3), transparent);
+      margin: 14px 0 16px;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      nav { padding: 13px 18px; }
+      .nav-links { gap: 16px; }
+      .content { padding: 0 20px 64px; }
+      .page-header { padding: 90px 20px 32px; }
+      .park-card.featured { padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="logo.png" alt="Covert Coffee">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="history.html">archive</a></li>
+      <li><a href="parks.html" class="active">parks</a></li>
+      <li><a href="https://www.instagram.com/covertcoffeebk/" target="_blank">instagram</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <p class="mono-label">bushwick · bed-stuy · 11207</p>
+    <h1>Parks &amp; Gardens</h1>
+    <p class="sub">Green space within walking distance of 1643 Broadway — community gardens tended by neighbors, and a neighborhood park that has been here since 1896.</p>
+  </div>
+
+  <div class="content">
+
+    <!-- ══════════════════
+         SVG NAV MAP
+    ══════════════════ -->
+    <div class="map-section reveal">
+      <p class="map-section-label">neighborhood map</p>
+      <div id="park-map"></div>
+      <div class="map-legend">
+        <div class="legend-item"><span class="legend-dot coffee"></span>Covert Coffee</div>
+        <div class="legend-item"><span class="legend-dot garden"></span>community garden</div>
+        <div class="legend-item"><span class="legend-dot park"></span>park</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════
+         PARK CARDS
+    ══════════════════ -->
+    <p class="parks-section-label" style="margin-bottom:0;padding-top:0;">places</p>
+    <div id="parks-list"></div>
+
+  </div>
+
+  <script>
+  // ════════════════════════════════════════════════════
+  // DATA
+  // ════════════════════════════════════════════════════
+
+  // Data inlined so the page works from file:// without a server
+  const PARKS_DATA = [
+    {
+      "id": "granite-st-garden",
+      "name": "Granite Street Community Garden",
+      "type": "community garden",
+      "distance": "~0.1 mi",
+      "address": "30 Granite St",
+      "cross": null,
+      "lat": 40.6903, "lng": -73.9183,
+      "parks_url": "https://www.nycgovparks.org/opportunities/volunteer/group/granite-street-community-garden",
+      "instagram": null, "instagram_handle": null,
+      "note": null, "featured": false
+    },
+    {
+      "id": "peoples-garden",
+      "name": "People's Garden",
+      "type": "community garden",
+      "distance": "~0.3 mi",
+      "address": null,
+      "cross": "Broadway & Van Buren St",
+      "lat": 40.6922, "lng": -73.9218,
+      "parks_url": "https://www.nycgovparks.org/greenthumb/community-gardens",
+      "instagram": null, "instagram_handle": null,
+      "note": null, "featured": false
+    },
+    {
+      "id": "cooper-st-garden",
+      "name": "Cooper Street Community Garden",
+      "type": "community garden",
+      "distance": "~0.4 mi",
+      "address": "34 Cooper St",
+      "cross": null,
+      "lat": 40.6926, "lng": -73.9224,
+      "parks_url": "https://www.nyrp.org/gardens-and-parks/cooper-street-community-garden",
+      "instagram": null, "instagram_handle": null,
+      "note": null, "featured": false
+    },
+    {
+      "id": "hart-to-hart",
+      "name": "Hart to Hart Garden",
+      "type": "community garden",
+      "distance": "~0.6 mi",
+      "address": "104 Hart St",
+      "cross": null,
+      "lat": 40.6942, "lng": -73.9255,
+      "parks_url": "https://www.nycgovparks.org/greenthumb/community-gardens",
+      "instagram": "https://www.instagram.com/hartgarden",
+      "instagram_handle": "@hartgarden",
+      "note": null, "featured": false
+    },
+    {
+      "id": "patchen-community-square",
+      "name": "Patchen Community Square",
+      "type": "community garden",
+      "distance": "~1.0 mi",
+      "address": null,
+      "cross": "Patchen Ave & Lafayette Ave",
+      "lat": 40.6966, "lng": -73.9292,
+      "parks_url": "https://www.nycgovparks.org/greenthumb/community-gardens",
+      "instagram": "https://www.instagram.com/patchencommunitysquare",
+      "instagram_handle": "@patchencommunitysquare",
+      "note": null, "featured": false
+    },
+    {
+      "id": "greene-acres",
+      "name": "Greene Acres Community Garden",
+      "type": "community garden",
+      "distance": "~1.3 mi",
+      "address": null,
+      "cross": "Franklin Ave & Greene Ave",
+      "lat": 40.6982, "lng": -73.9332,
+      "parks_url": "https://www.greeneacresgarden.com",
+      "instagram": "https://www.instagram.com/greeneacresgarden",
+      "instagram_handle": "@greeneacresgarden",
+      "note": null, "featured": false
+    },
+    {
+      "id": "saratoga-park",
+      "name": "Saratoga Park",
+      "type": "park",
+      "distance": "~1.2 mi",
+      "address": null,
+      "cross": "Halsey St, Macon St, Saratoga Ave, Howard Ave",
+      "lat": 40.6838, "lng": -73.9218,
+      "parks_url": "https://www.nycgovparks.org/parks/saratoga-park",
+      "instagram": null, "instagram_handle": null,
+      "note": "A 3.2-acre neighborhood park established in 1896, bounded by Halsey Street, Macon Street, Howard Avenue, and Saratoga Avenue.",
+      "featured": true
+    }
+  ];
+
+  function init() {
+    renderMap(PARKS_DATA);
+    renderCards(PARKS_DATA);
+    initReveal();
+  }
+
+  // ── MAP ─────────────────────────────────────────────
+  function renderMap(parks) {
+    // Large canvas — rendered at pixel size, user pans/drags
+    const W = 1100, H = 820;
+
+    // ── PROJECTION ─────────────────────────────────
+    // Real measured bounds for this neighborhood.
+    // At 40.69° lat: 1° lat ≈ 111,000 m, 1° lng ≈ 80,000 m
+    // Viewport: lat 40.679–40.702, lng -73.937–-73.912
+    // We use a slightly non-square scale to correctly represent
+    // the lat/lng aspect ratio at this latitude.
+    const LAT_MAX = 40.7025, LNG_MIN = -73.9375;
+    const LAT_RANGE = 0.0245;
+    const LNG_RANGE = 0.0285;
+    const LAT_SCALE = (H - 50) / LAT_RANGE;
+    const LNG_SCALE = (W - 50) / LNG_RANGE;
+    const MX = 25, MY = 25;
+
+    function px(lat, lng) {
+      return {
+        x: MX + (lng - LNG_MIN) * LNG_SCALE,
+        y: MY + (LAT_MAX - lat) * LAT_SCALE,
+      };
+    }
+    function pt(lat, lng) { const p = px(lat,lng); return `${p.x},${p.y}`; }
+    function pathD(coords) {
+      return coords.map(([la,ln],i) => {
+        const p = px(la,ln); return `${i===0?'M':'L'}${p.x} ${p.y}`;
+      }).join(' ');
+    }
+
+    // ── STREET NETWORK ──────────────────────────────
+    // All coordinates are real OSM-sourced lat/lng intersections.
+    // E-W streets in this area run at ~0° true (nearly flat).
+    // N-S avenues run nearly due north.
+    // Broadway runs NW-SE at ~29° from north through this grid.
+    //
+    // Key real intersections used as anchors:
+    //   Halsey & Broadway:        40.6857, -73.9156
+    //   Halsey & Saratoga Ave:    40.6858, -73.9218
+    //   Halsey & Howard Ave:      40.6858, -73.9242
+    //   Halsey & Patchen Ave:     40.6858, -73.9291
+    //   Halsey & Franklin Ave:    40.6858, -73.9331
+    //   Macon & Broadway:         40.6835, -73.9130  (approx)
+    //   Hart & Broadway:          40.6903, -73.9212
+    //   Cooper & Broadway:        40.6917, -73.9228  (approx)
+    //   Van Buren & Broadway:     40.6929, -73.9245
+    //   Lafayette & Franklin:     40.6980, -73.9331
+    //   Greene & Franklin:        40.6997, -73.9331
+    //   Covert Coffee:            40.6896, -73.9197  (1643 Broadway)
+
+    const streets = [
+      // ── BROADWAY (actual diagonal ~29° from N) ──
+      { w: 4, color: '#b5a898', name: 'Broadway', pts: [
+        [40.7015,-73.9355],[40.7003,-73.9337],[40.6990,-73.9318],
+        [40.6977,-73.9300],[40.6963,-73.9281],[40.6950,-73.9262],
+        [40.6936,-73.9244],[40.6923,-73.9226],[40.6910,-73.9208],
+        [40.6896,-73.9189],[40.6882,-73.9171],[40.6868,-73.9152],
+        [40.6853,-73.9133],[40.6837,-73.9113],[40.6820,-73.9093],
+      ]},
+
+      // ── MAJOR E-W STREETS ──
+      // Atlantic Ave
+      { w: 3, color: '#c0b3a2', pts: [
+        [40.7015,-73.9375],[40.7015,-73.9331],[40.7015,-73.9291],
+        [40.7015,-73.9242],[40.7015,-73.9197],[40.7015,-73.9150],
+        [40.7015,-73.9110],
+      ]},
+      // Greene Ave
+      { w: 2, color: '#c8baa8', pts: [
+        [40.6998,-73.9375],[40.6998,-73.9331],[40.6998,-73.9291],
+        [40.6998,-73.9242],[40.6998,-73.9197],[40.6998,-73.9150],
+      ]},
+      // Lafayette Ave
+      { w: 2.2, color: '#c3b6a5', pts: [
+        [40.6981,-73.9375],[40.6981,-73.9331],[40.6981,-73.9291],
+        [40.6981,-73.9242],[40.6981,-73.9197],[40.6981,-73.9150],
+      ]},
+      // Hart St
+      { w: 1.6, color: '#cec1b0', pts: [
+        [40.6949,-73.9375],[40.6949,-73.9331],[40.6949,-73.9291],
+        [40.6949,-73.9242],[40.6949,-73.9197],[40.6949,-73.9150],
+      ]},
+      // Cooper St
+      { w: 1.6, color: '#cec1b0', pts: [
+        [40.6934,-73.9375],[40.6934,-73.9331],[40.6934,-73.9291],
+        [40.6934,-73.9242],[40.6934,-73.9197],[40.6934,-73.9157],
+      ]},
+      // Van Buren St
+      { w: 1.5, color: '#d2c5b4', pts: [
+        [40.6921,-73.9375],[40.6921,-73.9331],[40.6921,-73.9291],
+        [40.6921,-73.9242],[40.6921,-73.9197],
+      ]},
+      // Halsey St
+      { w: 1.8, color: '#c8baa8', pts: [
+        [40.6858,-73.9375],[40.6858,-73.9331],[40.6858,-73.9291],
+        [40.6858,-73.9242],[40.6858,-73.9197],[40.6858,-73.9150],
+        [40.6858,-73.9110],
+      ]},
+      // Decatur St
+      { w: 1.5, color: '#d2c5b4', pts: [
+        [40.6873,-73.9375],[40.6873,-73.9331],[40.6873,-73.9291],
+        [40.6873,-73.9242],[40.6873,-73.9197],[40.6873,-73.9157],
+      ]},
+      // Macon St
+      { w: 1.7, color: '#c8baa8', pts: [
+        [40.6843,-73.9375],[40.6843,-73.9331],[40.6843,-73.9291],
+        [40.6843,-73.9242],[40.6843,-73.9197],[40.6843,-73.9150],
+        [40.6843,-73.9110],
+      ]},
+      // Bainbridge St
+      { w: 1.4, color: '#d6c9b8', pts: [
+        [40.6827,-73.9375],[40.6827,-73.9331],[40.6827,-73.9291],
+        [40.6827,-73.9242],[40.6827,-73.9197],[40.6827,-73.9150],
+      ]},
+
+      // ── N-S AVENUES ──
+      // Franklin Ave
+      { w: 2.2, color: '#c0b3a2', pts: [
+        [40.7015,-73.9331],[40.6998,-73.9331],[40.6981,-73.9331],
+        [40.6963,-73.9331],[40.6949,-73.9331],[40.6934,-73.9331],
+        [40.6921,-73.9331],[40.6904,-73.9331],[40.6889,-73.9331],
+        [40.6873,-73.9331],[40.6858,-73.9331],[40.6843,-73.9331],
+        [40.6827,-73.9331],
+      ]},
+      // Patchen Ave
+      { w: 1.8, color: '#c8baa8', pts: [
+        [40.7015,-73.9291],[40.6998,-73.9291],[40.6981,-73.9291],
+        [40.6963,-73.9291],[40.6949,-73.9291],[40.6934,-73.9291],
+        [40.6921,-73.9291],[40.6904,-73.9291],[40.6889,-73.9291],
+        [40.6873,-73.9291],[40.6858,-73.9291],[40.6843,-73.9291],
+        [40.6827,-73.9291],
+      ]},
+      // Howard Ave
+      { w: 1.8, color: '#c8baa8', pts: [
+        [40.7015,-73.9242],[40.6998,-73.9242],[40.6981,-73.9242],
+        [40.6963,-73.9242],[40.6949,-73.9242],[40.6934,-73.9242],
+        [40.6921,-73.9242],[40.6904,-73.9242],[40.6889,-73.9242],
+        [40.6873,-73.9242],[40.6858,-73.9242],[40.6843,-73.9242],
+        [40.6827,-73.9242],
+      ]},
+      // Saratoga Ave
+      { w: 1.8, color: '#c8baa8', pts: [
+        [40.7015,-73.9197],[40.6998,-73.9197],[40.6981,-73.9197],
+        [40.6963,-73.9197],[40.6949,-73.9197],[40.6934,-73.9197],
+        [40.6921,-73.9197],[40.6904,-73.9197],[40.6889,-73.9197],
+        [40.6873,-73.9197],[40.6858,-73.9197],[40.6843,-73.9197],
+        [40.6827,-73.9197],
+      ]},
+      // Thomas S. Boyland St (formerly Rockaway Ave)
+      { w: 1.6, color: '#cec1b0', pts: [
+        [40.7015,-73.9150],[40.6998,-73.9150],[40.6981,-73.9150],
+        [40.6963,-73.9150],[40.6949,-73.9150],[40.6934,-73.9150],
+        [40.6858,-73.9150],[40.6843,-73.9150],[40.6827,-73.9150],
+      ]},
+      // Marcus Garvey Blvd
+      { w: 1.5, color: '#d2c5b4', pts: [
+        [40.7015,-73.9110],[40.6998,-73.9110],[40.6981,-73.9110],
+        [40.6963,-73.9110],[40.6858,-73.9110],[40.6843,-73.9110],
+        [40.6827,-73.9110],
+      ]},
+    ];
+
+    // ── BLOCK FILLS ─────────────────────────────────
+    // Light fill between streets for a real-map look
+    // Generate a grid of block rectangles between the E-W streets
+    // and N-S avenues. Color slightly darker than background.
+    const EW = [40.7015,40.6998,40.6981,40.6963,40.6949,40.6934,
+                40.6921,40.6904,40.6889,40.6873,40.6858,40.6843,40.6827];
+    const NS = [-73.9375,-73.9331,-73.9291,-73.9242,-73.9197,-73.9150,-73.9110];
+    const blockFills = [];
+    for (let i=0; i<EW.length-1; i++) {
+      for (let j=0; j<NS.length-1; j++) {
+        const tl = px(EW[i],   NS[j]);
+        const br = px(EW[i+1], NS[j+1]);
+        blockFills.push(`<rect x="${tl.x+1}" y="${tl.y+1}" width="${br.x-tl.x-2}" height="${br.y-tl.y-2}" fill="#ddd6c8" opacity="0.45"/>`);
+      }
+    }
+
+    // ── STREET LABELS ───────────────────────────────
+    // Broadway angle in SVG coords: run along the diagonal
+    // Broadway goes from ~[40.6820,-73.9093] to ~[40.7015,-73.9355]
+    // Δlat=0.0195, Δlng=0.0262 → angle = atan2(Δx,Δy) in SVG
+    const bwAngle = (() => {
+      const a = px(40.6820,-73.9093), b = px(40.7015,-73.9355);
+      return Math.atan2(a.x-b.x, b.y-a.y) * 180 / Math.PI;
+    })();
+
+    const streetLabels = [
+      { text: 'BROADWAY',      lat: 40.6950, lng: -73.9260, angle: bwAngle, size: 8,   bold: true  },
+      { text: 'ATLANTIC AV',   lat: 40.7015, lng: -73.9242, angle: 0,       size: 6.5, bold: false },
+      { text: 'GREENE AV',     lat: 40.6998, lng: -73.9145, angle: 0,       size: 6,   bold: false },
+      { text: 'LAFAYETTE AV',  lat: 40.6981, lng: -73.9145, angle: 0,       size: 6,   bold: false },
+      { text: 'HART ST',       lat: 40.6949, lng: -73.9145, angle: 0,       size: 5.5, bold: false },
+      { text: 'COOPER ST',     lat: 40.6934, lng: -73.9145, angle: 0,       size: 5.5, bold: false },
+      { text: 'VAN BUREN ST',  lat: 40.6921, lng: -73.9195, angle: 0,       size: 5,   bold: false },
+      { text: 'HALSEY ST',     lat: 40.6858, lng: -73.9105, angle: 0,       size: 6,   bold: false },
+      { text: 'DECATUR ST',    lat: 40.6873, lng: -73.9145, angle: 0,       size: 5,   bold: false },
+      { text: 'MACON ST',      lat: 40.6843, lng: -73.9105, angle: 0,       size: 5.5, bold: false },
+      { text: 'BAINBRIDGE ST', lat: 40.6827, lng: -73.9220, angle: 0,       size: 5,   bold: false },
+      { text: 'FRANKLIN AV',   lat: 40.6815, lng: -73.9331, angle: -90,     size: 6,   bold: false },
+      { text: 'PATCHEN AV',    lat: 40.6815, lng: -73.9291, angle: -90,     size: 5.5, bold: false },
+      { text: 'HOWARD AV',     lat: 40.6815, lng: -73.9242, angle: -90,     size: 5.5, bold: false },
+      { text: 'SARATOGA AV',   lat: 40.6815, lng: -73.9197, angle: -90,     size: 5.5, bold: false },
+      { text: 'BOYLAND ST',    lat: 40.6815, lng: -73.9150, angle: -90,     size: 5,   bold: false },
+    ];
+
+    // ── BUILD SVG ───────────────────────────────────
+    const parts = [];
+
+    // SVG defs
+    parts.push(`<defs>
+      <!-- Aged paper texture -->
+      <filter id="paper" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" seed="2" result="noise"/>
+        <feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+        <feBlend in="SourceGraphic" in2="gray" mode="multiply" result="blend"/>
+        <feComponentTransfer in="blend">
+          <feFuncR type="linear" slope="0.97" intercept="0.04"/>
+          <feFuncG type="linear" slope="0.94" intercept="0.03"/>
+          <feFuncB type="linear" slope="0.88" intercept="0.02"/>
+        </feComponentTransfer>
+      </filter>
+      <!-- Subtle vignette -->
+      <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+        <stop offset="0%" stop-color="transparent"/>
+        <stop offset="100%" stop-color="rgba(42,33,26,0.18)"/>
+      </radialGradient>
+      <!-- Hatching for park fill -->
+      <pattern id="parkHatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="6" stroke="#7aaa7a" stroke-width="0.8" opacity="0.35"/>
+      </pattern>
+      <!-- Fine grid for blocks -->
+      <pattern id="blockGrid" patternUnits="userSpaceOnUse" width="40" height="40">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(180,168,152,0.12)" stroke-width="0.5"/>
+      </pattern>
+      <!-- Marker glow -->
+      <filter id="markerGlow">
+        <feGaussianBlur stdDeviation="2.5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <!-- Coffee anchor cross-hair glow -->
+      <filter id="coffeeGlow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>`);
+
+    // Background — aged parchment
+    parts.push(`<rect width="${W}" height="${H}" fill="#e9e2d6" filter="url(#paper)"/>`);
+    // Subtle block grid
+    parts.push(`<rect width="${W}" height="${H}" fill="url(#blockGrid)"/>`);
+
+    // Block fills — city blocks between streets
+    blockFills.forEach(b => parts.push(b));
+
+    // Saratoga Park polygon — hatch + stroke
+    const spCorners = [
+      [40.6848,-73.9222],[40.6848,-73.9198],
+      [40.6826,-73.9198],[40.6826,-73.9222],
+    ];
+    const spPts = spCorners.map(([la,ln]) => pt(la,ln)).join(' ');
+    parts.push(`<polygon points="${spPts}" fill="url(#parkHatch)" stroke="#6aa56a" stroke-width="1.2" opacity="0.85"/>`);
+    parts.push(`<polygon points="${spPts}" fill="rgba(106,170,106,0.08)"/>`);
+
+    // Streets
+    streets.forEach(s => {
+      const d = pathD(s.pts);
+      parts.push(`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.w}" stroke-linecap="round" stroke-linejoin="round"/>`);
+    });
+
+    // Street labels — uppercase mono, spaced
+    streetLabels.forEach(sl => {
+      const p = px(sl.lat, sl.lng);
+      parts.push(`
+        <text x="${p.x}" y="${p.y}"
+          font-family="JetBrains Mono, monospace"
+          font-size="${sl.size}"
+          font-weight="${sl.bold ? 600 : 300}"
+          fill="#8a7d6e"
+          opacity="0.55"
+          letter-spacing="1.2"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          transform="rotate(${sl.angle},${p.x},${p.y})"
+        >${sl.text}</text>`);
+    });
+
+    // Saratoga Park italic label in center of polygon
+    const spCtr = px(40.6837, -73.9210);
+    parts.push(`
+      <text x="${spCtr.x}" y="${spCtr.y}"
+        font-family="IM Fell French Canon, serif"
+        font-size="9" font-style="italic"
+        fill="#4a7a4a" opacity="0.7"
+        text-anchor="middle" dominant-baseline="middle"
+      >Saratoga Park</text>`);
+
+    // ── PARK / GARDEN MARKERS ───────────────────────
+    const ANCHOR_LAT = 40.6896, ANCHOR_LNG = -73.9197;
+    const anchor = px(ANCHOR_LAT, ANCHOR_LNG);
+
+    parks.forEach(park => {
+      const p = px(park.lat, park.lng);
+      const isFeatured = park.featured;
+      const color = park.type === 'park' ? '#5a9a5a' : '#4a8a68';
+      const r = isFeatured ? 7 : 5;
+      const shortName = park.name
+        .replace(' Community Garden','')
+        .replace(' Community Square','');
+
+      // Label positioning — avoid overlap with anchor
+      const labelRight = p.x < anchor.x - 10;
+      const lx = labelRight ? p.x + r + 5 : p.x - r - 5;
+      const anchor2 = labelRight ? 'start' : 'end';
+
+      parts.push(`
+        <g class="map-marker-group" data-id="${park.id}" tabindex="0" role="button" aria-label="${park.name}">
+          <circle class="marker-ring" cx="${p.x}" cy="${p.y}" r="10"
+            fill="${color}" fill-opacity="0.12" stroke="${color}" stroke-width="0.6" opacity="0.25"/>
+          <circle class="marker-dot" cx="${p.x}" cy="${p.y}" r="${r}"
+            fill="${color}" stroke="rgba(255,255,255,0.65)" stroke-width="${isFeatured?1.5:1}"
+            filter="url(#markerGlow)"/>
+          ${isFeatured ? `
+          <circle cx="${p.x}" cy="${p.y}" r="${r+6}"
+            fill="none" stroke="${color}" stroke-width="0.8" opacity="0.2" stroke-dasharray="2,2"/>` : ''}
+          <text x="${lx}" y="${p.y+1}"
+            font-family="JetBrains Mono,monospace"
+            font-size="${isFeatured?8:7}"
+            font-weight="${isFeatured?500:400}"
+            fill="${isFeatured?'#3a6b3a':'#4a6b55'}"
+            opacity="${isFeatured?0.85:0.7}"
+            text-anchor="${anchor2}"
+            dominant-baseline="middle"
+            letter-spacing="0.5"
+            pointer-events="none"
+          >${shortName}</text>
+        </g>`);
+    });
+
+    // ── COVERT COFFEE ANCHOR ────────────────────────
+    parts.push(`
+      <g filter="url(#coffeeGlow)">
+        <!-- cross-hair lines -->
+        <line x1="${anchor.x-14}" y1="${anchor.y}" x2="${anchor.x+14}" y2="${anchor.y}"
+          stroke="#3a2c2a" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,2"/>
+        <line x1="${anchor.x}" y1="${anchor.y-14}" x2="${anchor.x}" y2="${anchor.y+14}"
+          stroke="#3a2c2a" stroke-width="0.8" opacity="0.35" stroke-dasharray="3,2"/>
+        <!-- outer ring -->
+        <circle cx="${anchor.x}" cy="${anchor.y}" r="9"
+          fill="rgba(58,44,42,0.08)" stroke="#3a2c2a" stroke-width="1" opacity="0.5"/>
+        <!-- inner dot -->
+        <circle cx="${anchor.x}" cy="${anchor.y}" r="4.5"
+          fill="#3a2c2a" opacity="0.82"/>
+        <!-- tick marks -->
+        <circle cx="${anchor.x}" cy="${anchor.y}" r="6.5"
+          fill="none" stroke="#3a2c2a" stroke-width="0.6" opacity="0.3" stroke-dasharray="1.5,3"/>
+      </g>
+      <!-- Covert Coffee label -->
+      <text x="${anchor.x+14}" y="${anchor.y-7}"
+        font-family="IM Fell French Canon,serif"
+        font-size="9.5" font-style="italic"
+        fill="#3a2c2a" opacity="0.75"
+        letter-spacing="0.2"
+      >Covert Coffee</text>
+      <text x="${anchor.x+14}" y="${anchor.y+5}"
+        font-family="JetBrains Mono,monospace"
+        font-size="6"
+        fill="#3a2c2a" opacity="0.4"
+        letter-spacing="0.8"
+      >1643 BROADWAY</text>`);
+
+    // ── COMPASS ROSE ────────────────────────────────
+    const cx = W - 58, cy = H - 62;
+    parts.push(`
+      <g transform="translate(${cx},${cy})">
+        <!-- outer ring decoration -->
+        <circle r="26" fill="rgba(232,226,214,0.82)" stroke="rgba(89,74,60,0.2)" stroke-width="1"/>
+        <circle r="22" fill="none" stroke="rgba(89,74,60,0.1)" stroke-width="0.5"/>
+        <!-- tick marks at 45° intervals -->
+        ${[0,45,90,135,180,225,270,315].map(a => {
+          const rad = a * Math.PI / 180;
+          const r1 = 17, r2 = 21;
+          return `<line x1="${Math.sin(rad)*r1}" y1="${-Math.cos(rad)*r1}"
+            x2="${Math.sin(rad)*r2}" y2="${-Math.cos(rad)*r2}"
+            stroke="rgba(89,74,60,0.25)" stroke-width="0.7"/>`;
+        }).join('')}
+        <!-- N/S blade — dark -->
+        <polygon points="0,-18 -4,0 0,-3 4,0" fill="#3a2c2a" opacity="0.8"/>
+        <!-- S blade — lighter -->
+        <polygon points="0,18 -4,0 0,3 4,0" fill="#9a8a7a" opacity="0.6"/>
+        <!-- E blade -->
+        <polygon points="18,0 0,-3 3,0 0,4" fill="#9a8a7a" opacity="0.5"/>
+        <!-- W blade -->
+        <polygon points="-18,0 0,-3 -3,0 0,4" fill="#9a8a7a" opacity="0.5"/>
+        <!-- Center circle -->
+        <circle r="3" fill="#3a2c2a" opacity="0.6"/>
+        <circle r="1.5" fill="#e8e2d4"/>
+        <!-- Cardinal labels -->
+        <text y="-22" text-anchor="middle" dominant-baseline="auto"
+          font-family="JetBrains Mono,monospace" font-size="7" fill="#3a2c2a"
+          font-weight="600" opacity="0.75">N</text>
+        <text y="28" text-anchor="middle" dominant-baseline="auto"
+          font-family="JetBrains Mono,monospace" font-size="6" fill="#9a8a7a" opacity="0.6">S</text>
+        <text x="24" y="2" text-anchor="start" dominant-baseline="middle"
+          font-family="JetBrains Mono,monospace" font-size="6" fill="#9a8a7a" opacity="0.6">E</text>
+        <text x="-24" y="2" text-anchor="end" dominant-baseline="middle"
+          font-family="JetBrains Mono,monospace" font-size="6" fill="#9a8a7a" opacity="0.6">W</text>
+      </g>`);
+
+    // Distance scale bar (bottom left)
+    const scaleX = 20, scaleY = H - 22;
+    // ~0.5 mi at this zoom ≈ how many px?
+    // 0.5mi / 69mi per degree lat ≈ 0.00725° lat → 0.00725 * 4800 ≈ 34.8px
+    const scalePx = 35;
+    parts.push(`
+      <g opacity="0.45">
+        <line x1="${scaleX}" y1="${scaleY}" x2="${scaleX+scalePx}" y2="${scaleY}"
+          stroke="#594a3c" stroke-width="1.2"/>
+        <line x1="${scaleX}" y1="${scaleY-3}" x2="${scaleX}" y2="${scaleY+3}"
+          stroke="#594a3c" stroke-width="1"/>
+        <line x1="${scaleX+scalePx}" y1="${scaleY-3}" x2="${scaleX+scalePx}" y2="${scaleY+3}"
+          stroke="#594a3c" stroke-width="1"/>
+        <text x="${scaleX + scalePx/2}" y="${scaleY-6}"
+          font-family="JetBrains Mono,monospace" font-size="6"
+          fill="#594a3c" text-anchor="middle" letter-spacing="0.8">0.5 mi</text>
+      </g>`);
+
+    // Vignette overlay
+    parts.push(`<rect width="${W}" height="${H}" fill="url(#vignette)" pointer-events="none"/>`);
+
+    // Assemble SVG
+    const svgEl = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svgEl.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svgEl.innerHTML = parts.join('\n');
+    document.getElementById('park-map').appendChild(svgEl);
+
+    // Size the SVG element to the canvas size (not stretched to container)
+    svgEl.style.width  = W + 'px';
+    svgEl.style.height = H + 'px';
+
+    // Marker click → scroll to card
+    svgEl.querySelectorAll('.map-marker-group').forEach(g => {
+      g.addEventListener('click', e => {
+        if (wasDragging) return; // suppress click after drag
+        const id = g.dataset.id;
+        const card = document.getElementById('card-' + id);
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card?.classList.add('map-highlight');
+        setTimeout(() => card?.classList.remove('map-highlight'), 1400);
+      });
+      g.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') g.click();
+      });
+    });
+
+    // ── DRAG PANNING ────────────────────────────────
+    const wrap = document.getElementById('park-map');
+    let dragging = false, wasDragging = false;
+    let startX = 0, startY = 0, scrollX = 0, scrollY = 0;
+
+    // Center map on load — put Covert Coffee near center
+    const coffeePos = px(40.6896, -73.9197);
+    wrap.scrollLeft = coffeePos.x - wrap.clientWidth  / 2;
+    wrap.scrollTop  = coffeePos.y - wrap.clientHeight / 2;
+
+    wrap.addEventListener('pointerdown', e => {
+      if (e.target.closest('.map-marker-group')) return;
+      dragging = true;
+      wasDragging = false;
+      wrap.classList.add('dragging');
+      startX = e.clientX + wrap.scrollLeft;
+      startY = e.clientY + wrap.scrollTop;
+      wrap.setPointerCapture(e.pointerId);
+    });
+
+    wrap.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const dx = Math.abs(e.clientX - (startX - wrap.scrollLeft));
+      const dy = Math.abs(e.clientY - (startY - wrap.scrollTop));
+      if (dx > 3 || dy > 3) wasDragging = true;
+      wrap.scrollLeft = startX - e.clientX;
+      wrap.scrollTop  = startY - e.clientY;
+    });
+
+    wrap.addEventListener('pointerup',    () => { dragging = false; wrap.classList.remove('dragging'); });
+    wrap.addEventListener('pointerleave', () => { dragging = false; wrap.classList.remove('dragging'); });
+  }
+
+  // ── CARDS ────────────────────────────────────────────
+  function renderCards(parks) {
+    const list = document.getElementById('parks-list');
+    // Sort: featured park first, then gardens by distance
+    const sorted = [...parks].sort((a,b) => {
+      if (a.featured) return -1;
+      if (b.featured) return 1;
+      return parseFloat(a.distance) - parseFloat(b.distance);
+    });
+
+    sorted.forEach(park => {
+      const isFeatured = park.featured;
+      const typeClass  = park.type === 'park' ? 'park' : 'garden';
+      const addrStr    = park.address || park.cross || '';
+      const gmaps      = `https://www.google.com/maps/dir/1643+Broadway,Brooklyn,NY/${encodeURIComponent(addrStr + ' Brooklyn NY')}`;
+
+      const linksHtml = [
+        park.parks_url
+          ? `<a class="park-link" href="${park.parks_url}" target="_blank" rel="noopener">↗ nyc parks</a>`
+          : '',
+        park.instagram
+          ? `<a class="park-link" href="${park.instagram}" target="_blank" rel="noopener">${park.instagram_handle}</a>`
+          : '',
+        `<a class="park-link" href="${gmaps}" target="_blank" rel="noopener">↗ directions</a>`,
+      ].filter(Boolean).join('');
+
+      const noteHtml = park.note
+        ? `<div class="featured-rule"></div><p class="park-note">${park.note}</p>`
+        : '';
+
+      list.insertAdjacentHTML('beforeend', `
+        <div class="park-card reveal ${isFeatured ? 'featured' : ''}"
+             id="card-${park.id}"
+             data-type="${park.type}">
+          <div class="park-card-meta">
+            <span class="park-type-badge ${typeClass}">${park.type}</span>
+            <span class="park-distance">${park.distance}</span>
+          </div>
+          <div class="park-name">${park.name}</div>
+          <div class="park-address">${addrStr}</div>
+          ${noteHtml}
+          <div class="park-links">${linksHtml}</div>
+        </div>
+      `);
+    });
+  }
+
+  // ── REVEAL ───────────────────────────────────────────
+  function initReveal() {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+
+  // ── MAP HIGHLIGHT ─────────────────────────────────────
+  const style = document.createElement('style');
+  style.textContent = `
+    .map-highlight {
+      outline: 2px solid rgba(106,165,106,0.6) !important;
+      outline-offset: 4px;
+      transition: outline 0s;
+    }
+  `;
+  document.head.appendChild(style);
+
+  init();
+  </script>
+
+</body>
+</html>

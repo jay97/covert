@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Archive — Covert Coffee</title>
+  <title>History — Covert Coffee</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -16,6 +16,8 @@
       --espresso: #594A3C;
       --ink:      #2a211a;
       --mono:     "JetBrains Mono", "Courier New", monospace;
+      --paper:    #e8e0d0;
+      --newsprint:#d4cbbf;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,12 +55,8 @@
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(89,74,60,0.1);
     }
-
     .nav-logo img { height: 34px; width: auto; display: block; opacity: 0.88; }
-
-    .nav-links {
-      display: flex; gap: 22px; list-style: none;
-    }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
     .nav-links a {
       font-family: var(--mono);
       font-weight: 300;
@@ -73,984 +71,1206 @@
 
     /* ── PAGE HEADER ── */
     .page-header {
-      padding: 110px 28px 40px;
-      max-width: 680px;
+      padding: 110px 28px 50px;
+      max-width: 760px;
       margin: 0 auto;
+      text-align: center;
     }
-
-    .mono-label {
+    .page-header .mono-label {
       font-family: var(--mono);
-      font-weight: 300;
       font-size: 0.6rem;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.14em;
       color: var(--espresso);
-      opacity: 0.38;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      opacity: 0.5;
+      text-transform: uppercase;
+      margin-bottom: 14px;
     }
-    .mono-label::before { content: '//'; opacity: 0.5; }
-
     .page-header h1 {
-      font-size: clamp(2rem, 6vw, 3.2rem);
-      font-style: italic;
+      font-size: clamp(2.4rem, 6vw, 4rem);
       font-weight: 400;
-      color: var(--espresso);
-      line-height: 1.12;
-      margin-bottom: 14px;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -0.01em;
     }
-
-    .page-header .sub {
-      font-family: "Averia Serif Libre", serif;
-      font-weight: 300;
-      font-size: 1rem;
-      line-height: 1.8;
-      opacity: 0.58;
-    }
-
-    /* ── STICKY FILTER BAR ── */
-    .filter-bar {
-      position: sticky;
-      top: 64px;
-      z-index: 800;
-      background: rgba(242,236,228,0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(89,74,60,0.09);
-      padding: 0;
-    }
-
-    .filter-bar-inner {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      padding: 10px 20px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-    }
-    .filter-bar-inner::-webkit-scrollbar { display: none; }
-
-    .filter-label {
+    .page-header .subtitle {
+      margin-top: 16px;
       font-family: var(--mono);
-      font-size: 0.56rem;
-      letter-spacing: 0.1em;
+      font-size: 0.7rem;
       color: var(--espresso);
-      opacity: 0.3;
-      margin-right: 12px;
-      flex-shrink: 0;
-      white-space: nowrap;
+      opacity: 0.45;
+      letter-spacing: 0.06em;
     }
 
-    .filter-chips {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
+    /* ── DIVIDER RULE ── */
+    .section-rule {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto 60px;
+      border: none;
+      border-top: 1px solid rgba(89,74,60,0.15);
     }
 
-    .chip {
+    /* ── SECTION LABELS ── */
+    .section-label {
+      display: block;
+      max-width: 760px;
+      margin: 0 auto 22px;
+      padding: 0 28px;
       font-family: var(--mono);
-      font-weight: 300;
-      font-size: 0.6rem;
-      letter-spacing: 0.04em;
-      color: var(--espresso);
-      border: 1px solid rgba(89,74,60,0.2);
-      background: transparent;
-      padding: 5px 12px;
-      border-radius: 2px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.18s, border-color 0.18s, color 0.18s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .chip:hover { border-color: rgba(89,74,60,0.45); }
-    .chip.active {
-      background: var(--espresso);
-      color: var(--cream);
-      border-color: var(--espresso);
-    }
-
-    /* ── MAIN CONTENT ── */
-    .content {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 28px 80px;
-    }
-
-    /* ── ARCHIVE BLOCK ── */
-    /* Each block has data-tags for filtering */
-    .archive-block {
-      padding: 52px 0;
-      border-bottom: 1px solid rgba(89,74,60,0.09);
-      transition: opacity 0.3s ease;
-    }
-
-    .archive-block.hidden {
-      display: none;
-    }
-
-    .block-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .block-date {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.08em;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--espresso);
       opacity: 0.4;
     }
 
-    .block-tag {
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.06em;
-      color: var(--espresso);
-      border: 1px solid rgba(89,74,60,0.18);
-      padding: 2px 8px;
-      border-radius: 2px;
-      opacity: 0.5;
-    }
-
-    h2 {
-      font-size: clamp(1.3rem, 3.5vw, 1.9rem);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--espresso);
-      line-height: 1.2;
-      margin-bottom: 18px;
-    }
-
-    p {
-      font-family: "Averia Serif Libre", serif;
-      font-weight: 300;
-      font-size: 1rem;
-      line-height: 1.88;
-      color: var(--ink);
-      opacity: 0.78;
-      margin-bottom: 1.1em;
-    }
-    p:last-child { margin-bottom: 0; }
-
-    blockquote {
-      border-left: 2px solid var(--tan);
-      padding: 14px 20px;
-      margin: 24px 0;
-      background: rgba(217,194,167,0.1);
-    }
-    blockquote p {
-      font-style: italic;
-      font-size: 0.97rem;
-      margin: 0 0 6px !important;
-    }
-    blockquote cite {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      letter-spacing: 0.06em;
-      opacity: 0.38;
-      font-style: normal;
-    }
-
-    /* ── NEWSPAPER CLIPPINGS STRIP ── */
-    .clippings-head {
+    /* ═══════════════════════════════════════════════
+       § 1  REDDIT + FACEBOOK — vintage artifact style
+       Feels like a screenshot printed on newsprint,
+       then scanned back in. Degraded, found, real.
+    ═══════════════════════════════════════════════ */
+    .social-docs {
+      max-width: 420px;
+      margin: 0 auto 80px;
+      padding: 0 28px;
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .clippings-head .strip-title {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.07em;
-      color: var(--espresso);
-      opacity: 0.38;
-    }
-    .clippings-head .strip-count {
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      letter-spacing: 0.06em;
-      color: var(--espresso);
-      opacity: 0.28;
+      flex-direction: column;
+      gap: 32px;
     }
 
-    .scroll-hint {
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      letter-spacing: 0.1em;
-      opacity: 0.28;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .scroll-hint::after {
-      content: '';
-      display: inline-block;
-      width: 28px;
-      height: 1px;
-      background: currentColor;
-    }
-
-    .clippings-strip-wrap { margin: 0 -28px; }
-
-    .clippings-strip {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding: 4px 28px 18px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      cursor: grab;
-    }
-    .clippings-strip:active { cursor: grabbing; }
-    .clippings-strip::-webkit-scrollbar { display: none; }
-
-    .clipping-thumb {
-      flex: 0 0 auto;
-      width: 118px;
-      scroll-snap-align: start;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .clipping-thumb-img {
-      width: 118px;
-      height: 158px;
-      overflow: hidden;
-      background: var(--cream);
-      border: 1px solid rgba(89,74,60,0.14);
-      transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
-    }
-    .clipping-thumb:hover .clipping-thumb-img {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 18px rgba(89,74,60,0.15);
-      border-color: rgba(89,74,60,0.32);
-    }
-    .clipping-thumb.selected .clipping-thumb-img {
-      border-color: var(--espresso);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 18px rgba(89,74,60,0.18);
-    }
-
-    .clipping-thumb-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-      display: block;
-      filter: sepia(0.32) contrast(1.08) brightness(0.98);
-      transition: filter 0.25s;
-    }
-    .clipping-thumb:hover .clipping-thumb-img img,
-    .clipping-thumb.selected .clipping-thumb-img img {
-      filter: sepia(0.12) contrast(1.08);
-    }
-
-    .clipping-thumb-label {
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.05em;
-      opacity: 0.38;
-      padding: 5px 2px 0;
-      line-height: 1.45;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* ── IMAGE GRID ── */
-    .img-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 8px;
-      margin: 20px 0 8px;
-    }
-
-    .img-grid-item {
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      cursor: zoom-in;
-      background: var(--tan);
-    }
-    .img-grid-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: sepia(0.15) contrast(1.06);
-      transition: transform 0.35s ease, filter 0.25s;
-    }
-    .img-grid-item:hover img {
-      transform: scale(1.03);
-      filter: sepia(0.06) contrast(1.08);
-    }
-
-    /* ── MAPS GRID ── */
-    .maps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-      gap: 8px;
-      margin: 20px 0 8px;
-    }
-
-    .map-item {
-      cursor: zoom-in;
-      background: var(--cream);
-      border: 1px solid rgba(89,74,60,0.13);
-    }
-    .map-item img {
-      width: 100%;
-      display: block;
-      filter: sepia(0.28) contrast(1.1);
-      transition: filter 0.25s;
-    }
-    .map-item:hover img { filter: sepia(0.1) contrast(1.12); }
-    .map-item .map-label {
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.07em;
-      opacity: 0.38;
-      padding: 5px 7px;
-      text-align: center;
-    }
-
-    /* ── LIGHTBOX ── */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(35,26,18,0.93);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .lightbox.open {
-      display: flex;
-      animation: lbIn 0.25s ease both;
-    }
-    @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .lightbox-inner {
+    /* shared artifact wrapper — slight rotation, worn edges */
+    .social-artifact {
       position: relative;
-      max-width: min(820px, 95vw);
-      max-height: 92svh;
+      /* subtle degradation — faded printout feel */
+      filter: contrast(0.9) brightness(1.01) saturate(0.72);
+    }
+    /* grain overlay — multiply works great on light backgrounds */
+    .social-artifact::after {
+      content: '';
+      position: absolute; inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size: 140px;
+      opacity: 0.12;
+      mix-blend-mode: multiply;
+    }
+    /* artifact caption below each card */
+    .artifact-caption {
+      margin-top: 8px;
+      font-family: var(--mono);
+      font-size: 0.54rem;
+      letter-spacing: 0.1em;
+      color: var(--espresso);
+      opacity: 0.38;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* ── Reddit comment — old light theme (2015 era) ── */
+    .reddit-card {
+      background: #f6f7f8;
+      border-radius: 2px;
+      padding: 0;
+      font-family: "Courier New", Courier, monospace;
+      border: 1px solid #c6c6c6;
+    }
+    .reddit-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      padding: 7px 8px 0;
+    }
+    .reddit-vote-col {
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 1px;
+      min-width: 24px;
+      padding-top: 2px;
     }
+    .reddit-vote-col .reddit-vote-btn {
+      width: 12px; height: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: default;
+    }
+    .reddit-vote-col .reddit-vote-btn.up { color: #c0392b; }
+    .reddit-vote-col .reddit-vote-btn.down { color: #7685a0; }
+    .reddit-vote-col .reddit-vote-count {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #c0392b;
+      line-height: 1;
+    }
+    .reddit-avatar {
+      width: 26px; height: 26px;
+      border-radius: 2px;
+      background: #cee3f8;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .reddit-avatar svg { width: 18px; height: 18px; }
+    .reddit-comment-main { flex: 1; min-width: 0; }
+    .reddit-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+    .reddit-username {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #0079d3;
+      letter-spacing: 0;
+    }
+    .reddit-timestamp {
+      font-size: 0.6rem;
+      color: #999;
+    }
+    .reddit-body {
+      font-size: 0.72rem;
+      line-height: 1.55;
+      color: #222;
+      margin-bottom: 5px;
+      letter-spacing: 0;
+    }
+    .reddit-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 0 7px;
+    }
+    .reddit-vote { display: none; } /* votes moved to left col */
+    .reddit-action-btn {
+      display: flex; align-items: center; gap: 3px;
+      color: #888;
+      font-size: 0.58rem;
+      font-weight: 700;
+      cursor: default;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .reddit-action-btn svg { stroke: #888; }
 
-    .lightbox-inner img {
-      max-width: 100%;
-      max-height: 80svh;
-      object-fit: contain;
+    /* ── Facebook post — 2015 light theme ── */
+    .fb-card {
+      background: #fff;
+      border-radius: 3px;
+      overflow: hidden;
+      font-family: "Courier New", Courier, monospace;
+      border: 1px solid #dddfe2;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .fb-post-header {
+      padding: 9px 10px 6px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .fb-post-left {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .fb-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #dde8f5;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid #c8d4e8;
+    }
+    .fb-avatar-initials {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #3b5998;
+      font-family: "Courier New", Courier, monospace;
+    }
+    .fb-name-block { display: flex; flex-direction: column; gap: 1px; }
+    .fb-name {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #3b5998;
+      letter-spacing: 0;
+    }
+    .fb-meta {
+      font-size: 0.57rem;
+      color: #90949c;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .fb-meta svg { width: 9px; height: 9px; fill: #90949c; }
+    .fb-dots {
+      color: #bec2c9;
+      font-size: 0.9rem;
+      line-height: 1;
+      padding: 1px 3px;
+      cursor: default;
+      letter-spacing: 0.08em;
+    }
+    .fb-post-text {
+      padding: 0 10px 10px;
+      font-size: 0.74rem;
+      line-height: 1.55;
+      color: #1d2129;
+    }
+    .fb-reactions-bar {
+      padding: 5px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .fb-reaction-count {
+      font-size: 0.6rem;
+      color: #90949c;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .fb-reaction-icons {
+      display: flex;
+      margin-right: 2px;
+    }
+    .fb-reaction-icon {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      border: 1.5px solid #fff;
+      margin-right: -2px;
+      font-size: 0.48rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .fb-reaction-icon.like { background: #4267b2; }
+    .fb-reaction-icon.love { background: #e0284f; }
+    .fb-action-row {
+      display: flex;
+      padding: 1px 4px;
+    }
+    .fb-action {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 5px 3px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #90949c;
+      cursor: default;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-right: 1px solid #e5e5e5;
+    }
+    .fb-action:last-child { border-right: none; }
+    .fb-action svg { width: 11px; height: 11px; stroke: #90949c; fill: none; stroke-width: 2; }
+
+    /* ═══════════════════════════════════════════════
+       § 2  EARLY DAYS PHOTO GALLERY
+    ═══════════════════════════════════════════════ */
+    .early-days {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 28px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .gallery-cell {
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 2px;
+      background: var(--tan);
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-cell::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at center, transparent 55%, rgba(43,22,8,0.45) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .gallery-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover;
       display: block;
-      filter: sepia(0.1) contrast(1.05);
+      filter: sepia(0.35) contrast(0.92) brightness(0.98);
+      transition: transform 0.5s ease, filter 0.4s ease;
     }
+    .gallery-cell:hover img {
+      transform: scale(1.04);
+      filter: sepia(0.15) contrast(0.95) brightness(1.0);
+    }
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(20,12,8,0.92);
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: min(90vw, 900px);
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 2px;
+    }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 24px;
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.6);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,0.5);
+      font-size: 1.8rem;
+      padding: 12px;
+      transition: color 0.2s;
+    }
+    .lightbox-nav:hover { color: white; }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
 
-    .lightbox-caption {
+    /* ═══════════════════════════════════════════════
+       § 3  BEFORE / AFTER SLIDER
+    ═══════════════════════════════════════════════ */
+    .before-after {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 28px;
+    }
+    .ba-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 3px;
+      user-select: none;
+      touch-action: none;
+      cursor: col-resize;
+      background: #222;
+    }
+    .ba-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+    .ba-img.ba-before { z-index: 1; }
+    .ba-img.ba-after  { z-index: 2; clip-path: inset(0 50% 0 0); }
+    .ba-divider {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: white;
+      z-index: 5;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .ba-handle {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 42px; height: 42px;
+      background: white;
+      border-radius: 50%;
+      z-index: 6;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .ba-handle svg {
+      width: 22px; height: 22px;
+      fill: none; stroke: #594A3C; stroke-width: 2;
+    }
+    .ba-labels {
+      display: flex; justify-content: space-between;
+      margin-top: 10px;
+    }
+    .ba-label {
       font-family: var(--mono);
       font-size: 0.62rem;
+      color: var(--espresso);
+      opacity: 0.55;
       letter-spacing: 0.08em;
-      color: var(--cream);
-      opacity: 0.45;
-      margin-top: 12px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       § 4  BUILDING HISTORY — OLD BOOK / NEWSPAPER
+    ═══════════════════════════════════════════════ */
+    .newspaper {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 28px;
+    }
+    .newspaper-inner {
+      background: var(--paper);
+      border: 1px solid rgba(89,74,60,0.2);
+      border-radius: 2px;
+      padding: 40px 44px;
+      position: relative;
+      /* aged texture */
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E"),
+        linear-gradient(to bottom, #ede5d4, #e4dcc9);
+      background-blend-mode: multiply, normal;
+      background-size: 160px, auto;
+    }
+    .newspaper-inner::before {
+      content: '';
+      position: absolute; inset: 8px;
+      border: 1px solid rgba(89,74,60,0.12);
+      pointer-events: none;
+    }
+    .newspaper-flag {
       text-align: center;
-      line-height: 1.6;
-      padding: 0 12px;
+      border-bottom: 3px double rgba(89,74,60,0.45);
+      padding-bottom: 14px;
+      margin-bottom: 8px;
     }
-
-    .lb-close {
-      position: absolute;
-      top: -12px; right: -12px;
-      width: 32px; height: 32px;
-      background: var(--espresso);
-      color: var(--cream);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
+    .newspaper-flag .flag-title {
+      font-family: "IM Fell French Canon", serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      line-height: 1.15;
+    }
+    .newspaper-flag .flag-sub {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      color: var(--espresso);
+      opacity: 0.55;
+      margin-top: 4px;
+    }
+    .newspaper-dateline {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.85;
-      transition: opacity 0.2s;
-      -webkit-tap-highlight-color: transparent;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      color: var(--espresso);
+      opacity: 0.5;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(89,74,60,0.25);
+      padding: 6px 0 8px;
+      margin-bottom: 22px;
     }
-    .lb-close:hover { opacity: 1; }
-
-    .lb-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(89,74,60,0.65);
-      color: var(--cream);
-      border: none;
-      cursor: pointer;
-      width: 38px;
-      height: 52px;
+    .newspaper-cols {
+      column-count: 2;
+      column-gap: 28px;
+      column-rule: 1px solid rgba(89,74,60,0.18);
+    }
+    @media (max-width: 560px) { .newspaper-cols { column-count: 1; } }
+    .newspaper-col-head {
+      font-family: "IM Fell French Canon", serif;
       font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      border-top: 2px solid rgba(89,74,60,0.4);
+      border-bottom: 1px solid rgba(89,74,60,0.25);
+      padding: 6px 0 5px;
+      margin-bottom: 12px;
+      break-after: avoid;
+    }
+    .newspaper-cols p {
+      font-family: "IM Fell French Canon", serif;
+      font-size: 0.82rem;
+      line-height: 1.62;
+      color: var(--ink);
+      margin-bottom: 10px;
+      text-align: justify;
+      hyphens: auto;
+    }
+    .newspaper-cols .citation {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      color: var(--espresso);
+      opacity: 0.6;
+      letter-spacing: 0.04em;
+      margin-top: -6px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .newspaper-cols blockquote {
+      border-left: 2px solid rgba(89,74,60,0.35);
+      padding: 2px 0 2px 10px;
+      margin: 12px 0;
+    }
+    .newspaper-cols blockquote p {
+      font-style: italic;
+      font-size: 0.78rem;
+    }
+    .newspaper-head-break {
+      column-span: all;
+      border-top: 2px solid rgba(89,74,60,0.45);
+      border-bottom: 1px solid rgba(89,74,60,0.2);
+      text-align: center;
+      padding: 8px 0;
+      margin: 20px 0 18px;
+      font-family: "IM Fell French Canon", serif;
+      font-size: 1.0rem;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+    .newspaper-pull {
+      column-span: all;
+      border-top: 1px solid rgba(89,74,60,0.3);
+      border-bottom: 1px solid rgba(89,74,60,0.3);
+      text-align: center;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-family: "IM Fell French Canon", serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--ink);
+      opacity: 0.75;
+    }
+    .newspaper-sub-head {
+      font-family: "IM Fell French Canon", serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid rgba(89,74,60,0.22);
+      padding-bottom: 4px;
+      margin-bottom: 9px;
+      break-after: avoid;
+    }
+
+    /* ═══════════════════════════════════════════════
+       § 5  NEWSPAPER CLIPPINGS GALLERY
+    ═══════════════════════════════════════════════ */
+    .clippings-section {
+      max-width: 1100px;
+      margin: 0 auto 100px;
+      padding: 0 28px;
+    }
+    .clippings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .clipping-card {
+      background: var(--newsprint);
+      border: 1px solid rgba(89,74,60,0.18);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+    .clipping-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.4'/%3E%3C/svg%3E");
+      background-size: 100px;
+      opacity: 0.18;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+    .clipping-card:hover {
+      transform: translateY(-2px) rotate(0.3deg);
+      box-shadow: 0 8px 28px rgba(43,22,8,0.18);
+    }
+    .clipping-img-wrap {
+      width: 100%;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+    .clipping-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: sepia(0.5) contrast(0.9) brightness(0.97);
+      transition: filter 0.3s ease;
+    }
+    .clipping-card:hover .clipping-img-wrap img {
+      filter: sepia(0.2) contrast(0.95) brightness(1.0);
+    }
+    .clipping-caption {
+      padding: 8px 10px 10px;
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
       opacity: 0.65;
-      transition: opacity 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .lb-nav:hover { opacity: 1; }
-    .lb-prev { left: -50px; }
-    .lb-next { right: -50px; }
-
-    @media (max-width: 600px) {
-      .lb-prev { left: -6px; }
-      .lb-next { right: -6px; }
+      line-height: 1.4;
     }
 
-    /* ── REVEAL ── */
+    /* ── REVEAL animation ── */
     .reveal {
       opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .reveal.visible { opacity: 1; transform: none; }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
 
-    /* ── NO RESULTS ── */
-    .no-results {
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid rgba(89,74,60,0.1);
+      padding: 32px 28px;
       text-align: center;
-      padding: 64px 32px;
-      display: none;
-    }
-    .no-results p {
       font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      opacity: 0.3;
+      font-size: 0.58rem;
+      color: var(--espresso);
+      opacity: 0.4;
+      letter-spacing: 0.06em;
     }
 
-    /* ── MOBILE ── */
     @media (max-width: 600px) {
-      nav { padding: 13px 18px; }
-      .nav-links { gap: 16px; }
-      .content { padding: 0 20px 64px; }
-      .page-header { padding: 90px 20px 32px; }
-      .clippings-strip-wrap { margin: 0 -20px; }
-      .clippings-strip { padding: 4px 20px 18px; }
-      .img-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .nav-links { gap: 14px; }
+      .newspaper-inner { padding: 28px 20px; }
+      .fb-post-text { font-size: 0.87rem; }
+      .clippings-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lb-close">ESC / CLOSE</button>
+    <button class="lightbox-nav lightbox-prev" id="lb-prev">&#8592;</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" id="lb-next">&#8594;</button>
+  </div>
+
+  <!-- NAV -->
   <nav>
     <a class="nav-logo" href="index.html">
       <img src="logo.png" alt="Covert Coffee">
     </a>
     <ul class="nav-links">
       <li><a href="index.html">home</a></li>
-      <li><a href="history.html" class="active">archive</a></li>
+      <li><a href="history.html" class="active">history</a></li>
+      <li><a href="parks.html">parks</a></li>
       <li><a href="https://www.instagram.com/covertcoffeebk/" target="_blank">instagram</a></li>
     </ul>
   </nav>
 
   <!-- PAGE HEADER -->
-  <div class="page-header">
-    <p class="mono-label">1643 broadway · brooklyn · est. 1888</p>
-    <h1>The Archive</h1>
+  <div class="page-header reveal">
+    <p class="mono-label">1643 broadway · bushwick, brooklyn · est. 1888</p>
+    <h1>History</h1>
+    <p class="subtitle">from a William Covert farm to the Halsey J/Z train · 136 years and counting</p>
   </div>
 
-  <!-- STICKY FILTER BAR -->
-  <div class="filter-bar">
-    <div class="filter-bar-inner">
-      <span class="filter-label">show //</span>
-      <div class="filter-chips">
-        <button class="chip active" data-filter="all">all</button>
-        <button class="chip" data-filter="building">the building</button>
-        <button class="chip" data-filter="clippings">clippings</button>
-        <button class="chip" data-filter="maps">maps</button>
-        <button class="chip" data-filter="photos">photos</button>
-        <button class="chip" data-filter="bohacks">bohack's</button>
-        <button class="chip" data-filter="neighborhood">neighborhood</button>
-        <button class="chip" data-filter="covert-coffee">covert coffee</button>
+  <hr class="section-rule">
+
+  <!-- ══════════════════════════════════════════════════════
+       § 1  THE BEGINNING OF MODERN COVERT — SOCIAL DOCS
+  ══════════════════════════════════════════════════════ -->
+  <span class="section-label reveal">§ i — the beginning of modern covert, 2015</span>
+
+  <div class="social-docs reveal">
+
+    <!-- ── FACEBOOK POST — Aaron Mounier, Nov 15 2015 ── -->
+    <div class="social-artifact">
+    <div class="fb-card">
+      <div class="fb-post-header">
+        <div class="fb-post-left">
+          <div class="fb-avatar">
+            <span class="fb-avatar-initials">AM</span>
+          </div>
+          <div class="fb-name-block">
+            <span class="fb-name">Aaron Mounier</span>
+            <span class="fb-meta">
+              November 15, 2015 ·
+              <svg viewBox="0 0 16 16" fill="#b0b3b8"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1a6 6 0 110 12A6 6 0 018 2zm0 2a1 1 0 00-1 1v4l3 2 .5-.9L8 9V5a1 1 0 00-1-1z"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="fb-dots">···</div>
+      </div>
+
+      <div class="fb-post-text">
+        This weekend we did the soft open for Covert Coffee, I can't express the gratitude I feel. It was a truly humbling experience. People I hadn't seen in what seems like forever stopped in, called, text, liked and shared my posts. Flipping the front door sign to "open" was the scariest thing I've done in years, if not in my lifetime. I can't imagine it being possible without the encouragement and support I've received. The words "thank you" can't possibly convey the depth of my appreciation for anyone this message reaches. I'm forever indebted to my friends and family.
+      </div>
+
+      <div class="fb-reactions-bar">
+        <div class="fb-reaction-count">
+          <div class="fb-reaction-icons">
+            <div class="fb-reaction-icon like">👍</div>
+            <div class="fb-reaction-icon love">❤️</div>
+          </div>
+          147
+        </div>
+        <div style="font-size:0.68rem;color:#90949c;font-family:'Courier New',monospace;">12 comments · 8 shares</div>
+      </div>
+
+      <div class="fb-action-row">
+        <div class="fb-action">
+          <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+          Like
+        </div>
+        <div class="fb-action">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Comment
+        </div>
+        <div class="fb-action">
+          <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share
+        </div>
       </div>
     </div>
+    <div class="artifact-caption">facebook · nov 15 2015 · aaron mounier · soft open</div>
+    </div>
+
+    <!-- ── REDDIT COMMENT — hafabes, ~9y ago ── -->
+    <div class="social-artifact">
+    <div class="reddit-card">
+      <div class="reddit-header">
+        <div class="reddit-vote-col">
+          <div class="reddit-vote-btn up">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l8 8H4z"/></svg>
+          </div>
+          <span class="reddit-vote-count">6</span>
+          <div class="reddit-vote-btn down">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20l-8-8h16z"/></svg>
+          </div>
+        </div>
+        <div class="reddit-avatar">
+          <!-- Reddit Snoo alien icon, light-theme orange -->
+          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="10" fill="#ff4500"/>
+            <ellipse cx="10" cy="11.5" rx="5.5" ry="4.5" fill="#fff"/>
+            <circle cx="7.8" cy="11" r="1.1" fill="#ff4500"/>
+            <circle cx="12.2" cy="11" r="1.1" fill="#ff4500"/>
+            <path d="M8 14 Q10 15.5 12 14" stroke="#ff4500" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+            <ellipse cx="10" cy="6.2" rx="3.2" ry="2.6" fill="#fff"/>
+            <circle cx="8.2" cy="6" r="0.75" fill="#ff4500"/>
+            <circle cx="11.8" cy="6" r="0.75" fill="#ff4500"/>
+            <line x1="13" y1="4.8" x2="15" y2="3.2" stroke="#fff" stroke-width="1" stroke-linecap="round"/>
+            <circle cx="15.5" cy="2.9" r="0.9" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="reddit-comment-main">
+          <div class="reddit-meta">
+            <span class="reddit-username">hafabes</span>
+            <span class="reddit-timestamp">9 years ago</span>
+          </div>
+          <div class="reddit-body">
+            I just moved off the Halsey J as well! There's a boarded up place on the corner of Broadway and covert that says "covert coffee coming soon" and has cool little spray paint stencils, so that might be a good coffee edition. Otherwise, I have no idea where to go for bars. But I would love to not have to go to the city/Williamsburg for a drink.
+          </div>
+          <div class="reddit-actions">
+            <div class="reddit-action-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" width="13" height="13"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Reply
+            </div>
+            <div class="reddit-action-btn">Share</div>
+            <div class="reddit-action-btn">Report</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="artifact-caption">reddit · r/bushwick · hafabes · ~2015</div>
+    </div>
+
   </div>
 
-  <div class="content">
+  <hr class="section-rule">
 
-    <!-- ══════════════════════════════════════════
-         BLOCK 1 — THE BUILDING: ORIGINS
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="building neighborhood">
-      <div class="block-meta">
-        <span class="block-date">1888 – 1890s</span>
-        <span class="block-tag">the building</span>
-        <span class="block-tag">neighborhood</span>
-      </div>
-      <h2>Built on a Farm</h2>
-      <p>Chauncey Street and Halsey Street elevated train stations opened in the summer of 1885. Some time after, on what was once a farm owned by William Covert, an ornate four-story brick building was constructed at 1643 Broadway — which still stands today, housing Covert Coffee and its baristas.</p>
-      <p>Broadway was paved with cobblestone, and at Christmastime, prettily decorated with Yuletide green amongst attractive storefront displays. Streetcars were pulled along train tracks in the middle of the road by horses. A couple blocks up at Covert and Evergreen was Roth farm, where neighbors would fetch well-water for their houses and local kids would stash scrap wood for bonfires. Ol' Fink's Pond on Central Ave and Schaefer Street served the neighborhood as a swimming hole (bare) in Summer and skating pond in Winter.</p>
-      <blockquote>
-        <p>"When all were in place we set fire to them. And was that a blaze — it even awakened Red, the cop, who tried to chase the entire neighborhood away from it. There were no buildings near enough in danger of getting afire."</p>
-        <cite>— Brooklyn Daily Eagle Sun, Page 34</cite>
-      </blockquote>
-      <p>Near Myrtle Ave and Broadway kids would gather flowers in the Spring and Summer, and fruit from the orchards in the Fall. They would play baseball games in empty fields which were to become roads; they would build fires and roast spuds. They would steal rides on the train to Canarsie. Then one spring, Mr. Grassman began to build rows of houses where they had played and where cows were staked out to graze.</p>
-    </div>
+  <!-- ══════════════════════════════════════════════════════
+       § 2  EARLY DAYS PHOTO GALLERY
+  ══════════════════════════════════════════════════════ -->
+  <span class="section-label reveal">§ ii — early days</span>
 
-    <!-- ══════════════════════════════════════════
-         BLOCK 2 — BOHACK'S
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="building bohacks clippings">
-      <div class="block-meta">
-        <span class="block-date">1889 – 1920s</span>
-        <span class="block-tag">bohack's</span>
-        <span class="block-tag">the building</span>
-      </div>
-      <h2>Bohack's Corner Grocery</h2>
-      <p>First of the businesses to utilize the corner retail space at 1643 Broadway was <em>H.C. Bohack Co., Grocers</em>. Henry Bohack immigrated to Brooklyn from a small seaport, Cuxhaven, Germany at the age of 17. He worked as a grocery store clerk for $15 a month, before opening his first store at Lorimer Street &amp; Broadway. He married his wife the day after the store opened — above which they lived.</p>
-      <p>In the year 1903, the corner of Covert street and Broadway was one of the completely equipped modern stores which were marketed as Brooklyn's quality grocer, and advertised coffee often:</p>
-      <blockquote>
-        <p>"Paramount Blend Coffee. Perfection in quality; perfect aroma; cannot be equalled anywhere at this price. 5 lbs. for $1.15; per lb. 25¢."</p>
-        <cite>— The Chat, 12 Mar. 1910. (Adjusted for inflation: $36.28 and $7.89 respectively.)</cite>
-      </blockquote>
-      <p>Mr. &amp; Mrs. Bohack became prominent Brooklynites, well known in the 18th and 25th wards. On Friday August 18, 1893, after a fire on Cooper Street (just over the city line at the time) burned 17 houses and rendered 25 families homeless, groceries were provided free of charge by H.C. Bohack. On Thursday November 21, 1901, after Mr. &amp; Mrs. Bohack returned to Brooklyn from an eight month trip to Europe, a surprise party was organized — a full band serenaded the couple outside their home at the corner of Broadway and Putnam, before they were brought to Stanwix Hall, at the corner of Ralph Avenue and Broadway, where a hundred employees and business associates waited with their wives. Dancing was afterward indulged and a genuine German supper was enjoyed.</p>
-      <p>Bohack Co. continued its successful expansion throughout the city during the first half of the 20th century. While the location at Covert street &amp; Broadway did not last long, the Bohack brand survived until 1977, even being featured in the 66th episode of <em>The Sopranos</em> on HBO.</p>
-
-      <div class="clippings-head">
-        <span class="strip-title">// clippings · bohack's era</span>
-        <span class="strip-count" id="count-bohacks"></span>
-      </div>
-      <div class="scroll-hint">scroll</div>
-      <div class="clippings-strip-wrap">
-        <div class="clippings-strip" id="strip-bohacks"></div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         BLOCK 3 — NEIGHBORHOOD STORIES
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="neighborhood clippings">
-      <div class="block-meta">
-        <span class="block-date">1893 – 1940s</span>
-        <span class="block-tag">neighborhood</span>
-        <span class="block-tag">clippings</span>
-      </div>
-      <h2>Neighborhood Stories</h2>
-      <blockquote>
-        <p>"BOY HIGHWAYMAN? Patrolman Russel pressed a charge of robbery against Frank Bundy, held for examination to-day. According to Officer Russel, the youngster held up William Eagleston and George Payed, two small boys from Ridgewood, and robbed them of eleven cents and a penknife. Bundy is said to have had two companions who assisted in the robbery."</p>
-        <cite>— Brooklyn Times Union, Jun 25, 1909</cite>
-      </blockquote>
-      <p>During 1909, there was a 12 year old named Frank Bundy living at 3 Covert Street charged with robbery.</p>
-      <p>Proprietor Mr. J. O'Shaughnessy started H-O Drug Co. in the early 1900s and built it into an institution — "everyone goes there for all kinds of medicine and drug store supplies." They stocked all sorts of medical supplies and novelties, and advertised their delivery automobile as a new and innovative service. Covert St was home to a real estate office, Bushwick Realty Co., during 1923.</p>
-
-      <div class="clippings-head">
-        <span class="strip-title">// clippings · neighborhood</span>
-        <span class="strip-count" id="count-neighborhood"></span>
-      </div>
-      <div class="scroll-hint">scroll</div>
-      <div class="clippings-strip-wrap">
-        <div class="clippings-strip" id="strip-neighborhood"></div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         BLOCK 4 — MID-CENTURY BUSINESSES
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="building clippings">
-      <div class="block-meta">
-        <span class="block-date">1920s – 1960s</span>
-        <span class="block-tag">the building</span>
-        <span class="block-tag">clippings</span>
-      </div>
-      <h2>Flower Market, Fruit Stand, Luncheonette</h2>
-      <p>The address first appears in newspaper advertisements as one of five locations of JAY, PEE, Flower Markets during 1926. Starting around 1928, the corner unit became home of a fruit and vegetable market, with a help wanted listing: <em>"HELP WANTED MALE — Christian young clerk, fruit and vegetable market, salary, Broadway."</em> (The Chat, Saturday June 30, 1928.)</p>
-      <p>Rental units have always occupied the space above Covert Coffee, while their rent prices have fluctuated dramatically. Units in this building were marketed as having cheap rent, being close to Myrtle Ave, and having a janitor. August — "6 rooms bath, Broadway, apply premises." (Adjusted for inflation equal to $487.12 as of March 2024.) December — "5 rooms, Broadway." (Adjusted for inflation equal to $448.75.)</p>
-      <blockquote>
-        <p>"LUNCHEONETTE — CUSTARD STORE; corner location; quick sale account of sickness. 1643 Broadway."</p>
-        <cite>— Brooklyn Daily Eagle classified, Jul 01, 1950</cite>
-      </blockquote>
-      <p>In 1957 another grocery store had taken shop, with The Williamsburg News reporting: <em>"Notice is hereby given that License No. 16664 has been issued to the undersigned to sell beer at retail in a grocery store… at 1643 Broadway, Brooklyn, Kings County, N.Y., for off premises consumption."</em></p>
-
-      <div class="clippings-head">
-        <span class="strip-title">// clippings · mid-century</span>
-        <span class="strip-count" id="count-midcentury"></span>
-      </div>
-      <div class="scroll-hint">scroll</div>
-      <div class="clippings-strip-wrap">
-        <div class="clippings-strip" id="strip-midcentury"></div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         BLOCK 5 — ALL CLIPPINGS
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="clippings">
-      <div class="block-meta">
-        <span class="block-date">1887 – 1975</span>
-        <span class="block-tag">clippings</span>
-      </div>
-      <h2>Newspaper Clippings</h2>
-
-      <div class="clippings-head">
-        <span class="strip-title">// all clippings</span>
-        <span class="strip-count" id="count-all"></span>
-      </div>
-      <div class="scroll-hint">scroll</div>
-      <div class="clippings-strip-wrap">
-        <div class="clippings-strip" id="strip-all"></div>
-      </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         BLOCK 6 — COVERT COFFEE ORIGINAL
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="covert-coffee photos building">
-      <div class="block-meta">
-        <span class="block-date">2015 – present</span>
-        <span class="block-tag">covert coffee</span>
-      </div>
-      <h2>Covert Coffee</h2>
-      <div class="img-grid" id="grid-covert-early"></div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         BLOCK 7 — PHOTOS: 1940s–1980s
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="photos building neighborhood">
-      <div class="block-meta">
-        <span class="block-date">1940s – 1980s</span>
-        <span class="block-tag">photos</span>
-        <span class="block-tag">the building</span>
-      </div>
-      <h2>Photographs of the Block</h2>
-      <div class="img-grid" id="grid-historical"></div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         BLOCK 8 — MAPS
-    ══════════════════════════════════════════ -->
-    <div class="archive-block reveal" data-tags="maps building">
-      <div class="block-meta">
-        <span class="block-date">1880 – 1907</span>
-        <span class="block-tag">maps</span>
-        <span class="block-tag">the building</span>
-      </div>
-      <h2>Historic Maps</h2>
-      <div class="maps-grid" id="maps-grid"></div>
-    </div>
-
-    <div class="no-results" id="no-results">
-      <p>// no items match that filter</p>
-    </div>
-
-  </div><!-- /content -->
-
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-inner" id="lightbox-inner">
-      <button class="lb-close" id="lb-close">✕</button>
-      <button class="lb-nav lb-prev" id="lb-prev">‹</button>
-      <button class="lb-nav lb-next" id="lb-next">›</button>
-      <img id="lb-img" src="" alt="">
-      <p class="lightbox-caption" id="lb-caption"></p>
+  <div class="early-days reveal">
+    <div class="gallery-grid" id="early-gallery">
+      <!-- populated by JS -->
     </div>
   </div>
 
-  <footer style="text-align:center;padding:44px 28px 56px;border-top:1px solid rgba(89,74,60,0.08);margin-top:0;">
-    <img src="logo.png" alt="Covert Coffee" style="height:28px;opacity:0.28;margin:0 auto 14px;display:block;">
-    <p style="font-family:'JetBrains Mono','Courier New',monospace;font-size:0.58rem;letter-spacing:0.1em;opacity:0.22;font-weight:300;">© covert coffee · brooklyn · covert.nyc</p>
+  <hr class="section-rule">
+
+  <!-- ══════════════════════════════════════════════════════
+       § 3  HISTORY OF THE BUILDING
+  ══════════════════════════════════════════════════════ -->
+  <span class="section-label reveal">§ iii — history of the building</span>
+
+  <!-- Before / After Slider -->
+  <div class="before-after reveal">
+    <div class="ba-wrap" id="ba-wrap">
+      <img class="ba-img ba-before" src="photos/before after slider/1940.jpeg" alt="1643 Broadway, circa 1940">
+      <img class="ba-img ba-after"  src="photos/before after slider/2024.jpeg" alt="1643 Broadway, 2024">
+      <div class="ba-divider" id="ba-divider"></div>
+      <div class="ba-handle" id="ba-handle">
+        <svg viewBox="0 0 24 24"><path d="M8 12H4M4 12L7 9M4 12L7 15M16 12h4M20 12L17 9M20 12L17 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <div class="ba-labels">
+      <span class="ba-label">← 1940</span>
+      <span class="ba-label">drag to compare</span>
+      <span class="ba-label">2024 →</span>
+    </div>
+  </div>
+
+  <!-- Newspaper-style history text -->
+  <div class="newspaper reveal">
+    <div class="newspaper-inner">
+      <div class="newspaper-flag">
+        <div class="flag-title">A History of 1643 Broadway</div>
+        <div class="flag-sub">Bushwick · Brooklyn · Kings County, New York</div>
+      </div>
+      <div class="newspaper-dateline">
+        <span>Research by Jay Mounier</span>
+        <span>Est. 1888 — Present</span>
+        <span>Compiled from Brooklyn Public Library Archives</span>
+      </div>
+
+      <div class="newspaper-cols">
+
+        <h3 class="newspaper-col-head">The Neighborhood Before the Building</h3>
+
+        <p>The neighborhoods surrounding Covert Coffee are as unique and interesting as any in New York City. Newspapers and fire insurance maps meticulously archived and made available by Brooklyn Public Library offer insight as to what it must have been like here, if you were to visit Covert Coffee during the 1880s.</p>
+
+        <p>A couple blocks up at Covert and Evergreen was Roth farm, where neighbors would fetch well-water for their houses and local kids would stash scrap wood for bonfires. Four blocks further laid the city line at Irving Ave. There was Ol' Fink's Pond on Central Ave and Schafer Street, which served the neighborhood as a swimming hole (bare) in Summer and skating pond in Winter.</p>
+
+        <span class="citation">Edgar A. Steup · Brooklyn Daily Eagle, Jan 21, 1940 · Page 48</span>
+
+        <p>There were picnic grounds at Broadway and Chauncey Street. The circus pitched tents at Saratoga Park, which was lit by gas lamps. Broadway was paved with cobblestone and, at Christmastime, prettily decorated with Yuletide green amongst attractive storefront displays. Streetcars were pulled along train tracks in the middle of the road by horses.</p>
+
+        <p>Near Myrtle Ave and Broadway kids would gather flowers in the Spring and Summer, and fruit from the orchards in the Fall. In the Winter, they coasted down its snow-covered slopes. They would play baseball games in empty fields which had yet to become roads; they would build fires and roast spuds — sweet cliners, yams, to you.</p>
+
+        <p>They would steal rides on the train to Canarsie. There was a little boy who used to sell homemade ice cream candy for a penny a stick on the Canarsie trains — remember the lil' feller?</p>
+
+        <span class="citation">W. Burguin · Brooklyn Daily Eagle, Nov 20, 1938 · Page 42</span>
+
+        <blockquote>
+          <p>"When all were in place we set fire to them. And was that a blaze — it even awakened Red, the cop, who tried to chase the entire neighborhood away from it. There were no buildings near enough in danger of getting afire. We voted it a grand success."</p>
+        </blockquote>
+
+        <span class="citation">Brooklyn Daily Eagle, Jun 24, 1951 · Page 34</span>
+
+        <h3 class="newspaper-col-head">Built on a Farm, 1888–1889</h3>
+
+        <p>Chauncey Street and Halsey Street elevated train stations opened in the summer of 1885. Bushwick was changing in what must have seemed like an instant. Some time during 1888–1889, on what was once a farm owned by William Covert, an ornate four-story brick building was constructed at 1643 Broadway — which still stands today, housing Covert Coffee.</p>
+
+        <p>The address first appears listed for sale in 1901 — described as "a 4 story double flat and store." An identical building was built next door, the corner lot presumed occupied.</p>
+
+        <span class="citation">Brooklyn Daily Eagle, Fri Jan 18, 1901 · Page 12</span>
+
+      </div>
+
+      <div class="newspaper-head-break">Bohack's Corner Grocery · 1889 – 1920s</div>
+
+      <div class="newspaper-cols">
+
+        <p>First of all businesses to utilize the corner retail space at 1643 Broadway was <em>H.C. Bohack Co., Grocers</em>. Henry C. Bohack immigrated to Brooklyn from a small seaport, Cuxhaven, Germany at the age of 17. He worked as a grocery store clerk for $15 per month, before opening his first store at Lorimer Street &amp; Broadway on May 25, 1889. He married his wife the day after the store opened — above which they lived.</p>
+
+        <p>By the year 1903, the corner of Covert Street and Broadway was one of ten completely equipped modern stores marketed as Brooklyn's quality grocer — and advertised coffee often:</p>
+
+        <blockquote>
+          <p>"Paramount Blend Coffee. Perfection in quality; perfect aroma; cannot be equalled anywhere for this price. 5 lbs. for $1.15; per lb. 25¢."</p>
+        </blockquote>
+        <span class="citation">The Chat, 12 Mar. 1910, p. 4 — adjusted for inflation: $36.28 and $7.89 respectively.</span>
+
+        <blockquote>
+          <p>"Special Blend Coffee. A direct importation — the most desired coffee with that delicious mellow flavor to delight the most particular lover of good coffee. 5 lbs. for $1.60."</p>
+        </blockquote>
+
+        <p>Mr. &amp; Mrs. Bohack became prominent Brooklynites, well known in the 18th and 25th wards. On Friday August 18, 1893, after a fire on Cooper Street burned 17 houses and rendered 25 families homeless, groceries were provided free of charge by H.C. Bohack.</p>
+
+        <p>On Thursday November 21, 1901, after Mr. &amp; Mrs. Bohack returned to Brooklyn from an eight-month trip in Europe, a surprise party was organized — a full band serenaded the couple outside their home at the corner of Broadway and Putnam, before they were brought to Stanwix Hall, where two hundred employees and business associates waited. Dancing was afterward indulged and a genuine German supper was enjoyed.</p>
+
+        <p>H.C. Bohack Co. continued its successful expansion throughout the city during the first half of the 20th century. While the location at Covert Street &amp; Broadway did not last long, the Bohack brand survived until 1977, even being featured in the 66th episode of <em>The Sopranos</em> on HBO.</p>
+
+      </div>
+
+      <div class="newspaper-head-break">Flower Markets, Fruit Stands &amp; The H-O Drug Co. · 1920s–1940s</div>
+
+      <div class="newspaper-cols">
+
+        <p>The address first appears in newspaper advertisements as one of five locations of Jay Pee Flower Markets during 1926. The flower market advertised a location at this address for two years.</p>
+
+        <span class="citation">Thu, Apr 01, 1926 · Brooklyn Daily Eagle · Page 17</span>
+
+        <p>Starting around 1928, the corner unit was home of a fruit and vegetable market. A help-wanted listing read: <em>"Christian young man as clerk in fruit and vegetable market, salary $15. Duley, 1643 Broadway."</em> In a photograph taken in the 1940s — the first known photograph of the building — the market is open for business.</p>
+
+        <span class="citation">The Chat, Saturday Jun 30, 1928 · p. 34</span>
+
+        <p>Proprietor Mr. W.J. O'Shaughnessy started H.O. Drug Co. in the early 1900s and built it into an institution in the neighborhood. Everyone would go there for all kinds of medicine and drug store supplies. Customers went out of their way in the Bushwick section to trade at the H-O Drug Store. They stocked all sorts of medical supplies and novelties, and advertised delivery by automobile as a new and innovative service.</p>
+
+        <p>Home to a real estate office, Bushwick Realty Co., during 1923.</p>
+
+        <p>By Saturday July 1, 1950, another business had come and was on its way out in an unfortunate hurry: <em>"Luncheonette-Custard Store; corner location; quick sale account of sickness. 1643 Broadway."</em></p>
+
+        <span class="citation">Sat, Jul 01, 1950 · Page 10</span>
+
+        <p>In 1957, another grocery store had taken up shop, with The Williamsburg News reporting notice of a license to sell beer at retail at 1643 Broadway, Brooklyn, Kings County.</p>
+
+      </div>
+
+      <div class="newspaper-pull">"Bushwick was changing in what must have seemed like an instant to the neighborhood residents."</div>
+
+      <div class="newspaper-cols">
+
+        <h3 class="newspaper-sub-head">The Burning Bush · 1960s–1980s</h3>
+
+        <p>During the following two decades, the neighborhood north of Covert Coffee, the 28th precinct, had devolved into as much a neighborhood of rats, stray dogs, and burned-out buildings as it was of people — "a part of Brooklyn that few people see anymore, a battleground for the police and young street criminals."</p>
+
+        <span class="citation">NBC News, 1976</span>
+
+        <p>Young men would set fire to vacant buildings for fun in the "Burning Bush," as it was called by local gangs — the Devil's Rebels, Latin Tops, Savage Skulls, Tomahawks, Jolly Stompers, and Black Pearls.</p>
+
+        <p>The 1980s were rock bottom for the Broadway-Bushwick corridor. This block was not unique, with each building entirely boarded up, lying vacant if not being used as a shooting gallery. Drug use and crime were constant — everything from petty theft to gruesome murders happening along the elevated tracks.</p>
+
+        <h3 class="newspaper-sub-head">Rental History</h3>
+
+        <p>Rental units have always occupied the space above Covert Coffee, while rent prices have fluctuated dramatically:</p>
+
+        <p><em>August 19, 1916:</em> "Six rooms and bath, rent $17. 1643 Broadway, apply on premises." — Adjusted for inflation, equal to $487.12 as of March 2024.</p>
+
+        <p><em>December 11, 1926:</em> "4 and 5 rooms, $20 and $25. 1643 Broadway." — Adjusted for inflation equal to $359.00 and $448.75.</p>
+
+        <h3 class="newspaper-sub-head">Neighborhood Stories</h3>
+
+        <p>During 1909, a 12-year-old boy named Frank Bundy living at 3 Covert Street was charged with robbery. <em>"Patrolman Russel pressed a charge of robbery against Frank Bundy. The lad was held for examination. According to Officer Russel, the youngster held up William Eagleston and George Payed, two small boys from Ridgewood, and robbed them of eleven cents and a penknife."</em></p>
+
+        <p>A cool burglar — Times Union, Tue, Oct 30, 1894 — made an appearance at these addresses as well, adding to the neighborhood lore that stretches across more than a century of Brooklyn life.</p>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- ══════════════════════════════════════════════════════
+       § 4  NEWSPAPER CLIPPINGS
+  ══════════════════════════════════════════════════════ -->
+  <span class="section-label reveal">§ iv — newspaper clippings · 1887–1975</span>
+
+  <div class="clippings-section reveal">
+    <div class="clippings-grid" id="clippings-gallery">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <footer>
+    covert coffee · 1643 broadway · bushwick, brooklyn · 11207
   </footer>
 
   <script>
-  // ═══════════════════════════════
-  // DATA
-  // ═══════════════════════════════
-  const CLIP_DIR   = '../history/NEWSPAPER CLIPPINGS/';
-  const MAPS_DIR   = '../history/MAPS/';
-  const IMG_DIR    = '../history/images/';
-  const OG_DIR     = '../history/images/original iteration of covert/';
-
-  const ALL_CLIPS = [
-    { file: 'Brooklyn_Times_Union_Sat__Oct_22__1887_.jpg',          year: 1887, title: 'Brooklyn Times Union',           date: 'Oct 22, 1887',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Mon__Feb_29__1892_.jpg',       year: 1892, title: 'Brooklyn Daily Eagle',           date: 'Feb 29, 1892',  tags: ['neighborhood'] },
-    { file: 'Mob Story in Bushwick - The_Brooklyn_Citizen_Sat__Aug_19__1893_.jpg', year: 1893, title: 'Mob Story in Bushwick', date: 'Aug 19, 1893', tags: ['neighborhood'] },
-    { file: 'Brooklyn_Times_Union_Tue__Oct_30__1894_.jpg',           year: 1894, title: 'Brooklyn Times Union',           date: 'Oct 30, 1894',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Fri__Jul_10__1896_.jpg',       year: 1896, title: 'Brooklyn Daily Eagle',           date: 'Jul 10, 1896',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Fri__Jan_18__1901_.jpg',       year: 1901, title: 'Brooklyn Daily Eagle',           date: 'Jan 18, 1901',  tags: ['building'] },
-    { file: 'The_Chat_Sat__Mar_21__1903_.jpg',                       year: 1903, title: 'The Chat',                       date: 'Mar 21, 1903',  tags: ['bohacks'] },
-    { file: 'Boy Fooled Uncle Sam The_Brooklyn_Daily_Eagle_Thu__Oct_8__1903_.jpg', year: 1903, title: 'Boy Fooled Uncle Sam', date: 'Oct 8, 1903',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Oct_11__1903_.jpg',       year: 1903, title: 'Brooklyn Daily Eagle',           date: 'Oct 11, 1903',  tags: ['neighborhood'] },
-    { file: 'The_Chat_Sat__Nov_21__1903_.jpg',                       year: 1903, title: 'The Chat',                       date: 'Nov 21, 1903',  tags: ['neighborhood'] },
-    { file: 'Raid on The L The_Chat_Sat__Mar_26__1904_.jpg',         year: 1904, title: 'Raid on The L',                  date: 'Mar 26, 1904',  tags: ['neighborhood'] },
-    { file: 'The_Chat_Sat__Apr_4__1908_.jpg',                        year: 1908, title: 'The Chat',                       date: 'Apr 4, 1908',   tags: ['neighborhood'] },
-    { file: 'Cooper St was always noisy, The_Chat_Sat__Oct_3__1908_.jpg', year: 1908, title: 'Cooper St Was Always Noisy', date: 'Oct 3, 1908', tags: ['neighborhood'] },
-    { file: 'Brooklyn_Times_Union_Fri__Jun_25__1909_.jpg',           year: 1909, title: 'Brooklyn Times Union',           date: 'Jun 25, 1909',  tags: ['neighborhood'] },
-    { file: 'The_Chat_Sat__Apr_9__1910_.jpg',                        year: 1910, title: 'The Chat',                       date: 'Apr 9, 1910',   tags: ['bohacks'] },
-    { file: 'The_Chat_Sat__Jan_6__1912_.jpg',                        year: 1912, title: 'The Chat',                       date: 'Jan 6, 1912',   tags: ['bohacks'] },
-    { file: 'Bohacks Honeymoon The_Chat_Sat__May_23__1914_.jpg',     year: 1914, title: "Bohack's Honeymoon",             date: 'May 23, 1914',  tags: ['bohacks'] },
-    { file: 'The_Chat_Sat__May_20__1916_.jpg',                       year: 1916, title: 'The Chat',                       date: 'May 20, 1916',  tags: ['building'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Mar_6__1921_.jpg',        year: 1921, title: 'Brooklyn Daily Eagle',           date: 'Mar 6, 1921',   tags: ['neighborhood'] },
-    { file: 'Christmas on Broadway Brooklyn_Times_Union_Fri__Dec_16__1921_.jpg', year: 1921, title: 'Christmas on Broadway', date: 'Dec 16, 1921', tags: ['neighborhood'] },
-    { file: 'life on covertBrooklyn_Times_Union_Fri__Apr_28__1922_.jpg', year: 1922, title: 'Life on Covert Street', date: 'Apr 28, 1922', tags: ['building','neighborhood'] },
-    { file: '7 Covert The_Chat_Sat__Nov_8__1924_.jpg',               year: 1924, title: '7 Covert Street',               date: 'Nov 8, 1924',   tags: ['building'] },
-    { file: 'The_Chat_Sat__Sep_25__1926_.jpg',                       year: 1926, title: 'The Chat',                       date: 'Sep 25, 1926',  tags: ['building'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Fri__Apr_6__1928_.jpg',        year: 1928, title: 'Brooklyn Daily Eagle',           date: 'Apr 6, 1928',   tags: ['building'] },
-    { file: '7 Covert St The_Chat_Sat__Mar_30__1929_.jpg',           year: 1929, title: '7 Covert Street',               date: 'Mar 30, 1929',  tags: ['building'] },
-    { file: '7 Covert The_Chat_Fri__Oct_25__1929_.jpg',              year: 1929, title: '7 Covert Street',               date: 'Oct 25, 1929',  tags: ['building'] },
-    { file: 'Kidnapped and Robbed at Halsey The_Standard_Union_Sat__Dec_19__1931_.jpg', year: 1931, title: 'Kidnapped at Halsey', date: 'Dec 19, 1931', tags: ['neighborhood'] },
-    { file: 'Chauncey Vending Machine Looted Brooklyn_Times_Union_Mon__Jul_24__1933_.jpg', year: 1933, title: 'Vending Machine Looted', date: 'Jul 24, 1933', tags: ['neighborhood'] },
-    { file: 'Burguin_s Letter The_Brooklyn_Daily_Eagle_Sun__Nov_20__1938_.jpg', year: 1938, title: "Burguin's Letter", date: 'Nov 20, 1938', tags: ['neighborhood'] },
-    { file: 'Remembering The Corener The_Brooklyn_Daily_Eagle_Sun__Nov_5__1939_.jpg', year: 1939, title: 'Remembering the Corner', date: 'Nov 5, 1939', tags: ['neighborhood','building'] },
-    { file: 'Bushwick_s Close to My Heart Memory The_Brooklyn_Daily_Eagle_Sun__Nov_19__1939_.jpg', year: 1939, title: "Bushwick's Close to My Heart", date: 'Nov 19, 1939', tags: ['neighborhood'] },
-    { file: 'Good Memories The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.jpg', year: 1940, title: 'Good Memories', date: 'Jan 21, 1940', tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.jpg',       year: 1940, title: 'Brooklyn Daily Eagle',           date: 'Jan 21, 1940',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Aug_20__1944_.jpg',       year: 1944, title: 'Brooklyn Daily Eagle',           date: 'Aug 20, 1944',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Feb_25__1945_.jpg',       year: 1945, title: 'Brooklyn Daily Eagle',           date: 'Feb 25, 1945',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Jul_22__1945_.jpg',       year: 1945, title: 'Brooklyn Daily Eagle',           date: 'Jul 22, 1945',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Dec_15__1946_.jpg',       year: 1946, title: 'Brooklyn Daily Eagle',           date: 'Dec 15, 1946',  tags: ['neighborhood'] },
-    { file: 'The_Brooklyn_Daily_Eagle_Sun__Jun_12__1949_.jpg',       year: 1949, title: 'Brooklyn Daily Eagle',           date: 'Jun 12, 1949',  tags: ['neighborhood'] },
-    { file: 'Puerto Ricans The_Williamsburg_News_Fri__Sep_20__1957_.jpg', year: 1957, title: 'The Williamsburg News',    date: 'Sep 20, 1957',  tags: ['neighborhood','building'] },
-    { file: 'Kings_County_Chronicle_Tue__Sep_30__1958_.jpg',         year: 1958, title: 'Kings County Chronicle',        date: 'Sep 30, 1958',  tags: ['neighborhood'] },
-    { file: "Lucy_s Lunch Health Code Violation Daily_News_Tue__Feb_4__1975_.jpg", year: 1975, title: "Lucy's Lunch — Health Code", date: 'Feb 4, 1975', tags: ['neighborhood'] },
+  // ── EARLY DAYS GALLERY ────────────────────────────────
+  const EARLY_PHOTOS = [
+    'photos/early days/early days.jpg',
+    'photos/early days/1517822_10100875172763824_8811581896649551502_n.jpg',
+    'photos/early days/10888509_10100875172778794_8122135182119114938_n.jpg',
+    'photos/early days/11040398_10101114380988624_1443878349808503204_n.jpg',
+    'photos/early days/11267726_10100998086054604_1648789125103718406_n.jpg',
+    'photos/early days/11817225_10101081454922724_6267548244285099939_n.jpg',
+    'photos/early days/11904049_10101085941371844_831117229763057487_n.jpg',
+    'photos/early days/11998942_10101114380973654_9059087226865773339_n.jpg',
+    'photos/early days/12195836_10101150216299374_1105613124009199268_n.jpg',
+    'photos/early days/12316344_919803748067266_1480870731936971481_n.jpg',
+    'photos/early days/13502635_10101333700001564_6091817249567268934_o.jpg',
+    'photos/early days/14707965_10101445730965614_834634495966879104_o.jpg',
+    'photos/early days/15937257_10101554310875604_1774578666174758527_o.jpg',
+    'photos/early days/16178579_10101569560185864_7285098154539495865_o.jpg',
+    'photos/early days/10380748_10101138867108244_5867667160940295112_n.jpg',
+    'photos/early days/47e2b05540ba3d9ce7bf172d0c58e6c4e7c93d4d_573x422_crop.jpg',
+    'photos/early days/mocha java.jpeg',
+    'photos/early days/411873199_18404294116037279_743683065847560319_n.jpg',
   ];
 
-  const MAPS = [
-    { file: 'sanborn map 1880.jpeg',   label: 'Sanborn, 1880' },
-    { file: '1888 Sanborn Vol 9.jpeg', label: 'Sanborn Vol.9, 1888' },
-    { file: '1898 map.jpeg',           label: 'Survey, 1898' },
-    { file: '1898 key.jpeg',           label: 'Key, 1898' },
-    { file: '1907 map.jpeg',           label: 'Survey, 1907' },
-    { file: '1907 key.jpeg',           label: 'Key, 1907' },
+  // ── CLIPPINGS ─────────────────────────────────────────
+  const CLIPPINGS = [
+    { src: 'photos/clippings/Brooklyn_Times_Union_Sat__Oct_22__1887_.jpg',     label: 'Brooklyn Times Union · Oct 22, 1887' },
+    { src: 'photos/clippings/Mob Story in Bushwick - The_Brooklyn_Citizen_Sat__Aug_19__1893_.jpg', label: 'Mob Story in Bushwick · Aug 19, 1893' },
+    { src: 'photos/clippings/Brooklyn_Times_Union_Tue__Oct_30__1894_.jpg',     label: 'Cool Burglar · Oct 30, 1894' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Fri__Jul_10__1896_.jpg', label: 'Brooklyn Daily Eagle · Jul 10, 1896' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Fri__Jan_18__1901_.jpg', label: 'For Sale: 1643 Broadway · Jan 18, 1901' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Mon__Feb_29__1892_.jpg', label: 'Brooklyn Daily Eagle · Feb 29, 1892' },
+    { src: 'photos/clippings/Boy Fooled Uncle Sam The_Brooklyn_Daily_Eagle_Thu__Oct_8__1903_.jpg', label: 'Boy Fooled Uncle Sam · Oct 8, 1903' },
+    { src: 'photos/clippings/The_Chat_Sat__Mar_21__1903_.jpg',                 label: 'The Chat · Mar 21, 1903' },
+    { src: 'photos/clippings/The_Chat_Sat__Nov_21__1903_.jpg',                 label: 'The Chat · Nov 21, 1903' },
+    { src: 'photos/clippings/Raid on The L The_Chat_Sat__Mar_26__1904_.jpg',   label: 'Raid on The L · Mar 26, 1904' },
+    { src: 'photos/clippings/The_Chat_Sat__Apr_4__1908_.jpg',                  label: 'The Chat · Apr 4, 1908' },
+    { src: 'photos/clippings/Cooper St was always noisy, The_Chat_Sat__Oct_3__1908_.jpg', label: 'Cooper St Was Always Noisy · Oct 3, 1908' },
+    { src: 'photos/clippings/Brooklyn_Times_Union_Fri__Jun_25__1909_.jpg',     label: 'Brooklyn Times Union · Jun 25, 1909' },
+    { src: 'photos/clippings/The_Chat_Sat__Apr_9__1910_.jpg',                  label: 'The Chat · Apr 9, 1910' },
+    { src: 'photos/clippings/The_Chat_Sat__Jan_6__1912_.jpg',                  label: 'The Chat · Jan 6, 1912' },
+    { src: 'photos/clippings/Bohacks Honeymoon The_Chat_Sat__May_23__1914_.jpg', label: "Bohack's Honeymoon · May 23, 1914" },
+    { src: 'photos/clippings/The_Chat_Sat__May_20__1916_.jpg',                 label: 'The Chat · May 20, 1916' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Mar_6__1921_.jpg',  label: 'Brooklyn Daily Eagle · Mar 6, 1921' },
+    { src: 'photos/clippings/Christmas on Broadway Brooklyn_Times_Union_Fri__Dec_16__1921_.jpg', label: 'Christmas on Broadway · Dec 16, 1921' },
+    { src: 'photos/clippings/life on covertBrooklyn_Times_Union_Fri__Apr_28__1922_.jpg', label: 'Life on Covert St · Apr 28, 1922' },
+    { src: 'photos/clippings/The_Chat_Sat__Sep_25__1926_.jpg',                 label: 'The Chat · Sep 25, 1926' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Fri__Apr_6__1928_.jpg',  label: 'Brooklyn Daily Eagle · Apr 6, 1928' },
+    { src: 'photos/clippings/7 Covert St The_Chat_Sat__Mar_30__1929_.jpg',     label: '7 Covert St · Mar 30, 1929' },
+    { src: 'photos/clippings/7 Covert The_Chat_Fri__Oct_25__1929_.jpg',        label: '7 Covert · Oct 25, 1929' },
+    { src: 'photos/clippings/7 Covert The_Chat_Sat__Nov_8__1924_.jpg',         label: '7 Covert · Nov 8, 1924' },
+    { src: 'photos/clippings/Kidnapped and Robbed at Halsey The_Standard_Union_Sat__Dec_19__1931_.jpg', label: 'Kidnapped at Halsey · Dec 19, 1931' },
+    { src: 'photos/clippings/Chauncey Vending Machine Looted Brooklyn_Times_Union_Mon__Jul_24__1933_.jpg', label: 'Chauncey Vending Machine Looted · Jul 24, 1933' },
+    { src: 'photos/clippings/Burguin_s Letter The_Brooklyn_Daily_Eagle_Sun__Nov_20__1938_.jpg', label: "Burguin's Letter · Nov 20, 1938" },
+    { src: 'photos/clippings/Bushwick_s Close to My Heart Memory The_Brooklyn_Daily_Eagle_Sun__Nov_19__1939_.jpg', label: "Bushwick's Close to My Heart · Nov 19, 1939" },
+    { src: 'photos/clippings/Remembering The Corener The_Brooklyn_Daily_Eagle_Sun__Nov_5__1939_.jpg', label: 'Remembering The Corner · Nov 5, 1939' },
+    { src: 'photos/clippings/Good Memories The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.jpg', label: 'Good Memories · Jan 21, 1940' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.jpg', label: 'Brooklyn Daily Eagle · Jan 21, 1940' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Aug_20__1944_.jpg', label: 'Brooklyn Daily Eagle · Aug 20, 1944' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Feb_25__1945_.jpg', label: 'Brooklyn Daily Eagle · Feb 25, 1945' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Jul_22__1945_.jpg', label: 'Brooklyn Daily Eagle · Jul 22, 1945' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Dec_15__1946_.jpg', label: 'Brooklyn Daily Eagle · Dec 15, 1946' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Jun_12__1949_.jpg', label: 'Brooklyn Daily Eagle · Jun 12, 1949' },
+    { src: 'photos/clippings/The_Brooklyn_Daily_Eagle_Sun__Oct_11__1903_.jpg', label: 'Brooklyn Daily Eagle · Oct 11, 1903' },
+    { src: 'photos/clippings/Puerto Ricans The_Williamsburg_News_Fri__Sep_20__1957_.jpg', label: 'Puerto Ricans · Williamsburg News · Sep 20, 1957' },
+    { src: 'photos/clippings/Kings_County_Chronicle_Tue__Sep_30__1958_.jpg',   label: "Kings County Chronicle · Sep 30, 1958" },
+    { src: 'photos/clippings/Lucy_s Lunch Health Code Violation Daily_News_Tue__Feb_4__1975_.jpg', label: "Lucy's Lunch · Daily News · Feb 4, 1975" },
+    { src: 'photos/clippings/1980s.jpg',                                        label: '1980s · Broadway-Bushwick corridor' },
+    { src: 'photos/clippings/1980s up close.jpg',                               label: '1980s · up close' },
   ];
 
-  const HIST_IMGS = [
-    { file: 'early days.jpg',           dir: IMG_DIR, cap: 'Early days at 1643 Broadway' },
-    { file: '47e2b05540ba3d9ce7bf172d0c58e6c4e7c93d4d_573x422_crop.jpg', dir: IMG_DIR, cap: '1643 Broadway, the corner' },
-    { file: 'Screenshot 2024-04-30 at 11.44.18 AM.jpg', dir: IMG_DIR, cap: 'The building, 1940s' },
-    { file: 'Screenshot 2024-04-30 at 12.38.15 PM.jpg', dir: IMG_DIR, cap: 'Then & now comparison' },
-    { file: '1980s.jpg',                dir: IMG_DIR, cap: 'Broadway-Bushwick, 1980s' },
-    { file: '1980s up close.jpg',       dir: IMG_DIR, cap: 'The corner, 1980s' },
-    { file: 'pioneer supermarket 1980s.jpg', dir: IMG_DIR, cap: 'Pioneer Supermarket, 1980s' },
-    { file: 'across the street what is now pioneer supermarket.jpg', dir: IMG_DIR, cap: 'Across the street — now Pioneer' },
-    { file: 'reddit comment mentioning the upcoming shop.jpg', dir: IMG_DIR, cap: 'Reddit anticipating the shop' },
-    { file: 'mocha java.jpeg',          dir: IMG_DIR, cap: 'Mocha Java' },
-  ];
-
-  const OG_COVERT = [
-    '1517822_10100875172763824_8811581896649551502_n.jpg',
-    '10888509_10100875172778794_8122135182119114938_n.jpg',
-    '11267726_10100998086054604_1648789125103718406_n.jpg',
-    '11817225_10101081454922724_6267548244285099939_n.jpg',
-    '11902476_10101088895202344_1318162641539281736_n.jpg',
-    '11904049_10101085941371844_831117229763057487_n.jpg',
-    '11998942_10101114380973654_9059087226865773339_n.jpg',
-    '12195836_10101150216299374_1105613124009199268_n.jpg',
-    '12316344_919803748067266_1480870731936971481_n.jpg',
-    '13502635_10101333700001564_6091817249567268934_o.jpg',
-    '14707965_10101445730965614_834634495966879104_o.jpg',
-    '15937257_10101554310875604_1774578666174758527_o.jpg',
-    '16178579_10101569560185864_7285098154539495865_o.jpg',
-    '10380748_10101138867108244_5867667160940295112_n.jpg',
-    '11040398_10101114380988624_1443878349808503204_n.jpg',
-    '411873199_18404294116037279_743683065847560319_n.jpg',
-  ];
-
-  // ═══════════════════════════════
-  // BUILD STRIPS
-  // ═══════════════════════════════
-  function buildStrip(stripId, clips, countId) {
-    const strip = document.getElementById(stripId);
-    if (!strip) return;
-    strip.innerHTML = '';
-    clips.forEach((clip, idx) => {
-      const thumb = document.createElement('div');
-      thumb.className = 'clipping-thumb';
-      const imgWrap = document.createElement('div');
-      imgWrap.className = 'clipping-thumb-img';
+  // ── BUILD EARLY DAYS ──────────────────────────────────
+  (function buildEarlyGallery() {
+    const grid = document.getElementById('early-gallery');
+    EARLY_PHOTOS.forEach((src, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'gallery-cell';
+      cell.dataset.idx = i;
+      cell.dataset.gallery = 'early';
       const img = document.createElement('img');
-      img.src = CLIP_DIR + clip.file;
-      img.alt = clip.title;
+      img.src = src;
+      img.alt = 'Covert Coffee early days';
       img.loading = 'lazy';
-      imgWrap.appendChild(img);
-      const lbl = document.createElement('div');
-      lbl.className = 'clipping-thumb-label';
-      lbl.textContent = clip.date;
-      thumb.appendChild(imgWrap);
-      thumb.appendChild(lbl);
-      strip.appendChild(thumb);
-      thumb.addEventListener('click', () => openLightbox(clips.map(c => ({ src: CLIP_DIR + c.file, cap: c.title + ' — ' + c.date })), idx, thumb, strip));
+      cell.appendChild(img);
+      cell.addEventListener('click', () => openLightbox('early', i));
+      grid.appendChild(cell);
     });
-    if (countId) {
-      const el = document.getElementById(countId);
-      if (el) el.textContent = clips.length + ' items';
-    }
-    enableDrag(strip);
-  }
+  })();
 
-  function buildImgGrid(gridId, items) {
-    const grid = document.getElementById(gridId);
-    if (!grid) return;
-    items.forEach((item, idx) => {
-      const el = document.createElement('div');
-      el.className = 'img-grid-item';
+  // ── BUILD CLIPPINGS ───────────────────────────────────
+  (function buildClippings() {
+    const grid = document.getElementById('clippings-gallery');
+    CLIPPINGS.forEach((clip, i) => {
+      const card = document.createElement('div');
+      card.className = 'clipping-card';
+      card.dataset.idx = i;
+      card.addEventListener('click', () => openLightbox('clippings', i));
+
+      const wrap = document.createElement('div');
+      wrap.className = 'clipping-img-wrap';
       const img = document.createElement('img');
-      img.src = (item.dir || OG_DIR) + (item.file || item);
-      img.alt = item.cap || '';
+      img.src = clip.src;
+      img.alt = clip.label;
       img.loading = 'lazy';
-      el.appendChild(img);
-      grid.appendChild(el);
-      el.addEventListener('click', () => {
-        const all = items.map(it => ({ src: (it.dir || OG_DIR) + (it.file || it), cap: it.cap || '' }));
-        openLightboxRaw(all, idx);
-      });
+      wrap.appendChild(img);
+
+      const cap = document.createElement('div');
+      cap.className = 'clipping-caption';
+      cap.textContent = clip.label;
+
+      card.appendChild(wrap);
+      card.appendChild(cap);
+      grid.appendChild(card);
     });
-  }
+  })();
 
-  function buildMaps() {
-    const grid = document.getElementById('maps-grid');
-    if (!grid) return;
-    MAPS.forEach((m, idx) => {
-      const el = document.createElement('div');
-      el.className = 'map-item';
-      const img = document.createElement('img');
-      img.src = MAPS_DIR + m.file;
-      img.alt = m.label;
-      img.loading = 'lazy';
-      const lbl = document.createElement('div');
-      lbl.className = 'map-label';
-      lbl.textContent = m.label;
-      el.appendChild(img);
-      el.appendChild(lbl);
-      grid.appendChild(el);
-      el.addEventListener('click', () => openLightboxRaw(MAPS.map(mm => ({ src: MAPS_DIR + mm.file, cap: mm.label })), idx));
-    });
-  }
+  // ── LIGHTBOX ──────────────────────────────────────────
+  let lbGallery = null, lbIdx = 0;
 
-  // ═══════════════════════════════
-  // LIGHTBOX
-  // ═══════════════════════════════
-  let LB = { items: [], idx: 0 };
-  const lb      = document.getElementById('lightbox');
-  const lbImg   = document.getElementById('lb-img');
-  const lbCap   = document.getElementById('lb-caption');
-  const lbClose = document.getElementById('lb-close');
-  const lbPrev  = document.getElementById('lb-prev');
-  const lbNext  = document.getElementById('lb-next');
-
-  function openLightbox(items, idx, thumb, strip) {
-    if (strip) strip.querySelectorAll('.clipping-thumb').forEach(t => t.classList.remove('selected'));
-    if (thumb) thumb.classList.add('selected');
-    LB.items = items; LB.idx = idx;
-    renderLB(); lb.classList.add('open');
+  function openLightbox(gallery, idx) {
+    lbGallery = gallery;
+    lbIdx = idx;
+    updateLightboxImg();
+    document.getElementById('lightbox').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
-  function openLightboxRaw(items, idx) {
-    LB.items = items; LB.idx = idx;
-    renderLB(); lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
-  function renderLB() {
-    const it = LB.items[LB.idx];
-    lbImg.src = it.src || it.url || '';
-    lbImg.alt = it.cap || '';
-    lbCap.textContent = it.cap || '';
-    lbPrev.style.display = LB.items.length > 1 ? '' : 'none';
-    lbNext.style.display = LB.items.length > 1 ? '' : 'none';
+  function updateLightboxImg() {
+    const arr = lbGallery === 'early' ? EARLY_PHOTOS : CLIPPINGS.map(c => c.src);
+    document.getElementById('lb-img').src = (lbGallery === 'early') ? arr[lbIdx] : CLIPPINGS[lbIdx].src;
   }
 
-  function closeLB() { lb.classList.remove('open'); document.body.style.overflow = ''; }
-
-  lbClose.addEventListener('click', closeLB);
-  lb.addEventListener('click', e => { if (e.target === lb) closeLB(); });
-  lbPrev.addEventListener('click', e => { e.stopPropagation(); LB.idx = (LB.idx - 1 + LB.items.length) % LB.items.length; renderLB(); });
-  lbNext.addEventListener('click', e => { e.stopPropagation(); LB.idx = (LB.idx + 1) % LB.items.length; renderLB(); });
-
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lb-prev').addEventListener('click', () => {
+    const arr = lbGallery === 'early' ? EARLY_PHOTOS : CLIPPINGS;
+    lbIdx = (lbIdx - 1 + arr.length) % arr.length;
+    updateLightboxImg();
+  });
+  document.getElementById('lb-next').addEventListener('click', () => {
+    const arr = lbGallery === 'early' ? EARLY_PHOTOS : CLIPPINGS;
+    lbIdx = (lbIdx + 1) % arr.length;
+    updateLightboxImg();
+  });
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
   document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
     if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLB();
-    if (e.key === 'ArrowLeft')  { LB.idx = (LB.idx - 1 + LB.items.length) % LB.items.length; renderLB(); }
-    if (e.key === 'ArrowRight') { LB.idx = (LB.idx + 1) % LB.items.length; renderLB(); }
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft')  document.getElementById('lb-prev').click();
+    if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
   });
 
-  let lbTx = null;
-  lb.addEventListener('touchstart', e => { lbTx = e.touches[0].clientX; });
-  lb.addEventListener('touchend', e => {
-    if (lbTx === null) return;
-    const dx = e.changedTouches[0].clientX - lbTx;
-    if (Math.abs(dx) > 40) { LB.idx = dx < 0 ? (LB.idx + 1) % LB.items.length : (LB.idx - 1 + LB.items.length) % LB.items.length; renderLB(); }
-    lbTx = null;
-  });
+  // ── BEFORE / AFTER SLIDER ─────────────────────────────
+  (function initBA() {
+    const wrap = document.getElementById('ba-wrap');
+    const divider = document.getElementById('ba-divider');
+    const handle = document.getElementById('ba-handle');
+    const afterImg = wrap.querySelector('.ba-after');
+    let dragging = false;
 
-  // ═══════════════════════════════
-  // DRAG SCROLL
-  // ═══════════════════════════════
-  function enableDrag(el) {
-    let down = false, sx, sl;
-    el.addEventListener('mousedown',  e => { down = true; sx = e.pageX - el.offsetLeft; sl = el.scrollLeft; });
-    el.addEventListener('mouseleave', () => down = false);
-    el.addEventListener('mouseup',    () => down = false);
-    el.addEventListener('mousemove',  e => { if (!down) return; e.preventDefault(); el.scrollLeft = sl - (e.pageX - el.offsetLeft - sx) * 1.2; });
-  }
+    function setPos(pct) {
+      pct = Math.max(2, Math.min(98, pct));
+      divider.style.left = pct + '%';
+      handle.style.left  = pct + '%';
+      afterImg.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    }
 
-  // ═══════════════════════════════
-  // FILTER CHIPS
-  // ═══════════════════════════════
-  const chips  = document.querySelectorAll('.chip');
-  const blocks = document.querySelectorAll('.archive-block');
-  const noRes  = document.getElementById('no-results');
+    function getPos(e) {
+      const rect = wrap.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      return ((clientX - rect.left) / rect.width) * 100;
+    }
 
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const filter = chip.dataset.filter;
-      let visible = 0;
-      blocks.forEach(block => {
-        const tags = (block.dataset.tags || '').split(' ');
-        const show = filter === 'all' || tags.includes(filter);
-        block.classList.toggle('hidden', !show);
-        if (show) visible++;
-      });
-      noRes.style.display = visible === 0 ? 'block' : 'none';
+    wrap.addEventListener('pointerdown', e => {
+      dragging = true;
+      wrap.setPointerCapture(e.pointerId);
+      setPos(getPos(e));
     });
-  });
+    wrap.addEventListener('pointermove', e => {
+      if (dragging) setPos(getPos(e));
+    });
+    wrap.addEventListener('pointerup', () => { dragging = false; });
+    wrap.addEventListener('pointercancel', () => { dragging = false; });
 
-  // ═══════════════════════════════
-  // SCROLL REVEAL
-  // ═══════════════════════════════
-  const revIO = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revIO.unobserve(e.target); } });
-  }, { threshold: 0.07 });
-  document.querySelectorAll('.reveal').forEach(el => revIO.observe(el));
+    // init at 50%
+    setPos(50);
+  })();
 
-  // ═══════════════════════════════
-  // INIT
-  // ═══════════════════════════════
-  // Bohacks strip: 1887–1920s
-  buildStrip('strip-bohacks', ALL_CLIPS.filter(c => ['bohacks','building'].some(t => c.tags.includes(t)) && c.year <= 1920), 'count-bohacks');
-
-  // Neighborhood strip: all neighborhood tagged
-  buildStrip('strip-neighborhood', ALL_CLIPS.filter(c => c.tags.includes('neighborhood')), 'count-neighborhood');
-
-  // Mid-century: building/neighborhood 1920-1960
-  buildStrip('strip-midcentury', ALL_CLIPS.filter(c => c.year >= 1916 && c.year <= 1960), 'count-midcentury');
-
-  // All
-  buildStrip('strip-all', ALL_CLIPS, 'count-all');
-
-  buildImgGrid('grid-historical', HIST_IMGS);
-  buildImgGrid('grid-covert-early', OG_COVERT.map(f => ({ file: f, dir: OG_DIR, cap: '' })));
-  buildMaps();
+  // ── SCROLL REVEAL ─────────────────────────────────────
+  (function initReveal() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  })();
 
   </script>
 
