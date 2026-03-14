@@ -968,60 +968,6 @@
     }
     .section-first { padding-top: calc(56px + 26px + 36px); }
 
-    /* ══════════════════════════════
-       ON BAR TODAY — button
-    ══════════════════════════════ */
-    .bar-today-btn {
-      display: flex;
-      align-items: baseline;
-      gap: 6px 12px;
-      flex-wrap: wrap;
-      padding: 8px 14px 7px;
-      border: 1px solid rgba(92,74,56,0.14);
-      background: rgba(92,74,56,0.02);
-      cursor: pointer;
-      margin-bottom: 20px;
-      width: 100%;
-      text-align: left;
-      transition: background 0.15s, border-color 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .bar-today-btn:hover { background: rgba(92,74,56,0.05); border-color: rgba(92,74,56,0.25); }
-    .bar-today-kicker {
-      font-family: var(--mono);
-      font-size: 0.44rem;
-      letter-spacing: 0.12em;
-      color: var(--espresso);
-      opacity: 0.28;
-      text-transform: uppercase;
-      flex-shrink: 0;
-    }
-    .bar-today-bean {
-      font-size: 0.78rem;
-      font-style: italic;
-      color: var(--espresso);
-      opacity: 0.82;
-      flex-shrink: 0;
-    }
-    .bar-today-origin {
-      font-family: var(--mono);
-      font-size: 0.44rem;
-      letter-spacing: 0.05em;
-      color: var(--espresso);
-      opacity: 0.3;
-      flex-shrink: 0;
-    }
-    .bar-today-arrow {
-      font-family: var(--mono);
-      font-size: 0.56rem;
-      color: var(--espresso);
-      opacity: 0.25;
-      margin-left: auto;
-      flex-shrink: 0;
-      transition: transform 0.2s;
-    }
-    .bar-today-btn:hover .bar-today-arrow { transform: translateX(2px); opacity: 0.5; }
-
     /* ── bar today lightbox ── */
     .bar-lightbox {
       display: none;
@@ -1190,7 +1136,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       filter: saturate(0.45) sepia(0.35) brightness(0.88) contrast(1.08);
       pointer-events: none;
       user-select: none;
@@ -1310,6 +1256,17 @@
       97%      { opacity: 1; }
     }
 
+    /* location card */
+    .location-card {
+      border: 1px solid rgba(92,74,56,0.14);
+      border-left: 2px solid rgba(92,74,56,0.22);
+      background: rgba(92,74,56,0.02);
+      padding: 14px 16px;
+    }
+    .location-card .address-big { margin-bottom: 2px; }
+    .location-card .address-note { margin-bottom: 0; }
+    .location-card .map-links { margin-top: 12px; margin-bottom: 0; }
+
     /* bigger menu button */
     .menu-btn-hero {
       font-size: 0.82rem;
@@ -1399,20 +1356,13 @@
     <div class="shop-thumbs" id="shop-thumbs"></div>
 
 
-    <!-- ON BAR TODAY -->
-    <button class="bar-today-btn" onclick="document.getElementById('bar-lightbox').classList.add('open')">
-      <span class="bar-today-kicker">on bar today</span>
-      <span class="bar-today-bean" id="bar-bean">—</span>
-      <span class="bar-today-origin" id="bar-origin"></span>
-      <span class="bar-today-arrow">→</span>
-    </button>
-
     <div class="info-table">
 
       <div class="info-row">
         <span class="info-key">menu</span>
-        <span class="info-val">
+        <span class="info-val" style="display:flex;flex-wrap:wrap;gap:8px;">
           <button class="menu-btn menu-btn-hero" onclick="document.getElementById('menu-lightbox').classList.add('open')">view menu ↗</button>
+          <button class="menu-btn menu-btn-hero" onclick="document.getElementById('bar-lightbox').classList.add('open')"><span id="bar-bean">on bar today</span> ↗</button>
         </span>
       </div>
 
@@ -1444,14 +1394,14 @@
       <div class="info-row">
         <span class="info-key">location</span>
         <span class="info-val">
-          <div class="address-display">
+          <div class="location-card">
             <div class="address-big">1643 Broadway</div>
             <div class="address-note">Brooklyn, NY 11207</div>
-          </div>
-          <div class="map-links">
-            <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
-            <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">google maps</a>
-            <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">corner.inc</a>
+            <div class="map-links">
+              <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
+              <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">google maps</a>
+              <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">corner.inc</a>
+            </div>
           </div>
         </span>
       </div>
@@ -1679,9 +1629,7 @@
 
       // Button
       const beanEl = document.getElementById('bar-bean');
-      const originEl = document.getElementById('bar-origin');
       if (beanEl) beanEl.textContent = d.bean;
-      if (originEl) originEl.textContent = [d.origin, d.process, d.roast + ' roast'].filter(Boolean).join(' · ');
 
       // Lightbox header
       const cardBean = document.getElementById('bar-card-bean');
