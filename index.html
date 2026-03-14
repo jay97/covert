@@ -270,10 +270,14 @@
       text-decoration: none;
       border: 1px solid rgba(92,74,56,0.2);
       background: rgba(92,74,56,0.03);
-      padding: 8px 14px;
+      padding: 10px 14px;
       border-radius: 2px;
       transition: background 0.15s, border-color 0.15s;
       -webkit-tap-highlight-color: transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
     }
     .map-link:hover { background: rgba(92,74,56,0.08); border-color: rgba(92,74,56,0.38); }
 
@@ -284,7 +288,7 @@
     }
     .info-row {
       display: grid;
-      grid-template-columns: 80px 1fr;
+      grid-template-columns: 100px 1fr;
       gap: 16px;
       padding: 14px 0;
       border-bottom: 1px solid rgba(92,74,56,0.07);
@@ -306,7 +310,7 @@
       opacity: 0.82;
       line-height: 1.6;
     }
-    .info-val a {
+    .info-val a:not(.map-link) {
       color: inherit;
       border-bottom: 1px solid rgba(92,74,56,0.18);
       text-decoration: none;
@@ -779,45 +783,7 @@
       gap: 8px;
       margin-bottom: 12px;
     }
-    .bus-dir-swipe {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .bus-dir-swipe::-webkit-scrollbar { display: none; }
-    .bus-dir-page {
-      min-width: 100%;
-      scroll-snap-align: start;
-      flex-shrink: 0;
-    }
-    .bus-dir-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 10px;
-      border: 1px solid rgba(92,74,56,0.14);
-      border-radius: 2px;
-      overflow: hidden;
-      width: fit-content;
-    }
-    .bus-dir-tab {
-      font-family: var(--mono);
-      font-size: 0.5rem;
-      letter-spacing: 0.05em;
-      color: var(--espresso);
-      background: none;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      opacity: 0.28;
-      transition: opacity 0.15s, background 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      line-height: 1;
-    }
-    .bus-dir-tab:first-child { border-right: 1px solid rgba(92,74,56,0.14); }
-    .bus-dir-tab.active { background: rgba(92,74,56,0.07); opacity: 0.75; }
-    .bus-dir-tab:hover { opacity: 0.55; }
+    /* bus dropdown reuses dirs-grid from subway */
 
     /* citi bike panel */
     .transit-bike {
@@ -937,8 +903,7 @@
     }
     .transit-refresh:hover { opacity: 0.7; }
 
-    .bus-dir { display: none; }
-    .bus-dir.active { display: flex; flex-direction: column; gap: 5px; min-height: 54px; }
+    /* bus-dir removed — bus dropdowns now use dirs-grid layout */
 
     /* ══════════════════════════════
        QUOTE BLOCK
@@ -1477,7 +1442,7 @@
 
       .dirs-grid { gap: 10px; }
 
-      .info-row { grid-template-columns: 68px 1fr; }
+      .info-row { grid-template-columns: 88px 1fr; }
     }
 
   </style>
@@ -1504,9 +1469,9 @@
 
       <div class="drawer-section-label">navigate</div>
       <a class="drawer-link" href="#top" onclick="document.getElementById('nav-drawer').classList.remove('open')">Visit</a>
-      <a class="drawer-link" href="#about">About</a>
       <a class="drawer-link" href="history.html">History</a>
       <a class="drawer-link" href="parks.html">Parks &amp; Gardens</a>
+      <a class="drawer-link" href="reading.html">Reading</a>
       <a class="drawer-link" href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">Instagram</a>
       <a class="drawer-link" href="https://www.covert.coffee" target="_blank" rel="noopener">Wholesale</a>
 
@@ -1559,16 +1524,12 @@
     <div class="info-table">
 
       <div class="info-row">
-        <span class="info-key">menu</span>
-        <span class="info-val" style="display:flex;flex-wrap:wrap;gap:8px;">
-          <button class="menu-btn menu-btn-hero" onclick="document.getElementById('menu-lightbox').classList.add('open')">view menu ↗</button>
-          <button class="menu-btn menu-btn-hero" onclick="document.getElementById('bar-lightbox').classList.add('open')">on bar ↗</button>
-        </span>
-      </div>
-
-      <div class="info-row">
-        <span class="info-key">hours</span>
+        <span class="info-key">menu &amp; hours</span>
         <span class="info-val">
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+            <button class="menu-btn menu-btn-hero" onclick="document.getElementById('menu-lightbox').classList.add('open')">view menu ↗</button>
+            <button class="menu-btn menu-btn-hero" onclick="document.getElementById('bar-lightbox').classList.add('open')">on bar ↗</button>
+          </div>
           <div class="hours-sign">
             <table>
               <tr><td>Mon – Fri</td><td>8:00 am – 5:00 pm</td></tr>
@@ -1706,16 +1667,6 @@
     </div>
   </div>
 
-  <!-- ABOUT -->
-  <div class="section reveal" id="about">
-    <p class="kicker">about</p>
-    <h2>Covert Coffee</h2>
-    <p class="body-text">Covert Coffee sits at 1643 Broadway in Bushwick, Brooklyn — a corner that's been serving the neighborhood since the 1880s. The building started life as H.C. Bohack's corner grocery in 1889, survived decades as everything from a flower market to a drug store, weathered the arson crisis of the 1970s, and sat vacant through the long quiet of the 1990s and 2000s.</p>
-    <p class="body-text">In 2015, Aaron Mounier opened Covert behind a boarded-up storefront with a hand-lettered "coming soon" sign — and the name stuck. The shop roasts in small batches, pulls precise shots on a two-group La Marzocco, and serves sandwiches on locally baked bread. No Wi-Fi password on the wall, no merch rack by the door. Just good coffee in a building with 136 years of stories in its walls.</p>
-  </div>
-
-  <div class="section-divider"></div>
-
   <!-- LIVE TRANSIT -->
   <div class="transit-wrap reveal">
     <div class="transit-box">
@@ -1784,30 +1735,42 @@
       </div>
 
       <div class="bus-dropdown" id="bus-drop-b20">
-        <div class="bus-dir-tabs">
-          <button class="bus-dir-tab active" onclick="busTab('b20','N',this)">← williamsburg</button>
-          <button class="bus-dir-tab" onclick="busTab('b20','S',this)">spring creek →</button>
+        <div class="dirs-grid">
+          <div class="dir-col">
+            <div class="dir-label">→ williamsburg</div>
+            <div class="arrivals" id="arr-b20-N"><span class="arr-empty">loading…</span></div>
+          </div>
+          <div class="dir-col">
+            <div class="dir-label">→ spring creek</div>
+            <div class="arrivals" id="arr-b20-S"><span class="arr-empty">loading…</span></div>
+          </div>
         </div>
-        <div class="bus-dir active" id="arr-b20-N"><span class="arr-empty">loading…</span></div>
-        <div class="bus-dir" id="arr-b20-S"><span class="arr-empty">loading…</span></div>
       </div>
 
       <div class="bus-dropdown" id="bus-drop-q24">
-        <div class="bus-dir-tabs">
-          <button class="bus-dir-tab active" onclick="busTab('q24','N',this)">← flushing</button>
-          <button class="bus-dir-tab" onclick="busTab('q24','S',this)">jamaica →</button>
+        <div class="dirs-grid">
+          <div class="dir-col">
+            <div class="dir-label">→ flushing</div>
+            <div class="arrivals" id="arr-q24-N"><span class="arr-empty">loading…</span></div>
+          </div>
+          <div class="dir-col">
+            <div class="dir-label">→ jamaica</div>
+            <div class="arrivals" id="arr-q24-S"><span class="arr-empty">loading…</span></div>
+          </div>
         </div>
-        <div class="bus-dir active" id="arr-q24-N"><span class="arr-empty">loading…</span></div>
-        <div class="bus-dir" id="arr-q24-S"><span class="arr-empty">loading…</span></div>
       </div>
 
       <div class="bus-dropdown" id="bus-drop-b60">
-        <div class="bus-dir-tabs">
-          <button class="bus-dir-tab active" onclick="busTab('b60','N',this)">← williamsburg</button>
-          <button class="bus-dir-tab" onclick="busTab('b60','S',this)">canarsie →</button>
+        <div class="dirs-grid">
+          <div class="dir-col">
+            <div class="dir-label">→ williamsburg</div>
+            <div class="arrivals" id="arr-b60-N"><span class="arr-empty">loading…</span></div>
+          </div>
+          <div class="dir-col">
+            <div class="dir-label">→ canarsie</div>
+            <div class="arrivals" id="arr-b60-S"><span class="arr-empty">loading…</span></div>
+          </div>
         </div>
-        <div class="bus-dir active" id="arr-b60-N"><span class="arr-empty">loading…</span></div>
-        <div class="bus-dir" id="arr-b60-S"><span class="arr-empty">loading…</span></div>
       </div>
 
       <!-- CITI BIKE (live via GBFS) -->
@@ -1843,9 +1806,8 @@
   <!-- ARCHIVE CTA -->
   <div class="archive-strip reveal">
     <div class="archive-strip-inner">
-      <p class="kicker">136 years of documentation</p>
+      <p class="kicker">1643 broadway · est. 1888</p>
       <h2>History</h2>
-      <p class="body-text">Newspaper clippings back to 1887. Sanborn fire insurance maps. Photographs of the block across a century. Everything dug up about this building and this corner.</p>
       <a href="history.html" class="btn-outline">explore the history <span class="arr">→</span></a>
     </div>
   </div>
@@ -1858,6 +1820,10 @@
   </footer>
 
   <script>
+  // Prevent browser scroll restoration from moving the page
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
   // ═══════════════════════════════════════════════════════
   // ON BAR TODAY — loads from bar-today.json
   // ═══════════════════════════════════════════════════════
@@ -2186,14 +2152,7 @@
     }
   }
 
-  function busTab(line, dir, btn) {
-    const drop = document.getElementById('bus-drop-' + line);
-    drop.querySelectorAll('.bus-dir-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    drop.querySelectorAll('.bus-dir').forEach(d => d.classList.remove('active'));
-    const target = drop.querySelector(`#arr-${line}-${dir}`);
-    if (target) target.classList.add('active');
-  }
+  // busTab removed — directions now shown side by side like subway
 
   // ── Subway fetch ────────────────────────────────────────
 
@@ -2236,6 +2195,7 @@
   async function fetchBusLine(line) {
     const stops = BUS_STOPS[line];
     let anyLive = false;
+    let soonest = Infinity;
     await Promise.allSettled(
       ['N','S'].map(async dir => {
         const stopId = stops[dir];
@@ -2255,7 +2215,11 @@
             const eat = call?.ExpectedArrivalTime || call?.AimedArrivalTime;
             return { r: mvj?.PublishedLineName || '', t: eat ? Math.floor(new Date(eat).getTime() / 1000) : null };
           }).filter(i => i.t && i.t > now - 30).sort((a,b) => a.t - b.t);
-          if (items.length) { renderArrivals(arrId, items); anyLive = true; }
+          if (items.length) {
+            renderArrivals(arrId, items);
+            anyLive = true;
+            if (items[0].t < soonest) soonest = items[0].t;
+          }
           else setErr(arrId, 'no service');
         } catch(e) {
           console.warn('bus', line, dir, e);
@@ -2264,6 +2228,7 @@
       })
     );
     setDot(`dot-${line}`, anyLive);
+    return soonest;
   }
 
   // ── Citi Bike fetch (GBFS — public, no key needed) ────
@@ -2378,21 +2343,34 @@
   async function doRefresh() {
     const ts = document.getElementById('transit-ts');
     if (ts) ts.textContent = 'updating…';
-    // Save scroll position so DOM updates don't cause jumps
-    const scrollY = window.scrollY;
     // Reset all dots while refreshing
     ['dot-subway', 'dot-subway-chauncey', 'dot-b20', 'dot-q24', 'dot-b60', 'dot-bike'].forEach(id => setDot(id, false));
 
-    await Promise.allSettled([
+    const busResults = {};
+    const [, b20, q24, b60] = await Promise.allSettled([
       fetchSubway(),
-      fetchBusLine('b20'),
-      fetchBusLine('q24'),
-      fetchBusLine('b60'),
+      fetchBusLine('b20').then(t => { busResults.b20 = t; }),
+      fetchBusLine('q24').then(t => { busResults.q24 = t; }),
+      fetchBusLine('b60').then(t => { busResults.b60 = t; }),
       fetchBike(),
     ]);
 
-    // Restore scroll position after DOM updates
-    window.scrollTo(0, scrollY);
+    // Auto-open the bus with the soonest arrival
+    let soonestLine = null, soonestTime = Infinity;
+    for (const [line, t] of Object.entries(busResults)) {
+      if (t < soonestTime) { soonestTime = t; soonestLine = line; }
+    }
+    if (soonestLine) {
+      // Close all, then open soonest
+      document.querySelectorAll('.bus-dropdown').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.bus-route-btn').forEach(b => b.classList.remove('active'));
+      const drop = document.getElementById('bus-drop-' + soonestLine);
+      if (drop) drop.classList.add('open');
+      const btns = document.querySelectorAll('.bus-route-btn');
+      const idx = { b20: 0, q24: 1, b60: 2 }[soonestLine];
+      if (btns[idx]) btns[idx].classList.add('active');
+    }
+
     tick();
     clearTimeout(refreshTimer);
     refreshTimer = setTimeout(doRefresh, 45000);
@@ -2409,18 +2387,16 @@
 
   // ── Homepage gallery — auto-pull from folder ──────────
   const GALLERY_PHOTOS = [
-    'photos/homepage gallery/webp/IMG_2424.webp',
-    'photos/homepage gallery/webp/IMG_3323.webp',
-    'photos/homepage gallery/webp/IMG_3837.webp',
-    'photos/homepage gallery/webp/IMG_4713.webp',
-    'photos/homepage gallery/webp/IMG_5439.webp',
-    'photos/homepage gallery/webp/IMG_7144.webp',
-    'photos/homepage gallery/webp/IMG_8839.webp',
-    'photos/homepage gallery/webp/IMG_9079.webp',
-    'photos/homepage gallery/webp/IMG_9683.webp',
-    'photos/homepage gallery/webp/IMG_9732.webp',
-    'photos/homepage gallery/webp/IMG_9733.webp',
-    'photos/homepage gallery/webp/IMG_9862.webp',
+    'photos/homepage gallery/webp/1.webp',
+    'photos/homepage gallery/webp/2.webp',
+    'photos/homepage gallery/webp/3.webp',
+    'photos/homepage gallery/webp/4.webp',
+    'photos/homepage gallery/webp/5.webp',
+    'photos/homepage gallery/webp/6.webp',
+    'photos/homepage gallery/webp/7.webp',
+    'photos/homepage gallery/webp/8.webp',
+    'photos/homepage gallery/webp/9.webp',
+    'photos/homepage gallery/webp/10.webp',
   ];
 
   (function buildGallery() {
@@ -2485,9 +2461,12 @@
         d.classList.toggle('active', i === cur));
       // update thumbnails
       thumbButtons.forEach((t, i) => t.classList.toggle('active', i === cur));
-      // scroll active thumb into view
+      // scroll active thumb into view (horizontal only, never move page)
       if (thumbButtons[cur] && thumbsEl) {
-        thumbButtons[cur].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+        const thumbRect = thumbButtons[cur].getBoundingClientRect();
+        const containerRect = thumbsEl.getBoundingClientRect();
+        const offset = thumbRect.left - containerRect.left - (containerRect.width / 2) + (thumbRect.width / 2);
+        thumbsEl.scrollBy({ left: offset, behavior: 'smooth' });
       }
       clearTimeout(timer);
       timer = setTimeout(next, 4800);

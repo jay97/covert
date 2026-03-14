@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Parks & Gardens — Covert Coffee</title>
+  <title>Reading — Covert Coffee</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -16,8 +16,6 @@
       --espresso: #594A3C;
       --ink:      #2a211a;
       --mono:     "JetBrains Mono", "Courier New", monospace;
-      --garden:   #4f8d6a;
-      --park:     #6aa56a;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -180,23 +178,21 @@
       padding: 0 28px 80px;
     }
 
-    /* ── PARK CARDS ── */
-    .park-card {
-      background: rgba(106,165,106,0.04);
-      border: 1px solid rgba(106,165,106,0.18);
-      padding: 32px 24px;
-      margin-bottom: 20px;
-      border-radius: 2px;
+    /* ── BOOK CARD ── */
+    .book-card {
+      padding: 36px 0 36px;
+      border-bottom: 1px solid rgba(89,74,60,0.09);
     }
+    .book-card:last-child { border-bottom: none; }
 
-    .park-card-meta {
+    .book-meta {
       display: flex;
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 10px;
     }
-    .park-type-badge {
+    .book-badge {
       font-family: var(--mono);
       font-size: 0.52rem;
       letter-spacing: 0.07em;
@@ -206,57 +202,53 @@
       border-radius: 2px;
       opacity: 0.5;
     }
-    .park-type-badge.garden { border-color: rgba(79,141,106,0.4); color: #3a6b52; opacity: 0.8; }
-    .park-type-badge.park   { border-color: rgba(106,165,106,0.4); color: #3a6b3a; opacity: 0.8; }
-
-    .park-distance {
+    .book-rating {
       font-family: var(--mono);
       font-size: 0.52rem;
       letter-spacing: 0.06em;
       color: var(--espresso);
-      opacity: 0.32;
+      opacity: 0.42;
     }
 
-    .park-name {
-      font-size: clamp(1.3rem, 4vw, 1.9rem);
+    .book-title {
+      font-size: clamp(1.2rem, 3.5vw, 1.65rem);
       font-style: italic;
       font-weight: 400;
       color: var(--espresso);
-      line-height: 1.2;
+      line-height: 1.25;
       margin-bottom: 6px;
     }
-
-    .park-address {
+    .book-author {
       font-family: var(--mono);
-      font-size: 0.56rem;
+      font-size: 0.62rem;
       letter-spacing: 0.05em;
       color: var(--espresso);
-      opacity: 0.38;
-      margin-bottom: 14px;
+      opacity: 0.45;
+      margin-bottom: 16px;
     }
-
-    .featured-rule {
-      height: 1px;
-      background: linear-gradient(to right, rgba(106,165,106,0.3), transparent);
-      margin: 14px 0 16px;
-    }
-
-    .park-note {
+    .book-desc {
       font-family: "Averia Serif Libre", serif;
       font-weight: 300;
       font-size: 0.95rem;
       line-height: 1.82;
       color: var(--ink);
       opacity: 0.72;
+      margin-bottom: 18px;
+    }
+    .book-details {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      opacity: 0.32;
       margin-bottom: 16px;
     }
-
-    .park-links {
+    .book-links {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
-    .park-link {
+    .book-link {
       font-family: var(--mono);
       font-size: 0.54rem;
       font-weight: 300;
@@ -271,7 +263,13 @@
       -webkit-tap-highlight-color: transparent;
       opacity: 0.7;
     }
-    .park-link:hover { background: rgba(89,74,60,0.07); border-color: rgba(89,74,60,0.36); opacity: 1; }
+    .book-link:hover { background: rgba(89,74,60,0.07); border-color: rgba(89,74,60,0.36); opacity: 1; }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, rgba(89,74,60,0.15), transparent);
+      margin: 8px 0;
+    }
 
     /* ── REVEAL ── */
     .reveal {
@@ -286,7 +284,6 @@
       nav { padding: 0 18px; }
       .content { padding: 0 20px 64px; }
       .page-header { padding: 40px 20px 32px; }
-      .park-card { padding: 24px 16px; }
     }
   </style>
 </head>
@@ -320,41 +317,42 @@
 
   <!-- PAGE HEADER -->
   <div class="page-header">
-    <p class="mono-label">bushwick · bed-stuy · 11207</p>
-    <h1>Parks &amp; Gardens</h1>
-    <p class="sub">Green space within walking distance of 1643 Broadway.</p>
+    <p class="mono-label">featured reading</p>
+    <h1>Reading</h1>
+    <p class="sub">Books on the shelf at 1643 Broadway.</p>
   </div>
 
   <div class="content">
 
-    <!-- SARATOGA PARK -->
-    <div class="park-card reveal">
-      <div class="park-card-meta">
-        <span class="park-type-badge park">park</span>
-        <span class="park-distance">~1.2 mi</span>
+    <!-- WAR AGAINST ALL PUERTO RICANS -->
+    <div class="book-card reveal">
+      <div class="book-meta">
+        <span class="book-badge">featured</span>
+        <span class="book-rating">4.56 · 4,416 ratings</span>
       </div>
-      <div class="park-name">Saratoga Park</div>
-      <div class="park-address">Halsey St, Macon St, Saratoga Ave, Howard Ave</div>
-      <div class="featured-rule"></div>
-      <p class="park-note">A 3.2-acre neighborhood park established in 1896, bounded by Halsey Street, Macon Street, Howard Avenue, and Saratoga Avenue.</p>
-      <div class="park-links">
-        <a class="park-link" href="https://www.nycgovparks.org/parks/saratoga-park" target="_blank" rel="noopener">↗ nyc parks</a>
-        <a class="park-link" href="https://www.google.com/maps/dir/1643+Broadway,Brooklyn,NY/Saratoga+Park+Brooklyn+NY" target="_blank" rel="noopener">↗ directions</a>
+      <div class="book-title">War Against All Puerto Ricans</div>
+      <div class="book-author">Nelson A. Denis · 2015</div>
+      <div class="book-desc">Revolution and terror in America's colony. In 1950, Puerto Rico's Nationalist Party staged an armed insurrection following decades of military occupation and colonial rule. The uprising triggered widespread violence across the island, including assassination attempts on President Truman and armed clashes in multiple towns.</div>
+      <div class="book-details">400 pages · Nation Books</div>
+      <div class="book-links">
+        <a class="book-link" href="https://www.goodreads.com/book/show/22928891-war-against-all-puerto-ricans" target="_blank" rel="noopener">↗ goodreads</a>
       </div>
     </div>
 
-    <!-- COOPER STREET COMMUNITY GARDEN -->
-    <div class="park-card reveal">
-      <div class="park-card-meta">
-        <span class="park-type-badge garden">community garden</span>
-        <span class="park-distance">~0.4 mi</span>
+    <div class="section-divider"></div>
+
+    <!-- THE GREAT BRIDGE -->
+    <div class="book-card reveal">
+      <div class="book-meta">
+        <span class="book-badge">featured</span>
+        <span class="book-rating">4.26 · 18,772 ratings</span>
       </div>
-      <div class="park-name">Cooper Street Community Garden</div>
-      <div class="park-address">34 Cooper St</div>
-      <div class="featured-rule"></div>
-      <div class="park-links">
-        <a class="park-link" href="https://www.instagram.com/cooperstreetgarden/" target="_blank" rel="noopener">@cooperstreetgarden</a>
-        <a class="park-link" href="https://www.google.com/maps/dir/1643+Broadway,Brooklyn,NY/34+Cooper+St+Brooklyn+NY" target="_blank" rel="noopener">↗ directions</a>
+      <div class="book-title">The Great Bridge</div>
+      <div class="book-author">David McCullough · 1972</div>
+      <div class="book-desc">The epic story of the building of the Brooklyn Bridge. This work chronicles how the Brooklyn Bridge was constructed between 1869 and 1883, transforming from an impossibility destined to fail into an engineering triumph. The narrative follows chief engineer Washington Roebling and his wife Emily as they navigate both technical obstacles and political corruption to complete this iconic American structure.</div>
+      <div class="book-details">608 pages · Simon &amp; Schuster</div>
+      <div class="book-links">
+        <a class="book-link" href="https://www.goodreads.com/book/show/2369.The_Great_Bridge" target="_blank" rel="noopener">↗ goodreads</a>
       </div>
     </div>
 
