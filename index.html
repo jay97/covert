@@ -1038,27 +1038,23 @@
     .shop-slider {
       position: relative;
       width: 100%;
+      aspect-ratio: 3 / 2;
       margin-bottom: 22px;
       overflow: hidden;
       border-radius: 1px;
-      background: var(--tan);
-      max-height: 72vh;
+      background: var(--ink);
     }
-
-    /* film grain + faded colour via CSS filter + overlay */
     .shop-slider::after {
       content: '';
       position: absolute;
       inset: 0;
       z-index: 4;
       pointer-events: none;
-      /* grain texture */
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
       background-size: 120px;
       opacity: 0.18;
       mix-blend-mode: multiply;
     }
-    /* warm vignette */
     .shop-slider::before {
       content: '';
       position: absolute;
@@ -1067,25 +1063,22 @@
       pointer-events: none;
       background: radial-gradient(ellipse at center, transparent 40%, rgba(43,22,8,0.52) 100%);
     }
-
     .shop-slides {
       display: flex;
-      width: 100%;
+      height: 100%;
       transition: transform 0.7s cubic-bezier(0.45, 0, 0.2, 1);
       will-change: transform;
     }
-
     .shop-slide {
       min-width: 100%;
+      height: 100%;
       flex-shrink: 0;
-      overflow: hidden;
     }
-
     .shop-slide img {
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
-      /* desaturate + warm tone to feel analogue */
+      object-fit: cover;
       filter: saturate(0.45) sepia(0.35) brightness(0.88) contrast(1.08);
       pointer-events: none;
       user-select: none;
@@ -1113,6 +1106,43 @@
     .shop-dot.active {
       background: rgba(242,228,187,0.9);
       transform: scale(1.3);
+    }
+
+    /* thumbnail strip */
+    .shop-thumbs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      padding: 6px 0 2px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+    .shop-thumbs::-webkit-scrollbar { display: none; }
+    .shop-thumb {
+      flex-shrink: 0;
+      width: 56px;
+      height: 38px;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      opacity: 0.45;
+      transition: opacity 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .shop-thumb:hover { opacity: 0.75; }
+    .shop-thumb.active {
+      opacity: 1;
+      border-color: var(--espresso);
+    }
+    .shop-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.4) sepia(0.25) brightness(0.9);
+      pointer-events: none;
     }
 
     /* inline info row (instagram · wholesale) */
@@ -1172,57 +1202,13 @@
        POSTCARD LOCATION
     ══════════════════════════════ */
     .postcard {
-      display: flex;
-      gap: 0;
       border: 1px solid rgba(92,74,56,0.18);
       background: rgba(242,228,187,0.18);
-      max-width: 340px;
-      position: relative;
-      overflow: hidden;
-    }
-    /* aged paper texture on the card */
-    .postcard::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 90px;
-      opacity: 0.06;
-    }
-    .postcard-left {
-      width: 44px;
-      flex-shrink: 0;
-      border-right: 1px solid rgba(92,74,56,0.12);
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 10px;
-    }
-    .postcard-stamp {
-      width: 26px;
-      height: 32px;
-      border: 1px solid rgba(92,74,56,0.25);
-      background: rgba(92,74,56,0.04);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      position: relative;
-    }
-    /* perforated stamp edge */
-    .postcard-stamp::before {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border: 2px dotted rgba(92,74,56,0.2);
-    }
-    .postcard-right {
-      flex: 1;
-      padding: 10px 12px 10px;
+      padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      max-width: 300px;
     }
     .postcard-address {
       border-left: 2px solid rgba(92,74,56,0.14);
@@ -1346,6 +1332,7 @@
       </div>
       <div class="shop-dots" id="shop-dots"></div>
     </div>
+    <div class="shop-thumbs" id="shop-thumbs"></div>
 
 
     <!-- ON BAR TODAY -->
@@ -1396,21 +1383,16 @@
         <span class="info-key">location</span>
         <span class="info-val">
           <div class="postcard">
-            <div class="postcard-left">
-              <div class="postcard-stamp">☕</div>
+            <div class="postcard-address">
+              <div class="postcard-line postcard-name">Covert Coffee</div>
+              <div class="postcard-line">1643 Broadway</div>
+              <div class="postcard-line">Brooklyn, NY 11207</div>
+              <div class="postcard-coords">40.6896° N · 73.9197° W</div>
             </div>
-            <div class="postcard-right">
-              <div class="postcard-address">
-                <div class="postcard-line postcard-name">Covert Coffee</div>
-                <div class="postcard-line">1643 Broadway</div>
-                <div class="postcard-line">Brooklyn, NY 11207</div>
-                <div class="postcard-coords">40.6896° N · 73.9197° W</div>
-              </div>
-              <div class="postcard-links">
-                <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
-                <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">google maps</a>
-                <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">corner.inc</a>
-              </div>
+            <div class="postcard-links">
+              <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
+              <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">google maps</a>
+              <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">corner.inc</a>
             </div>
           </div>
         </span>
@@ -1637,65 +1619,10 @@
   // Zip 11207, Brooklyn NY
   // ═══════════════════════════════════════════════════════
 
-  // wttr.in weather-code → description
-  function wxDesc(code) {
-    const n = parseInt(code, 10);
-    if (n === 113) return 'clear';
-    if (n === 116) return 'partly cloudy';
-    if (n === 119 || n === 122) return 'overcast';
-    if (n >= 143 && n <= 248) return 'fog';
-    if (n >= 263 && n <= 281) return 'drizzle';
-    if (n >= 293 && n <= 321) return 'rain';
-    if (n >= 323 && n <= 377) return 'snow';
-    if (n >= 386 && n <= 395) return 'thunderstorm';
-    if (n >= 176 && n <= 186) return 'showers';
-    return 'cloudy';
-  }
-
-  function wxIcon(code) {
-    const n = parseInt(code, 10);
-    if (n === 113) return '◌';
-    if (n === 116) return '◑';
-    if (n === 119 || n === 122) return '●';
-    if (n >= 143 && n <= 248) return '≋';
-    if (n >= 263 && n <= 281) return '·';
-    if (n >= 293 && n <= 321) return '⌇';
-    if (n >= 323 && n <= 377) return '*';
-    if (n >= 386 && n <= 395) return '↯';
-    return '●';
-  }
-
   function windArrow(deg) {
     const dirs = ['↑','↗','→','↘','↓','↙','←','↖'];
     return dirs[Math.round(deg / 45) % 8];
   }
-
-  // JSONP callback — called by wttr.in script tag
-  window._wxCallback = function(data) {
-    try {
-      const c = data.current_condition[0];
-      const temp    = c.temp_F;
-      const code    = c.weatherCode;
-      const wind    = Math.round(parseFloat(c.windspeedMiles));
-      const windDir = parseInt(c.winddirDegree, 10);
-      const hum     = c.humidity;
-      const desc    = wxDesc(code);
-      const icon    = wxIcon(code);
-      const arrow   = windArrow(windDir);
-
-      const el = id => document.getElementById(id);
-      if (el('wx-temp'))  el('wx-temp').textContent  = `${temp}°f`;
-      if (el('wx-icon'))  el('wx-icon').textContent  = icon;
-      if (el('wx-desc'))  el('wx-desc').textContent  = desc;
-      if (el('wx-wind'))  el('wx-wind').textContent  = `${arrow} ${wind} mph`;
-    } catch(e) {
-      console.warn('weather parse:', e);
-      wxHide();
-    }
-    // clean up script tag
-    const s = document.getElementById('wx-script');
-    if (s) s.remove();
-  };
 
   function wxHide() {
     const bar = document.getElementById('weather-bar');
@@ -1704,19 +1631,65 @@
     if (sf) sf.style.paddingTop = 'calc(56px + 36px)';
   }
 
-  function fetchWeather() {
-    // Abort and hide if previous script didn't fire within 5s
-    const timeout = setTimeout(wxHide, 5000);
-    const orig = window._wxCallback;
-    window._wxCallback = function(data) {
+  async function fetchWeather() {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 6000);
+      const resp = await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.6896&longitude=-73.9197&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York', {
+        signal: controller.signal,
+        cache: 'no-store',
+      });
       clearTimeout(timeout);
-      orig(data);
-    };
-    const s = document.createElement('script');
-    s.id = 'wx-script';
-    s.src = 'https://wttr.in/11207?format=j1&callback=_wxCallback';
-    s.onerror = () => { clearTimeout(timeout); wxHide(); s.remove(); };
-    document.head.appendChild(s);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const data = await resp.json();
+      const cur = data.current;
+      const temp = Math.round(cur.temperature_2m);
+      const wmo  = cur.weather_code;
+      const wind = Math.round(cur.wind_speed_10m);
+      const windDir = cur.wind_direction_10m;
+
+      // WMO weather code → description & icon
+      function wmoDesc(c) {
+        if (c === 0) return 'clear';
+        if (c <= 3) return ['mainly clear','partly cloudy','overcast'][c - 1];
+        if (c >= 45 && c <= 48) return 'fog';
+        if (c >= 51 && c <= 55) return 'drizzle';
+        if (c >= 56 && c <= 57) return 'freezing drizzle';
+        if (c >= 61 && c <= 65) return 'rain';
+        if (c >= 66 && c <= 67) return 'freezing rain';
+        if (c >= 71 && c <= 77) return 'snow';
+        if (c >= 80 && c <= 82) return 'showers';
+        if (c >= 85 && c <= 86) return 'snow showers';
+        if (c >= 95 && c <= 99) return 'thunderstorm';
+        return 'cloudy';
+      }
+      function wmoIcon(c) {
+        if (c === 0) return '◌';
+        if (c <= 2) return '◑';
+        if (c === 3) return '●';
+        if (c >= 45 && c <= 48) return '≋';
+        if (c >= 51 && c <= 57) return '·';
+        if (c >= 61 && c <= 67) return '⌇';
+        if (c >= 71 && c <= 77) return '*';
+        if (c >= 80 && c <= 82) return '⌇';
+        if (c >= 85 && c <= 86) return '*';
+        if (c >= 95) return '↯';
+        return '●';
+      }
+
+      const desc  = wmoDesc(wmo);
+      const icon  = wmoIcon(wmo);
+      const arrow = windArrow(windDir);
+
+      const el = id => document.getElementById(id);
+      if (el('wx-temp'))  el('wx-temp').textContent = `${temp}°f`;
+      if (el('wx-icon'))  el('wx-icon').textContent = icon;
+      if (el('wx-desc'))  el('wx-desc').textContent = desc;
+      if (el('wx-wind'))  el('wx-wind').textContent = `${arrow} ${wind} mph`;
+    } catch(e) {
+      console.warn('weather fetch:', e);
+      wxHide();
+    }
   }
 
   // ═══════════════════════════════════════════════════════
@@ -2096,7 +2069,7 @@
 
     tick();
     clearTimeout(refreshTimer);
-    refreshTimer = setTimeout(doRefresh, 60000);
+    refreshTimer = setTimeout(doRefresh, 45000);
   }
 
   // ── Scroll reveal ──────────────────────────────────────
@@ -2109,42 +2082,60 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   // ── Homepage gallery — auto-pull from folder ──────────
+  const GALLERY_PHOTOS = [
+    'photos/homepage gallery/webp/IMG_2424.webp',
+    'photos/homepage gallery/webp/IMG_3323.webp',
+    'photos/homepage gallery/webp/IMG_3837.webp',
+    'photos/homepage gallery/webp/IMG_4713.webp',
+    'photos/homepage gallery/webp/IMG_5439.webp',
+    'photos/homepage gallery/webp/IMG_7144.webp',
+    'photos/homepage gallery/webp/IMG_8839.webp',
+    'photos/homepage gallery/webp/IMG_9079.webp',
+    'photos/homepage gallery/webp/IMG_9683.webp',
+    'photos/homepage gallery/webp/IMG_9732.webp',
+    'photos/homepage gallery/webp/IMG_9733.webp',
+    'photos/homepage gallery/webp/IMG_9862.webp',
+  ];
+
   (function buildGallery() {
-    const GALLERY_PHOTOS = [
-      'photos/homepage gallery/webp/IMG_2424.webp',
-      'photos/homepage gallery/webp/IMG_3323.webp',
-      'photos/homepage gallery/webp/IMG_3837.webp',
-      'photos/homepage gallery/webp/IMG_4713.webp',
-      'photos/homepage gallery/webp/IMG_5439.webp',
-      'photos/homepage gallery/webp/IMG_7144.webp',
-      'photos/homepage gallery/webp/IMG_8839.webp',
-      'photos/homepage gallery/webp/IMG_9079.webp',
-      'photos/homepage gallery/webp/IMG_9683.webp',
-      'photos/homepage gallery/webp/IMG_9732.webp',
-      'photos/homepage gallery/webp/IMG_9733.webp',
-      'photos/homepage gallery/webp/IMG_9862.webp',
-    ];
     const slides = document.getElementById('shop-slides');
+    const thumbs = document.getElementById('shop-thumbs');
     if (!slides) return;
-    GALLERY_PHOTOS.forEach(src => {
+    GALLERY_PHOTOS.forEach((src, i) => {
+      // main slide
       const div = document.createElement('div');
       div.className = 'shop-slide';
       const img = document.createElement('img');
       img.src = src;
       img.alt = '';
-      img.loading = 'lazy';
+      img.loading = i < 2 ? 'eager' : 'lazy';
       div.appendChild(img);
       slides.appendChild(div);
+
+      // thumbnail
+      if (thumbs) {
+        const thumb = document.createElement('button');
+        thumb.className = 'shop-thumb' + (i === 0 ? ' active' : '');
+        thumb.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        const tImg = document.createElement('img');
+        tImg.src = src;
+        tImg.alt = '';
+        tImg.loading = 'lazy';
+        thumb.appendChild(tImg);
+        thumbs.appendChild(thumb);
+      }
     });
   })();
 
   // ── Photo slider ───────────────────────────────────────
   (function initSlider() {
-    const slides = document.getElementById('shop-slides');
-    const dotsEl = document.getElementById('shop-dots');
+    const slides  = document.getElementById('shop-slides');
+    const dotsEl  = document.getElementById('shop-dots');
+    const thumbsEl = document.getElementById('shop-thumbs');
     if (!slides || !dotsEl) return;
 
     const total = slides.children.length;
+    const thumbButtons = thumbsEl ? Array.from(thumbsEl.querySelectorAll('.shop-thumb')) : [];
     let cur = 0, timer, startX = 0, isDragging = false;
 
     // Build dots
@@ -2156,11 +2147,22 @@
       dotsEl.appendChild(d);
     }
 
+    // Wire up thumbnail clicks
+    thumbButtons.forEach((btn, i) => {
+      btn.addEventListener('click', () => go(i));
+    });
+
     function go(n) {
       cur = (n + total) % total;
       slides.style.transform = `translateX(-${cur * 100}%)`;
       dotsEl.querySelectorAll('.shop-dot').forEach((d, i) =>
         d.classList.toggle('active', i === cur));
+      // update thumbnails
+      thumbButtons.forEach((t, i) => t.classList.toggle('active', i === cur));
+      // scroll active thumb into view
+      if (thumbButtons[cur] && thumbsEl) {
+        thumbButtons[cur].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+      }
       clearTimeout(timer);
       timer = setTimeout(next, 4800);
     }
@@ -2198,36 +2200,38 @@
   function updateNeonSign() {
     const sign = document.getElementById('neon-sign');
     if (!sign) return;
-    // Convert to America/New_York regardless of visitor's timezone
-    const now = new Date();
-    const nyStr = now.toLocaleString('en-US', { timeZone: 'America/New_York', hour12: false,
-      weekday: 'short', hour: 'numeric', minute: 'numeric' });
-    // Parse: e.g. "Mon, 14:32"
-    const parts = now.toLocaleString('en-US', { timeZone: 'America/New_York', hour12: false,
-      weekday: 'short', hour: '2-digit', minute: '2-digit' }).split(', ');
-    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const dayIdx = dayNames.indexOf(parts[0]);
-    const timeParts = parts[1].split(':');
-    const h = parseInt(timeParts[0], 10);  // 0–23
-    const m = parseInt(timeParts[1], 10);
+    try {
+      // Get NY time parts reliably using Intl
+      const ny = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+      const nyDate = new Date(ny);
+      const dayIdx = nyDate.getDay();    // 0=Sun
+      const h = nyDate.getHours();       // 0–23
+      const m = nyDate.getMinutes();
 
-    const hrsToday = HOURS[dayIdx >= 0 ? dayIdx : 0];
-    const minuteOfDay = h * 60 + m;
-    const openMin  = hrsToday.open  * 60;
-    const closeMin = hrsToday.close * 60;
-    const isOpen = minuteOfDay >= openMin && minuteOfDay < closeMin;
+      const hrsToday = HOURS[dayIdx];
+      const minuteOfDay = h * 60 + m;
+      const openMin  = hrsToday.open  * 60;
+      const closeMin = hrsToday.close * 60;
+      const isOpen = minuteOfDay >= openMin && minuteOfDay < closeMin;
 
-    sign.textContent = isOpen ? 'open' : 'closed';
-    sign.className   = 'neon-sign ' + (isOpen ? 'open' : 'closed');
+      sign.textContent = isOpen ? 'open' : 'closed';
+      sign.className   = 'neon-sign ' + (isOpen ? 'open' : 'closed');
+    } catch(e) {
+      console.warn('neon sign:', e);
+      sign.textContent = '';
+    }
   }
 
   updateNeonSign();
   setInterval(updateNeonSign, 30 * 1000); // recheck every 30 s
 
   // ── Boot ───────────────────────────────────────────────
-  doRefresh();
-  fetchWeather();
-  setInterval(fetchWeather, 10 * 60 * 1000); // refresh weather every 10 min
+  // Weather: fire immediately, independently of transit
+  setTimeout(() => fetchWeather().catch(e => console.warn('wx boot:', e)), 0);
+  setInterval(() => fetchWeather().catch(() => {}), 10 * 60 * 1000);
+
+  // Transit: auto-load on boot
+  setTimeout(() => doRefresh(), 50);
   </script>
 
 </body>
