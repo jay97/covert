@@ -273,6 +273,119 @@
     }
     .park-link:hover { background: rgba(89,74,60,0.07); border-color: rgba(89,74,60,0.36); opacity: 1; }
 
+    /* ── PARK HISTORY ── */
+    .park-history-label {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--espresso);
+      opacity: 0.35;
+      margin: 20px 0 8px;
+    }
+    .park-history {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1.82;
+      color: var(--ink);
+      opacity: 0.65;
+      margin-bottom: 6px;
+    }
+
+    /* ── PARK STATS ── */
+    .park-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 6px;
+    }
+    .park-stat {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.05em;
+      color: var(--espresso);
+      opacity: 0.45;
+      border: 1px solid rgba(106,165,106,0.2);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .park-stat strong {
+      font-weight: 400;
+      opacity: 1;
+      color: var(--garden);
+    }
+    .tree-glyph {
+      color: var(--garden);
+      vertical-align: -1px;
+      margin-right: 2px;
+    }
+    .park-stat-link {
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .park-stat-link:hover {
+      background: rgba(106,165,106,0.08);
+      border-color: rgba(106,165,106,0.4);
+    }
+
+    /* ── FACILITIES ── */
+    .park-facilities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 18px;
+    }
+    .park-facility {
+      font-family: var(--mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.05em;
+      color: var(--espresso);
+      opacity: 0.38;
+      background: rgba(106,165,106,0.06);
+      border: 1px solid rgba(106,165,106,0.12);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    /* ── SOURCE ── */
+    .park-source {
+      font-family: var(--mono);
+      font-size: 0.46rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      opacity: 0.28;
+      margin-top: 14px;
+    }
+    .park-source a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .park-source a:hover { opacity: 0.7; }
+
+    /* ── IG EMBED ── */
+    .park-ig {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .park-ig-icon {
+      width: 16px; height: 16px; opacity: 0.5;
+    }
+    .park-ig a {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      text-decoration: none;
+      opacity: 0.55;
+      transition: opacity 0.15s;
+    }
+    .park-ig a:hover { opacity: 0.9; }
+
     /* ── REVEAL ── */
     .reveal {
       opacity: 0;
@@ -322,7 +435,7 @@
   <div class="page-header">
     <p class="mono-label">bushwick · bed-stuy · 11207</p>
     <h1>Parks &amp; Gardens</h1>
-    <p class="sub">Green space within walking distance of 1643 Broadway.</p>
+    <p class="sub">Green space within distance of Covert.</p>
   </div>
 
   <div class="content">
@@ -336,11 +449,31 @@
       <div class="park-name">Saratoga Park</div>
       <div class="park-address">Halsey St, Macon St, Saratoga Ave, Howard Ave</div>
       <div class="featured-rule"></div>
-      <p class="park-note">A 3.2-acre neighborhood park established in 1896, bounded by Halsey Street, Macon Street, Howard Avenue, and Saratoga Avenue.</p>
+
+      <div class="park-stats">
+        <a class="park-stat park-stat-link" href="https://tree-map.nycgovparks.org" target="_blank" rel="noopener"><svg class="tree-glyph" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5L3.5 7h2.3L3 11h3.5V14.5h3V11H13l-2.8-4h2.3z"/></svg> <strong>97</strong> mapped trees</a>
+      </div>
+
+      <div class="park-facilities">
+        <span class="park-facility">Great Trees</span>
+        <span class="park-facility">Playgrounds</span>
+        <span class="park-facility">Public Restrooms</span>
+        <span class="park-facility">Spray Showers</span>
+        <span class="park-facility">Wi-Fi Hot Spots</span>
+      </div>
+
       <div class="park-links">
         <a class="park-link" href="https://www.nycgovparks.org/parks/saratoga-park" target="_blank" rel="noopener">↗ nyc parks</a>
         <a class="park-link" href="https://www.google.com/maps/dir/1643+Broadway,Brooklyn,NY/Saratoga+Park+Brooklyn+NY" target="_blank" rel="noopener">↗ directions</a>
       </div>
+
+      <div class="park-history-label">What was here before?</div>
+      <p class="park-history">Prior to its acquisition as a park, this site, a full square city block, was the property of James C. Brower and his wife. The open land was used as a circus grounds.</p>
+
+      <div class="park-history-label">How did this site become a park?</div>
+      <p class="park-history">The City of Brooklyn purchased the land for park use in 1896. The park was soon graded and planted, and workers laid new paths and enclosed the area with an iron picket fence. The land's conversion into a park was said to be "greatly appreciated by the owners of property in the neighborhood." A brick and wood frame shelter was erected in the park in 1903. In 1914 the park's gas lamps were electrified and replaced with tungsten-powered luminaires.</p>
+
+      <p class="park-source">Source: <a href="https://www.nycgovparks.org/parks/saratoga-park" target="_blank" rel="noopener">NYC Parks — Saratoga Park</a></p>
     </div>
 
     <!-- COOPER STREET COMMUNITY GARDEN -->
@@ -352,8 +485,11 @@
       <div class="park-name">Cooper Street Community Garden</div>
       <div class="park-address">34 Cooper St</div>
       <div class="featured-rule"></div>
+      <div class="park-ig">
+        <svg class="park-ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        <a href="https://www.instagram.com/cooperstreetgarden/" target="_blank" rel="noopener">@cooperstreetgarden</a>
+      </div>
       <div class="park-links">
-        <a class="park-link" href="https://www.instagram.com/cooperstreetgarden/" target="_blank" rel="noopener">@cooperstreetgarden</a>
         <a class="park-link" href="https://www.google.com/maps/dir/1643+Broadway,Brooklyn,NY/34+Cooper+St+Brooklyn+NY" target="_blank" rel="noopener">↗ directions</a>
       </div>
     </div>
