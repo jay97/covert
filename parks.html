@@ -43,35 +43,28 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 900;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 28px;
-      background: rgba(242,236,228,0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      padding: 18px 28px;
       border-bottom: 1px solid rgba(89,74,60,0.1);
     }
-    .nav-logo img { height: 34px; width: auto; display: block; opacity: 0.88; }
-    .nav-links { display: flex; gap: 22px; list-style: none; }
-    .nav-links a {
+    .nav-logo img { height: 22px; width: auto; display: block; opacity: 0.82; }
+    .nav-back {
       font-family: var(--mono);
       font-weight: 300;
-      font-size: 0.66rem;
-      letter-spacing: 0.04em;
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
       color: var(--espresso);
       text-decoration: none;
-      opacity: 0.55;
+      opacity: 0.5;
       transition: opacity 0.2s;
     }
-    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-back:hover { opacity: 1; }
 
     /* ── PAGE HEADER ── */
     .page-header {
-      padding: 110px 28px 40px;
+      padding: 60px 28px 40px;
       max-width: 680px;
       margin: 0 auto;
     }
@@ -307,9 +300,8 @@
     /* ── MOBILE ── */
     @media (max-width: 600px) {
       nav { padding: 13px 18px; }
-      .nav-links { gap: 16px; }
       .content { padding: 0 20px 64px; }
-      .page-header { padding: 90px 20px 32px; }
+      .page-header { padding: 40px 20px 32px; }
       .park-card.featured { padding: 24px 16px; }
     }
   </style>
@@ -320,12 +312,7 @@
     <a class="nav-logo" href="index.html">
       <img src="logo.png" alt="Covert Coffee">
     </a>
-    <ul class="nav-links">
-      <li><a href="index.html">home</a></li>
-      <li><a href="history.html">archive</a></li>
-      <li><a href="parks.html" class="active">parks</a></li>
-      <li><a href="https://www.instagram.com/covertcoffeebk/" target="_blank">instagram</a></li>
-    </ul>
+    <a class="nav-back" href="index.html">&larr; home</a>
   </nav>
 
   <!-- PAGE HEADER -->
