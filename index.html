@@ -1310,54 +1310,6 @@
       97%      { opacity: 1; }
     }
 
-    /* ══════════════════════════════
-       POSTCARD LOCATION
-    ══════════════════════════════ */
-    .postcard {
-      border: 1px solid rgba(92,74,56,0.18);
-      background: rgba(242,228,187,0.18);
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-width: 300px;
-    }
-    .postcard-address {
-      border-left: 2px solid rgba(92,74,56,0.14);
-      padding-left: 8px;
-    }
-    .postcard-line {
-      font-family: "Averia Serif Libre", serif;
-      font-weight: 300;
-      font-size: 0.8rem;
-      color: var(--espresso);
-      opacity: 0.75;
-      line-height: 1.55;
-    }
-    .postcard-name {
-      font-family: "IM Fell French Canon", serif;
-      font-style: italic;
-      font-size: 0.92rem;
-      opacity: 0.85;
-    }
-    .postcard-coords {
-      font-family: var(--mono);
-      font-size: 0.42rem;
-      letter-spacing: 0.07em;
-      color: var(--espresso);
-      opacity: 0.28;
-      margin-top: 4px;
-    }
-    .postcard-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-    .postcard-links .map-link {
-      font-size: 0.5rem;
-      padding: 3px 8px;
-    }
-
     /* bigger menu button */
     .menu-btn-hero {
       font-size: 0.82rem;
@@ -1492,18 +1444,14 @@
       <div class="info-row">
         <span class="info-key">location</span>
         <span class="info-val">
-          <div class="postcard">
-            <div class="postcard-address">
-              <div class="postcard-line postcard-name">Covert Coffee</div>
-              <div class="postcard-line">1643 Broadway</div>
-              <div class="postcard-line">Brooklyn, NY 11207</div>
-              <div class="postcard-coords">40.6896° N · 73.9197° W</div>
-            </div>
-            <div class="postcard-links">
-              <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
-              <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">google maps</a>
-              <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">corner.inc</a>
-            </div>
+          <div class="address-display">
+            <div class="address-big">1643 Broadway</div>
+            <div class="address-note">Brooklyn, NY 11207</div>
+          </div>
+          <div class="map-links">
+            <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
+            <a class="map-link" href="https://www.google.com/maps/place/1643+Broadway,+Brooklyn,+NY+11207" target="_blank" rel="noopener">google maps</a>
+            <a class="map-link" href="https://www.corner.inc/place/321238" target="_blank" rel="noopener">corner.inc</a>
           </div>
         </span>
       </div>
