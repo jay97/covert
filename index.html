@@ -1466,34 +1466,7 @@
       <button class="drawer-close" onclick="document.getElementById('nav-drawer').classList.remove('open')">✕ close</button>
 
       <div class="drawer-section-label">navigate</div>
-      <a class="drawer-link" href="#top" onclick="document.getElementById('nav-drawer').classList.remove('open')">Visit</a>
-      <a class="drawer-link" href="history.html">History</a>
-      <a class="drawer-link" href="parks.html">Parks &amp; Gardens</a>
-      <a class="drawer-link" href="reading.html">Reading</a>
-      <a class="drawer-link" href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">Instagram</a>
-      <a class="drawer-link" href="https://www.covert.coffee" target="_blank" rel="noopener">Wholesale</a>
-
-      <div class="drawer-section-label">recommended reading</div>
-      <div class="drawer-book">
-        <span class="drawer-book-title">Brooklyn: The Once and Future City</span>
-        <span class="drawer-book-author">Thomas J. Campanella</span>
-      </div>
-      <div class="drawer-book">
-        <span class="drawer-book-title">The Neighborhoods of Brooklyn</span>
-        <span class="drawer-book-author">Kenneth T. Jackson &amp; John B. Manbeck</span>
-      </div>
-      <div class="drawer-book">
-        <span class="drawer-book-title">Bushwick: A Neighborhood Rediscovered</span>
-        <span class="drawer-book-author">Brooklyn Historical Society</span>
-      </div>
-      <div class="drawer-book">
-        <span class="drawer-book-title">Queens: What a Difference a Borough Makes</span>
-        <span class="drawer-book-author">Joe DiStefano</span>
-      </div>
-      <div class="drawer-book">
-        <span class="drawer-book-title">A History of New York in 27 Buildings</span>
-        <span class="drawer-book-author">Sam Roberts</span>
-      </div>
+      <div id="drawer-nav-links"></div>
     </div>
   </div>
 
@@ -2531,6 +2504,26 @@
 
   // Transit: auto-load on boot
   setTimeout(() => doRefresh(), 50);
+  </script>
+
+  <script>
+  fetch('nav.json').then(r => r.json()).then(links => {
+    const c = document.getElementById('drawer-nav-links');
+    if (!c) return;
+    links.forEach(link => {
+      const a = document.createElement('a');
+      a.className = 'drawer-link';
+      a.textContent = link.label;
+      if (link.href === 'index.html') {
+        a.href = '#top';
+        a.onclick = () => document.getElementById('nav-drawer').classList.remove('open');
+      } else {
+        a.href = link.href;
+      }
+      if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
+      c.appendChild(a);
+    });
+  });
   </script>
 
 </body>

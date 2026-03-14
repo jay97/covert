@@ -1107,12 +1107,7 @@
       <button class="drawer-close" onclick="document.getElementById('nav-drawer').classList.remove('open')">✕ close</button>
 
       <div class="drawer-section-label">navigate</div>
-      <a class="drawer-link" href="index.html">Visit</a>
-      <a class="drawer-link" href="history.html">History</a>
-      <a class="drawer-link" href="parks.html">Parks &amp; Gardens</a>
-      <a class="drawer-link" href="reading.html">Reading</a>
-      <a class="drawer-link" href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">Instagram</a>
-      <a class="drawer-link" href="https://www.covert.coffee" target="_blank" rel="noopener">Wholesale</a>
+      <div id="drawer-nav-links"></div>
     </div>
   </div>
 
@@ -1812,6 +1807,21 @@
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   })();
 
+  </script>
+
+  <script>
+  fetch('nav.json').then(r => r.json()).then(links => {
+    const c = document.getElementById('drawer-nav-links');
+    if (!c) return;
+    links.forEach(link => {
+      const a = document.createElement('a');
+      a.className = 'drawer-link';
+      a.href = link.href;
+      a.textContent = link.label;
+      if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
+      c.appendChild(a);
+    });
+  });
   </script>
 
 </body>
