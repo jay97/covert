@@ -1,0 +1,22 @@
+{
+  "bean": "Finca La Providencia",
+  "roaster": "Covert Coffee",
+  "origin": "Huehuetenango, Guatemala",
+  "process": "Washed",
+  "variety": "Caturra & Bourbon",
+  "altitude": "1,650 masl",
+  "roast": "Light",
+  "notes": "Brown sugar, tangerine, dark chocolate, walnut",
+  "harvest": "2025",
+
+  "shot": {
+    "dose": "18 g",
+    "yield": "36 g",
+    "ratio": "1 : 2",
+    "time": "25 – 30 s",
+    "temp": "93 – 94 °C  ·  200 – 201 °F",
+    "pressure": "9 bar",
+    "preinfusion": "~4 s  ·  low flow",
+    "grind": "Fine  ·  dial until 25 – 30 s lands"
+  }
+}

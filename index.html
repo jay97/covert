@@ -969,18 +969,24 @@
     .section-first { padding-top: calc(56px + 26px + 36px); }
 
     /* ══════════════════════════════
-       ON BAR TODAY
+       ON BAR TODAY — button
     ══════════════════════════════ */
-    .bar-today {
+    .bar-today-btn {
       display: flex;
       align-items: baseline;
+      gap: 6px 12px;
       flex-wrap: wrap;
-      gap: 4px 14px;
-      padding: 7px 12px 6px;
-      border: 1px solid rgba(92,74,56,0.1);
+      padding: 8px 14px 7px;
+      border: 1px solid rgba(92,74,56,0.14);
       background: rgba(92,74,56,0.02);
+      cursor: pointer;
       margin-bottom: 20px;
+      width: 100%;
+      text-align: left;
+      transition: background 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
     }
+    .bar-today-btn:hover { background: rgba(92,74,56,0.05); border-color: rgba(92,74,56,0.25); }
     .bar-today-kicker {
       font-family: var(--mono);
       font-size: 0.44rem;
@@ -1005,31 +1011,137 @@
       opacity: 0.3;
       flex-shrink: 0;
     }
-    .bar-today-settings {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0 10px;
-      margin-left: auto;
-    }
-    .bar-setting {
-      display: flex;
-      gap: 3px;
-      align-items: baseline;
-    }
-    .bar-setting-label {
+    .bar-today-arrow {
       font-family: var(--mono);
-      font-size: 0.4rem;
-      letter-spacing: 0.07em;
+      font-size: 0.56rem;
       color: var(--espresso);
-      opacity: 0.24;
-      text-transform: uppercase;
+      opacity: 0.25;
+      margin-left: auto;
+      flex-shrink: 0;
+      transition: transform 0.2s;
     }
-    .bar-setting-val {
+    .bar-today-btn:hover .bar-today-arrow { transform: translateX(2px); opacity: 0.5; }
+
+    /* ── bar today lightbox ── */
+    .bar-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(43,31,21,0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+    }
+    .bar-lightbox.open { display: flex; animation: fadeIn 0.2s ease both; }
+    .bar-card {
+      background: var(--linen);
+      max-width: 420px;
+      width: 100%;
+      max-height: 88svh;
+      overflow-y: auto;
+      padding: 32px 28px 28px;
+      position: relative;
+      scrollbar-width: thin;
+    }
+    .bar-card-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      background: none;
+      border: none;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--espresso);
+      opacity: 0.35;
+      cursor: pointer;
+      padding: 4px;
+      transition: opacity 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .bar-card-close:hover { opacity: 0.8; }
+    .bar-card-header {
       font-family: var(--mono);
       font-size: 0.52rem;
+      letter-spacing: 0.2em;
       color: var(--espresso);
-      opacity: 0.55;
+      opacity: 0.3;
+      text-align: center;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .bar-card-bean {
+      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--espresso);
+      text-align: center;
+      line-height: 1.2;
+    }
+    .bar-card-roaster {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.06em;
+      color: var(--espresso);
+      opacity: 0.35;
+      text-align: center;
+      margin-top: 4px;
+      margin-bottom: 20px;
+    }
+    .bar-card-rule {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(92,74,56,0.18), transparent);
+      margin: 0 0 18px;
+    }
+    .bar-section-label {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+      color: var(--espresso);
+      opacity: 0.3;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+    }
+    .bar-section-label:first-of-type { margin-top: 0; }
+    .bar-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px dotted rgba(92,74,56,0.1);
+    }
+    .bar-detail-key {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      opacity: 0.45;
+      flex-shrink: 0;
+    }
+    .bar-detail-val {
+      font-family: "IM Fell French Canon", serif;
+      font-size: 0.92rem;
+      color: var(--espresso);
+      opacity: 0.88;
+      text-align: right;
+    }
+    .bar-detail-glyph {
+      opacity: 0.3;
+      margin-right: 4px;
+      font-style: normal;
+    }
+    .bar-notes {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--espresso);
+      opacity: 0.65;
+      line-height: 1.65;
+      text-align: center;
+      padding: 14px 0 4px;
     }
 
     /* ══════════════════════════════
@@ -1336,14 +1448,12 @@
 
 
     <!-- ON BAR TODAY -->
-    <div class="bar-today">
-      <div class="bar-today-kicker">on bar today</div>
-      <div>
-        <div class="bar-today-bean" id="bar-bean">—</div>
-        <div class="bar-today-origin" id="bar-origin"></div>
-      </div>
-      <div class="bar-today-settings" id="bar-settings"></div>
-    </div>
+    <button class="bar-today-btn" onclick="document.getElementById('bar-lightbox').classList.add('open')">
+      <span class="bar-today-kicker">on bar today</span>
+      <span class="bar-today-bean" id="bar-bean">—</span>
+      <span class="bar-today-origin" id="bar-origin"></span>
+      <span class="bar-today-arrow">→</span>
+    </button>
 
     <div class="info-table">
 
@@ -1437,6 +1547,25 @@
         <div class="menu-item"><span class="menu-name">Lox, Tomato, Capers &amp; Red Onion</span><span class="menu-price">12</span></div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- BAR TODAY LIGHTBOX -->
+  <div class="bar-lightbox" id="bar-lightbox" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="bar-card">
+      <button class="bar-card-close" onclick="document.getElementById('bar-lightbox').classList.remove('open')">✕ close</button>
+      <div class="bar-card-header">on bar today</div>
+      <div class="bar-card-bean" id="bar-card-bean">—</div>
+      <div class="bar-card-roaster" id="bar-card-roaster"></div>
+      <div class="bar-card-rule"></div>
+
+      <div class="bar-section-label">☕ origin</div>
+      <div id="bar-origin-details"></div>
+
+      <div class="bar-section-label">⚙ dial-in</div>
+      <div id="bar-shot-details"></div>
+
+      <div class="bar-notes" id="bar-notes"></div>
     </div>
   </div>
 
@@ -1584,35 +1713,73 @@
 
   <script>
   // ═══════════════════════════════════════════════════════
-  // ON BAR TODAY — edit this object to update the board
+  // ON BAR TODAY — loads from bar-today.json
   // ═══════════════════════════════════════════════════════
-  const ON_BAR = {
-    bean:     'Finca La Providencia',
-    origin:   'Guatemala · washed · light roast',
-    settings: [
-      { label: 'dose',   val: '18 g'    },
-      { label: 'yield',  val: '36 g'    },
-      { label: 'time',   val: '28 s'    },
-      { label: 'temp',   val: '93 °C'   },
-    ],
-  };
 
-  // Populate on bar today panel
-  (function renderBarToday() {
-    const beanEl    = document.getElementById('bar-bean');
-    const originEl  = document.getElementById('bar-origin');
-    const settingsEl = document.getElementById('bar-settings');
-    if (beanEl)    beanEl.textContent   = ON_BAR.bean;
-    if (originEl)  originEl.textContent = ON_BAR.origin;
-    if (settingsEl) {
-      settingsEl.innerHTML = ON_BAR.settings.map(s =>
-        `<div class="bar-setting">
-          <span class="bar-setting-label">${s.label}</span>
-          <span class="bar-setting-val">${s.val}</span>
-        </div>`
-      ).join('');
+  function barRow(glyph, key, val) {
+    return `<div class="bar-detail-row">
+      <span class="bar-detail-key"><span class="bar-detail-glyph">${glyph}</span>${key}</span>
+      <span class="bar-detail-val">${val}</span>
+    </div>`;
+  }
+
+  async function loadBarToday() {
+    try {
+      const resp = await fetch('bar-today.json', { cache: 'no-store' });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const d = await resp.json();
+
+      // Button
+      const beanEl = document.getElementById('bar-bean');
+      const originEl = document.getElementById('bar-origin');
+      if (beanEl) beanEl.textContent = d.bean;
+      if (originEl) originEl.textContent = [d.origin, d.process, d.roast + ' roast'].filter(Boolean).join(' · ');
+
+      // Lightbox header
+      const cardBean = document.getElementById('bar-card-bean');
+      const cardRoaster = document.getElementById('bar-card-roaster');
+      if (cardBean) cardBean.textContent = d.bean;
+      if (cardRoaster) cardRoaster.textContent = d.roaster ? 'roasted by ' + d.roaster : '';
+
+      // Origin details
+      const originDetails = document.getElementById('bar-origin-details');
+      if (originDetails) {
+        originDetails.innerHTML = [
+          d.origin   && barRow('◉', 'Origin',   d.origin),
+          d.variety  && barRow('❋', 'Variety',  d.variety),
+          d.altitude && barRow('▲', 'Altitude', d.altitude),
+          d.process  && barRow('◎', 'Process',  d.process),
+          d.roast    && barRow('●', 'Roast',    d.roast),
+          d.harvest  && barRow('⌘', 'Harvest',  d.harvest),
+        ].filter(Boolean).join('');
+      }
+
+      // Shot details
+      const shotDetails = document.getElementById('bar-shot-details');
+      if (shotDetails && d.shot) {
+        const s = d.shot;
+        shotDetails.innerHTML = [
+          s.dose         && barRow('⊙', 'Dose',         s.dose),
+          s.yield        && barRow('⊕', 'Yield',        s.yield),
+          s.ratio        && barRow('÷', 'Ratio',        s.ratio),
+          s.time         && barRow('◷', 'Time',         s.time),
+          s.temp         && barRow('△', 'Temp',         s.temp),
+          s.pressure     && barRow('⬡', 'Pressure',     s.pressure),
+          s.preinfusion  && barRow('≈', 'Pre-infusion', s.preinfusion),
+          s.grind        && barRow('⌀', 'Grind',        s.grind),
+        ].filter(Boolean).join('');
+      }
+
+      // Tasting notes
+      const notesEl = document.getElementById('bar-notes');
+      if (notesEl && d.notes) notesEl.textContent = '⌇ ' + d.notes + ' ⌇';
+
+    } catch(e) {
+      console.warn('bar-today:', e);
     }
-  })();
+  }
+
+  loadBarToday();
 
   // ═══════════════════════════════════════════════════════
   // WEATHER — wttr.in JSONP (works from file://, no key)
@@ -1855,9 +2022,12 @@
     if (el) el.innerHTML = `<span class="arr-empty">${msg}</span>`;
   }
 
-  // ── Menu lightbox ──────────────────────────────────────
+  // ── Lightbox keyboard dismiss ──────────────────────────
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') document.getElementById('menu-lightbox').classList.remove('open');
+    if (e.key === 'Escape') {
+      document.getElementById('menu-lightbox').classList.remove('open');
+      document.getElementById('bar-lightbox').classList.remove('open');
+    }
   });
 
   // ── Bus direction tab toggle ────────────────────────────
