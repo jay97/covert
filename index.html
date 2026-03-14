@@ -42,10 +42,10 @@
     }
 
     /* ══════════════════════════════
-       NAV
+       NAV — minimal top bar
     ══════════════════════════════ */
     nav {
-      position: fixed;
+      position: relative;
       top: 0; left: 0; right: 0;
       z-index: 800;
       display: flex;
@@ -53,9 +53,7 @@
       justify-content: space-between;
       padding: 0 28px;
       height: 56px;
-      background: rgba(240,232,220,0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: var(--linen);
       border-bottom: 1px solid rgba(92,74,56,0.08);
       gap: 16px;
     }
@@ -68,36 +66,121 @@
       flex-shrink: 0;
     }
 
-    .nav-address {
-      font-family: var(--mono);
-      font-size: 0.54rem;
-      font-weight: 300;
-      letter-spacing: 0.07em;
-      color: var(--espresso);
-      opacity: 0.32;
-      white-space: nowrap;
-      flex: 1;
-      padding-left: 18px;
-    }
-
-    .nav-links {
+    .nav-right {
       display: flex;
       align-items: center;
-      gap: 28px;
-      list-style: none;
-      flex-shrink: 0;
+      gap: 14px;
     }
-    .nav-links a {
+
+    /* hamburger button */
+    .hamburger {
+      background: none;
+      border: 1px solid rgba(92,74,56,0.18);
+      border-radius: 2px;
+      padding: 7px 9px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.2s;
+    }
+    .hamburger:hover { border-color: rgba(92,74,56,0.4); }
+    .hamburger span {
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: var(--espresso);
+      opacity: 0.5;
+      border-radius: 1px;
+    }
+
+    /* slide-out menu drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9500;
+      background: rgba(43,31,21,0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .nav-drawer.open { display: flex; animation: fadeIn 0.2s ease both; }
+    .nav-drawer-inner {
+      margin-left: auto;
+      width: 280px;
+      max-width: 85vw;
+      height: 100%;
+      background: var(--linen);
+      padding: 28px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      animation: slideIn 0.25s ease both;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to   { transform: translateX(0); }
+    }
+    .drawer-close {
+      align-self: flex-end;
+      background: none;
+      border: 1px solid rgba(92,74,56,0.18);
+      border-radius: 2px;
       font-family: var(--mono);
       font-size: 0.62rem;
-      font-weight: 300;
-      letter-spacing: 0.05em;
+      color: var(--espresso);
+      opacity: 0.5;
+      cursor: pointer;
+      padding: 6px 10px;
+      margin-bottom: 28px;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.15s;
+    }
+    .drawer-close:hover { opacity: 0.9; }
+    .drawer-section-label {
+      font-family: var(--mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.14em;
+      color: var(--espresso);
+      opacity: 0.28;
+      text-transform: uppercase;
+      margin: 20px 0 10px;
+    }
+    .drawer-section-label:first-of-type { margin-top: 0; }
+    .drawer-link {
+      display: block;
+      font-family: "IM Fell French Canon", serif;
+      font-size: 1.1rem;
       color: var(--espresso);
       text-decoration: none;
-      opacity: 0.5;
-      transition: opacity 0.2s;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(92,74,56,0.07);
+      transition: opacity 0.15s;
+      opacity: 0.78;
     }
-    .nav-links a:hover { opacity: 1; }
+    .drawer-link:hover { opacity: 1; }
+    .drawer-link:last-child { border-bottom: none; }
+    .drawer-book {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--espresso);
+      opacity: 0.6;
+      line-height: 1.55;
+      padding: 6px 0;
+      border-bottom: 1px dotted rgba(92,74,56,0.08);
+    }
+    .drawer-book-title { font-style: italic; }
+    .drawer-book-author {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.04em;
+      opacity: 0.5;
+      display: block;
+      margin-top: 2px;
+    }
 
     /* ══════════════════════════════
        DIVIDER
@@ -187,7 +270,7 @@
       text-decoration: none;
       border: 1px solid rgba(92,74,56,0.2);
       background: rgba(92,74,56,0.03);
-      padding: 6px 13px;
+      padding: 8px 14px;
       border-radius: 2px;
       transition: background 0.15s, border-color 0.15s;
       -webkit-tap-highlight-color: transparent;
@@ -284,6 +367,49 @@
       margin-top: 3px;
       line-height: 1.6;
     }
+
+    /* bagel types */
+    .menu-bagel-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0 12px;
+    }
+    .bagel-type {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      border: 1px solid rgba(92,74,56,0.22);
+      padding: 5px 10px;
+      border-radius: 2px;
+      opacity: 0.7;
+    }
+    .bagel-type.seasonal {
+      border-color: rgba(168,120,50,0.4);
+      background: rgba(168,120,50,0.06);
+    }
+    .seasonal-tag {
+      font-size: 0.42rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      margin-left: 4px;
+    }
+
+    /* menu item image glyph */
+    .menu-img-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.72rem;
+      opacity: 0.25;
+      padding: 0 4px;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .menu-img-btn:hover { opacity: 0.6; }
 
     .pill-row { display: flex; flex-wrap: wrap; gap: 5px; }
     .pill {
@@ -392,17 +518,18 @@
       position: absolute;
       top: 14px; right: 16px;
       background: none;
-      border: none;
+      border: 1px solid rgba(92,74,56,0.2);
+      border-radius: 2px;
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       color: var(--espresso);
-      opacity: 0.35;
+      opacity: 0.45;
       cursor: pointer;
-      padding: 4px;
-      transition: opacity 0.15s;
+      padding: 6px 12px;
+      transition: opacity 0.15s, border-color 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .menu-card-close:hover { opacity: 0.8; }
+    .menu-card-close:hover { opacity: 0.8; border-color: rgba(92,74,56,0.4); }
     .menu-card-header {
       font-family: var(--mono);
       font-size: 0.52rem;
@@ -615,35 +742,82 @@
       letter-spacing: 0.06em;
     }
 
-    /* bus panels row */
-    .transit-buses {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+    /* bus route row — 3 clickable buttons */
+    .bus-route-row {
+      display: flex;
+      border-bottom: 1px solid rgba(92,74,56,0.1);
     }
-
-    .bus-panel {
-      padding: 16px 18px;
-      border-right: 1px solid rgba(92,74,56,0.08);
-    }
-    .bus-panel:last-child { border-right: none; }
-
-    .bus-head {
+    .bus-route-btn {
+      flex: 1;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+      padding: 12px 8px;
+      background: none;
+      border: none;
+      border-right: 1px solid rgba(92,74,56,0.08);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+      opacity: 0.5;
     }
+    .bus-route-btn:last-child { border-right: none; }
+    .bus-route-btn:hover { background: rgba(92,74,56,0.03); }
+    .bus-route-btn.active { opacity: 1; background: rgba(92,74,56,0.04); }
 
-    .bus-stop-line {
-      font-family: var(--mono);
-      font-size: 0.52rem;
-      color: var(--espresso);
-      opacity: 0.32;
-      letter-spacing: 0.04em;
-      line-height: 1.3;
-      margin-bottom: 8px;
+    /* bus dropdown panel */
+    .bus-dropdown {
+      display: none;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(92,74,56,0.1);
     }
+    .bus-dropdown.open { display: block; }
+    .bus-dropdown-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .bus-dir-swipe {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .bus-dir-swipe::-webkit-scrollbar { display: none; }
+    .bus-dir-page {
+      min-width: 100%;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+    .bus-dir-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 10px;
+      border: 1px solid rgba(92,74,56,0.14);
+      border-radius: 2px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .bus-dir-tab {
+      font-family: var(--mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.05em;
+      color: var(--espresso);
+      background: none;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      opacity: 0.28;
+      transition: opacity 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1;
+    }
+    .bus-dir-tab:first-child { border-right: 1px solid rgba(92,74,56,0.14); }
+    .bus-dir-tab.active { background: rgba(92,74,56,0.07); opacity: 0.75; }
+    .bus-dir-tab:hover { opacity: 0.55; }
 
     /* citi bike panel */
     .transit-bike {
@@ -763,36 +937,6 @@
     }
     .transit-refresh:hover { opacity: 0.7; }
 
-    /* bus direction toggles */
-    .bus-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 8px;
-      border: 1px solid rgba(92,74,56,0.14);
-      border-radius: 2px;
-      overflow: hidden;
-      align-self: flex-start;
-    }
-    .bus-tab {
-      font-family: var(--mono);
-      font-size: 0.5rem;
-      letter-spacing: 0.05em;
-      color: var(--espresso);
-      background: none;
-      border: none;
-      padding: 4px 9px;
-      cursor: pointer;
-      opacity: 0.28;
-      transition: opacity 0.15s, background 0.15s;
-      -webkit-tap-highlight-color: transparent;
-      line-height: 1;
-    }
-    .bus-tab:first-child { border-right: 1px solid rgba(92,74,56,0.14); }
-    .bus-tab.active {
-      background: rgba(92,74,56,0.07);
-      opacity: 0.75;
-    }
-    .bus-tab:hover { opacity: 0.55; }
     .bus-dir { display: none; }
     .bus-dir.active { display: flex; flex-direction: column; gap: 5px; min-height: 54px; }
 
@@ -927,13 +1071,8 @@
        WEATHER TICKER
     ══════════════════════════════ */
     .weather-bar {
-      position: fixed;
-      top: 56px; left: 0; right: 0;
-      z-index: 790;
       height: 26px;
-      background: rgba(240,232,220,0.82);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--linen);
       border-bottom: 1px solid rgba(92,74,56,0.07);
       display: flex;
       align-items: center;
@@ -966,7 +1105,7 @@
       background: rgba(92,74,56,0.15);
       flex-shrink: 0;
     }
-    .section-first { padding-top: calc(56px + 26px + 36px); }
+    .section-first { padding-top: 36px; }
 
     /* ── bar today lightbox ── */
     .bar-lightbox {
@@ -996,17 +1135,18 @@
       position: absolute;
       top: 14px; right: 16px;
       background: none;
-      border: none;
+      border: 1px solid rgba(92,74,56,0.2);
+      border-radius: 2px;
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       color: var(--espresso);
-      opacity: 0.35;
+      opacity: 0.45;
       cursor: pointer;
-      padding: 4px;
-      transition: opacity 0.15s;
+      padding: 6px 12px;
+      transition: opacity 0.15s, border-color 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .bar-card-close:hover { opacity: 0.8; }
+    .bar-card-close:hover { opacity: 0.8; border-color: rgba(92,74,56,0.4); }
     .bar-card-header {
       font-family: var(--mono);
       font-size: 0.52rem;
@@ -1075,8 +1215,9 @@
     }
     .bar-detail-glyph {
       opacity: 0.3;
-      margin-right: 4px;
+      margin-right: 6px;
       font-style: normal;
+      font-size: 1.1em;
     }
     .bar-notes {
       font-family: "Averia Serif Libre", serif;
@@ -1090,6 +1231,46 @@
       padding: 14px 0 4px;
     }
 
+    /* coffee guide in bar popup */
+    .coffee-guide {
+      margin-top: 10px;
+    }
+    .guide-block {
+      margin-bottom: 16px;
+    }
+    .guide-block:last-child { margin-bottom: 0; }
+    .guide-title {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      color: var(--espresso);
+      opacity: 0.35;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .guide-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      padding: 3px 0;
+      border-bottom: 1px dotted rgba(92,74,56,0.08);
+    }
+    .guide-row span:first-child {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.03em;
+      color: var(--espresso);
+      opacity: 0.45;
+    }
+    .guide-row span:last-child {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--espresso);
+      opacity: 0.72;
+      text-align: right;
+    }
+
     /* ══════════════════════════════
        PHOTO SLIDER
     ══════════════════════════════ */
@@ -1097,7 +1278,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 4 / 3;
-      margin-bottom: 36px;
+      margin-bottom: 48px;
       overflow: hidden;
       border-radius: 1px;
       background: var(--ink);
@@ -1292,22 +1473,13 @@
       .transit-wrap, .quote-block { padding-left: 20px; padding-right: 20px; }
       .archive-strip-inner { padding: 48px 20px 52px; }
       footer { padding: 30px 20px calc(30px + env(safe-area-inset-bottom)); }
-      .section-first { padding-top: calc(56px + 26px + 24px); }
+      .section-first { padding-top: 24px; }
 
       .dirs-grid { gap: 10px; }
-      .transit-buses { grid-template-columns: 1fr 1fr; }
-      .bus-panel { padding: 14px 14px; }
-      .bus-panel:nth-child(2) { border-right: none; }
-      .bus-panel:nth-child(3) { border-top: 1px solid rgba(92,74,56,0.08); grid-column: 1 / -1; border-right: none; }
 
       .info-row { grid-template-columns: 68px 1fr; }
     }
 
-    @media (max-width: 400px) {
-      .transit-buses { grid-template-columns: 1fr; }
-      .bus-panel { border-right: none; border-top: 1px solid rgba(92,74,56,0.08); }
-      .bus-panel:first-child { border-top: none; }
-    }
   </style>
 </head>
 <body>
@@ -1317,15 +1489,50 @@
     <a class="nav-logo" href="#top">
       <img src="logo.png" alt="Covert Coffee">
     </a>
-    <span class="nav-address">1643 Broadway · Bushwick, Brooklyn</span>
-    <span class="neon-sign" id="neon-sign"></span>
-    <ul class="nav-links">
-      <li><a href="#top">visit</a></li>
-      <li><a href="history.html">history</a></li>
-      <li><a href="parks.html">parks</a></li>
-      <li><a href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">instagram</a></li>
-    </ul>
+    <div class="nav-right">
+      <span class="neon-sign" id="neon-sign"></span>
+      <button class="hamburger" onclick="document.getElementById('nav-drawer').classList.add('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
+
+  <!-- SLIDE-OUT MENU -->
+  <div class="nav-drawer" id="nav-drawer" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="nav-drawer-inner">
+      <button class="drawer-close" onclick="document.getElementById('nav-drawer').classList.remove('open')">✕ close</button>
+
+      <div class="drawer-section-label">navigate</div>
+      <a class="drawer-link" href="#top" onclick="document.getElementById('nav-drawer').classList.remove('open')">Visit</a>
+      <a class="drawer-link" href="#about">About</a>
+      <a class="drawer-link" href="history.html">History</a>
+      <a class="drawer-link" href="parks.html">Parks &amp; Gardens</a>
+      <a class="drawer-link" href="https://www.instagram.com/covertcoffeebk/" target="_blank" rel="noopener">Instagram</a>
+      <a class="drawer-link" href="https://www.covert.coffee" target="_blank" rel="noopener">Wholesale</a>
+
+      <div class="drawer-section-label">recommended reading</div>
+      <div class="drawer-book">
+        <span class="drawer-book-title">Brooklyn: The Once and Future City</span>
+        <span class="drawer-book-author">Thomas J. Campanella</span>
+      </div>
+      <div class="drawer-book">
+        <span class="drawer-book-title">The Neighborhoods of Brooklyn</span>
+        <span class="drawer-book-author">Kenneth T. Jackson &amp; John B. Manbeck</span>
+      </div>
+      <div class="drawer-book">
+        <span class="drawer-book-title">Bushwick: A Neighborhood Rediscovered</span>
+        <span class="drawer-book-author">Brooklyn Historical Society</span>
+      </div>
+      <div class="drawer-book">
+        <span class="drawer-book-title">Queens: What a Difference a Borough Makes</span>
+        <span class="drawer-book-author">Joe DiStefano</span>
+      </div>
+      <div class="drawer-book">
+        <span class="drawer-book-title">A History of New York in 27 Buildings</span>
+        <span class="drawer-book-author">Sam Roberts</span>
+      </div>
+    </div>
+  </div>
 
   <!-- WEATHER TICKER -->
   <div class="weather-bar" id="weather-bar">
@@ -1410,25 +1617,30 @@
 
       <div class="menu-section">
         <div class="menu-category">sandwiches</div>
-        <div class="menu-item"><span class="menu-name">PEC</span><span class="menu-price">8</span></div>
+        <div class="menu-item"><span class="menu-name">PEC</span><button class="menu-img-btn" title="View photo">📷</button><span class="menu-price">8</span></div>
         <div class="menu-desc">Crispy prosciutto, egg, cheddar, tomato, carrot aioli on an everything bagel.</div>
-        <div class="menu-item"><span class="menu-name">Avocado</span><span class="menu-price">14</span></div>
+        <div class="menu-item"><span class="menu-name">Avocado</span><button class="menu-img-btn" title="View photo">📷</button><span class="menu-price">14</span></div>
         <div class="menu-desc">Avocado, arugula, pickled red onion, jalapeño aioli on seeded multigrain pullman.</div>
-        <div class="menu-item"><span class="menu-name">Hummus</span><span class="menu-price">14</span></div>
+        <div class="menu-item"><span class="menu-name">Hummus</span><button class="menu-img-btn" title="View photo">📷</button><span class="menu-price">14</span></div>
         <div class="menu-desc">Hummus, arugula, roasted carrots, tomato, caramelized onion on seeded multigrain pullman.</div>
-        <div class="menu-item"><span class="menu-name">Prosciutto</span><span class="menu-price">15</span></div>
+        <div class="menu-item"><span class="menu-name">Prosciutto</span><button class="menu-img-btn" title="View photo">📷</button><span class="menu-price">15</span></div>
         <div class="menu-desc">Prosciutto, arugula, shaved parmesan, jalapeño aioli on seeded multigrain pullman.</div>
       </div>
 
       <div class="menu-section">
         <div class="menu-category">breakfast</div>
-        <div class="menu-item"><span class="menu-name">Breakfast Taco</span><span class="menu-price">5</span></div>
+        <div class="menu-item"><span class="menu-name">Breakfast Taco</span><button class="menu-img-btn" title="View photo">📷</button><span class="menu-price">5</span></div>
         <div class="menu-desc">Egg, crisped prosciutto, cheese &amp; potatoes — or — refried beans, poblano, sautéed onion &amp; potatoes. Both on flour tortilla.</div>
       </div>
 
       <div class="menu-section">
         <div class="menu-category">bagels</div>
-        <div class="menu-sub">Everything · Classic · Whole Wheat · Cinnamon Raisin</div>
+        <div class="menu-bagel-types">
+          <span class="bagel-type">Everything</span>
+          <span class="bagel-type">Classic</span>
+          <span class="bagel-type">Whole Wheat</span>
+          <span class="bagel-type seasonal">Cinnamon Raisin <span class="seasonal-tag">seasonal</span></span>
+        </div>
         <div class="menu-item"><span class="menu-name">Cream Cheese</span><span class="menu-price">5</span></div>
         <div class="menu-item"><span class="menu-name">Veggies</span><span class="menu-price">6</span></div>
         <div class="menu-item"><span class="menu-name">Vegan</span><span class="menu-price">6</span></div>
@@ -1455,8 +1667,54 @@
       <div id="bar-shot-details"></div>
 
       <div class="bar-notes" id="bar-notes"></div>
+
+      <div class="bar-card-rule" style="margin-top:20px;"></div>
+      <div class="bar-section-label">☕ barista's guide</div>
+
+      <div class="coffee-guide">
+        <div class="guide-block">
+          <div class="guide-title">espresso</div>
+          <div class="guide-row"><span>dose</span><span>18 g</span></div>
+          <div class="guide-row"><span>yield</span><span>36 g (1:2 ratio)</span></div>
+          <div class="guide-row"><span>time</span><span>25 – 30 s</span></div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-title">milk drinks</div>
+          <div class="guide-row"><span>cortado</span><span>~60 ml · 2 oz</span></div>
+          <div class="guide-row"><span>flat white</span><span>~150 ml · 5 oz</span></div>
+          <div class="guide-row"><span>latte</span><span>~240 ml · 8 oz</span></div>
+          <div class="guide-row"><span>oat latte</span><span>~300 ml · 10 oz</span></div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-title">milk steaming</div>
+          <div class="guide-row"><span>temp</span><span>55 – 65 °C · 131 – 149 °F</span></div>
+          <div class="guide-row"><span>texture</span><span>microfoam · wet paint sheen</span></div>
+          <div class="guide-row"><span>oat milk</span><span>steam cooler: 55 °C max</span></div>
+          <div class="guide-row"><span>stretch</span><span>½ – 1 s hiss, then roll</span></div>
+        </div>
+
+        <div class="guide-block">
+          <div class="guide-title">brew ratios</div>
+          <div class="guide-row"><span>ristretto</span><span>1 : 1.5</span></div>
+          <div class="guide-row"><span>espresso</span><span>1 : 2</span></div>
+          <div class="guide-row"><span>lungo</span><span>1 : 3</span></div>
+          <div class="guide-row"><span>pour over</span><span>1 : 15 – 1 : 17</span></div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- ABOUT -->
+  <div class="section reveal" id="about">
+    <p class="kicker">about</p>
+    <h2>Covert Coffee</h2>
+    <p class="body-text">Covert Coffee sits at 1643 Broadway in Bushwick, Brooklyn — a corner that's been serving the neighborhood since the 1880s. The building started life as H.C. Bohack's corner grocery in 1889, survived decades as everything from a flower market to a drug store, weathered the arson crisis of the 1970s, and sat vacant through the long quiet of the 1990s and 2000s.</p>
+    <p class="body-text">In 2015, Aaron Mounier opened Covert behind a boarded-up storefront with a hand-lettered "coming soon" sign — and the name stuck. The shop roasts in small batches, pulls precise shots on a two-group La Marzocco, and serves sandwiches on locally baked bread. No Wi-Fi password on the wall, no merch rack by the door. Just good coffee in a building with 136 years of stories in its walls.</p>
+  </div>
+
+  <div class="section-divider"></div>
 
   <!-- LIVE TRANSIT -->
   <div class="transit-wrap reveal">
@@ -1509,48 +1767,47 @@
         </div>
       </div>
 
-      <!-- BUSES (live via MTA BusTime SIRI API) — direction toggles per line -->
-      <div class="transit-buses">
+      <!-- BUSES — clickable route row with dropdown -->
+      <div class="bus-route-row">
+        <button class="bus-route-btn" onclick="toggleBusDropdown('b20',this)">
+          <span class="route-tag">B20</span>
+          <span class="status-dot" id="dot-b20"></span>
+        </button>
+        <button class="bus-route-btn" onclick="toggleBusDropdown('q24',this)">
+          <span class="route-tag">Q24</span>
+          <span class="status-dot" id="dot-q24"></span>
+        </button>
+        <button class="bus-route-btn" onclick="toggleBusDropdown('b60',this)">
+          <span class="route-tag">B60</span>
+          <span class="status-dot" id="dot-b60"></span>
+        </button>
+      </div>
 
-        <div class="bus-panel">
-          <div class="bus-head">
-            <span class="route-tag">B20</span>
-            <span class="status-dot" id="dot-b20"></span>
-          </div>
-          <div class="bus-tabs">
-            <button class="bus-tab active" onclick="busTab('b20','N',this)">← williamsburg</button>
-            <button class="bus-tab" onclick="busTab('b20','S',this)">spring creek →</button>
-          </div>
-          <div class="bus-dir active" id="arr-b20-N"><span class="arr-empty">loading…</span></div>
-          <div class="bus-dir" id="arr-b20-S"><span class="arr-empty">loading…</span></div>
+      <div class="bus-dropdown" id="bus-drop-b20">
+        <div class="bus-dir-tabs">
+          <button class="bus-dir-tab active" onclick="busTab('b20','N',this)">← williamsburg</button>
+          <button class="bus-dir-tab" onclick="busTab('b20','S',this)">spring creek →</button>
         </div>
+        <div class="bus-dir active" id="arr-b20-N"><span class="arr-empty">loading…</span></div>
+        <div class="bus-dir" id="arr-b20-S"><span class="arr-empty">loading…</span></div>
+      </div>
 
-        <div class="bus-panel">
-          <div class="bus-head">
-            <span class="route-tag">Q24</span>
-            <span class="status-dot" id="dot-q24"></span>
-          </div>
-          <div class="bus-tabs">
-            <button class="bus-tab active" onclick="busTab('q24','N',this)">← flushing</button>
-            <button class="bus-tab" onclick="busTab('q24','S',this)">jamaica →</button>
-          </div>
-          <div class="bus-dir active" id="arr-q24-N"><span class="arr-empty">loading…</span></div>
-          <div class="bus-dir" id="arr-q24-S"><span class="arr-empty">loading…</span></div>
+      <div class="bus-dropdown" id="bus-drop-q24">
+        <div class="bus-dir-tabs">
+          <button class="bus-dir-tab active" onclick="busTab('q24','N',this)">← flushing</button>
+          <button class="bus-dir-tab" onclick="busTab('q24','S',this)">jamaica →</button>
         </div>
+        <div class="bus-dir active" id="arr-q24-N"><span class="arr-empty">loading…</span></div>
+        <div class="bus-dir" id="arr-q24-S"><span class="arr-empty">loading…</span></div>
+      </div>
 
-        <div class="bus-panel">
-          <div class="bus-head">
-            <span class="route-tag">B60</span>
-            <span class="status-dot" id="dot-b60"></span>
-          </div>
-          <div class="bus-tabs">
-            <button class="bus-tab active" onclick="busTab('b60','N',this)">← williamsburg</button>
-            <button class="bus-tab" onclick="busTab('b60','S',this)">canarsie →</button>
-          </div>
-          <div class="bus-dir active" id="arr-b60-N"><span class="arr-empty">loading…</span></div>
-          <div class="bus-dir" id="arr-b60-S"><span class="arr-empty">loading…</span></div>
+      <div class="bus-dropdown" id="bus-drop-b60">
+        <div class="bus-dir-tabs">
+          <button class="bus-dir-tab active" onclick="busTab('b60','N',this)">← williamsburg</button>
+          <button class="bus-dir-tab" onclick="busTab('b60','S',this)">canarsie →</button>
         </div>
-
+        <div class="bus-dir active" id="arr-b60-N"><span class="arr-empty">loading…</span></div>
+        <div class="bus-dir" id="arr-b60-S"><span class="arr-empty">loading…</span></div>
       </div>
 
       <!-- CITI BIKE (live via GBFS) -->
@@ -1910,19 +2167,31 @@
     if (e.key === 'Escape') {
       document.getElementById('menu-lightbox').classList.remove('open');
       document.getElementById('bar-lightbox').classList.remove('open');
+      document.getElementById('nav-drawer').classList.remove('open');
     }
   });
 
-  // ── Bus direction tab toggle ────────────────────────────
+  // ── Bus dropdown toggle ────────────────────────────
+
+  function toggleBusDropdown(line, btn) {
+    const drop = document.getElementById('bus-drop-' + line);
+    const isOpen = drop.classList.contains('open');
+    // close all
+    document.querySelectorAll('.bus-dropdown').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.bus-route-btn').forEach(b => b.classList.remove('active'));
+    // open if wasn't open
+    if (!isOpen) {
+      drop.classList.add('open');
+      btn.classList.add('active');
+    }
+  }
 
   function busTab(line, dir, btn) {
-    // toggle active tab buttons
-    const panel = btn.closest('.bus-panel');
-    panel.querySelectorAll('.bus-tab').forEach(b => b.classList.remove('active'));
+    const drop = document.getElementById('bus-drop-' + line);
+    drop.querySelectorAll('.bus-dir-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    // toggle active dir panel
-    panel.querySelectorAll('.bus-dir').forEach(d => d.classList.remove('active'));
-    const target = panel.querySelector(`#arr-${line}-${dir}`);
+    drop.querySelectorAll('.bus-dir').forEach(d => d.classList.remove('active'));
+    const target = drop.querySelector(`#arr-${line}-${dir}`);
     if (target) target.classList.add('active');
   }
 
@@ -2109,6 +2378,8 @@
   async function doRefresh() {
     const ts = document.getElementById('transit-ts');
     if (ts) ts.textContent = 'updating…';
+    // Save scroll position so DOM updates don't cause jumps
+    const scrollY = window.scrollY;
     // Reset all dots while refreshing
     ['dot-subway', 'dot-subway-chauncey', 'dot-b20', 'dot-q24', 'dot-b60', 'dot-bike'].forEach(id => setDot(id, false));
 
@@ -2120,6 +2391,8 @@
       fetchBike(),
     ]);
 
+    // Restore scroll position after DOM updates
+    window.scrollTo(0, scrollY);
     tick();
     clearTimeout(refreshTimer);
     refreshTimer = setTimeout(doRefresh, 45000);
