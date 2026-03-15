@@ -138,6 +138,56 @@
     .drawer-link:hover { opacity: 1; }
     .drawer-link:last-child { border-bottom: none; }
 
+    /* wholesale dropdown in drawer */
+    .drawer-dropdown { border-bottom: 1px solid rgba(92,74,56,0.07); }
+    .drawer-dropdown-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: "IM Fell French Canon", serif;
+      font-size: 1.1rem;
+      color: var(--espresso);
+      text-align: left;
+      padding: 10px 0;
+      cursor: pointer;
+      opacity: 0.78;
+      transition: opacity 0.15s;
+    }
+    .drawer-dropdown-toggle:hover { opacity: 1; }
+    .drawer-dropdown-toggle .dd-arrow {
+      font-size: 0.7rem;
+      opacity: 0.4;
+      transition: transform 0.25s ease;
+    }
+    .drawer-dropdown.open .dd-arrow { transform: rotate(90deg); }
+    .drawer-dropdown-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 0 0 4px;
+    }
+    .drawer-dropdown.open .drawer-dropdown-content {
+      max-height: 120px;
+      padding: 0 0 12px 4px;
+    }
+    .drawer-dropdown-content .dd-line {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.88rem;
+      color: var(--espresso);
+      opacity: 0.55;
+      line-height: 1.6;
+    }
+    .drawer-dropdown-content .dd-line a {
+      color: var(--espresso);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(92,74,56,0.25);
+    }
+    .drawer-dropdown-content .dd-line a:hover { opacity: 1; }
+
     /* ── PAGE HEADER ── */
     .page-header {
       padding: 60px 28px 50px;
@@ -929,6 +979,57 @@
       line-height: 1.4;
     }
 
+    /* ═══════════════════════════════════════════════
+       § MAPS GALLERY — small thumbnails
+    ═══════════════════════════════════════════════ */
+    .maps-section {
+      max-width: 1100px;
+      margin: 0 auto 100px;
+      padding: 0 28px;
+    }
+    .maps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .map-card {
+      background: var(--newsprint);
+      border: 1px solid rgba(89,74,60,0.18);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+    .map-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43,22,8,0.16);
+    }
+    .map-img-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+    .map-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: sepia(0.4) contrast(0.9) brightness(0.97);
+      transition: filter 0.3s ease;
+    }
+    .map-card:hover .map-img-wrap img {
+      filter: sepia(0.15) contrast(0.95) brightness(1.0);
+    }
+    .map-caption {
+      padding: 5px 7px 6px;
+      font-family: var(--mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      opacity: 0.55;
+      line-height: 1.3;
+    }
+
     /* ── REVEAL animation ── */
     .reveal {
       opacity: 0;
@@ -1121,8 +1222,8 @@
   <!-- Before / After Slider -->
   <div class="before-after reveal">
     <div class="ba-wrap" id="ba-wrap">
-      <img class="ba-img ba-before" src="photos/before after slider/webp/1940.webp" alt="1643 Broadway, circa 1940">
-      <img class="ba-img ba-after"  src="photos/before after slider/webp/2024.webp" alt="1643 Broadway, 2024">
+      <img class="ba-img ba-before" src="photos/history/1940crop.webp" alt="1643 Broadway, circa 1940">
+      <img class="ba-img ba-after"  src="photos/history/2024crop.webp" alt="1643 Broadway, 2024">
       <div class="ba-divider" id="ba-divider"></div>
       <div class="ba-handle" id="ba-handle">
         <svg viewBox="0 0 24 24"><path d="M8 12H4M4 12L7 9M4 12L7 15M16 12h4M20 12L17 9M20 12L17 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1314,7 +1415,7 @@
         <div class="ig-avatar"><div class="ig-avatar-inner">C</div></div>
         <span class="ig-username">covertcoffeebk</span>
       </div>
-      <img class="ig-image" src="photos/ig-return-2023.webp" alt="">
+      <img class="ig-image" src="photos/history/ig-return-2023.webp" alt="">
       <div class="ig-actions">
         <div class="ig-action-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
         <div class="ig-action-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
@@ -1338,7 +1439,7 @@
         <div class="ig-avatar"><div class="ig-avatar-inner">C</div></div>
         <span class="ig-username">covertcoffeebk</span>
       </div>
-      <img class="ig-image" src="photos/ig-reopen-2023.webp" alt="">
+      <img class="ig-image" src="photos/history/ig-reopen-2023.webp" alt="">
       <div class="ig-actions">
         <div class="ig-action-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
         <div class="ig-action-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
@@ -1357,7 +1458,7 @@
         <div class="ig-avatar"><div class="ig-avatar-inner">C</div></div>
         <span class="ig-username">covertcoffeebk</span>
       </div>
-      <img class="ig-image" src="photos/ig-1year-2024.webp" alt="">
+      <img class="ig-image" src="photos/history/ig-1year-2024.webp" alt="">
       <div class="ig-actions">
         <div class="ig-action-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
         <div class="ig-action-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
@@ -1561,6 +1662,54 @@
     </div>
   </div>
 
+  <hr class="section-rule">
+
+  <!-- ══════════════════════════════════════════════════════
+       § 6  MAPS
+  ══════════════════════════════════════════════════════ -->
+  <span class="section-label reveal">§ vi — maps · 1880–1907</span>
+
+  <div class="maps-section reveal">
+    <div class="maps-grid">
+      <div class="map-card" onclick="openLightbox('maps',0)">
+        <div class="map-img-wrap">
+          <img src="photos/history/maps/sanborn map 1880.jpeg" alt="Sanborn Fire Insurance Map, 1880" loading="lazy">
+        </div>
+        <div class="map-caption">Sanborn Fire Insurance Map · 1880</div>
+      </div>
+      <div class="map-card" onclick="openLightbox('maps',1)">
+        <div class="map-img-wrap">
+          <img src="photos/history/maps/1888 Sanborn Vol 9.jpeg" alt="Sanborn Fire Insurance Map, Vol. 9, 1888" loading="lazy">
+        </div>
+        <div class="map-caption">Sanborn Vol. 9 · 1888</div>
+      </div>
+      <div class="map-card" onclick="openLightbox('maps',2)">
+        <div class="map-img-wrap">
+          <img src="photos/history/maps/1898 map.jpeg" alt="Map of the neighborhood, 1898" loading="lazy">
+        </div>
+        <div class="map-caption">Neighborhood Map · 1898</div>
+      </div>
+      <div class="map-card" onclick="openLightbox('maps',3)">
+        <div class="map-img-wrap">
+          <img src="photos/history/maps/1898 key.jpeg" alt="Map key, 1898" loading="lazy">
+        </div>
+        <div class="map-caption">Map Key · 1898</div>
+      </div>
+      <div class="map-card" onclick="openLightbox('maps',4)">
+        <div class="map-img-wrap">
+          <img src="photos/history/maps/1907 map.jpeg" alt="Map of the neighborhood, 1907" loading="lazy">
+        </div>
+        <div class="map-caption">Neighborhood Map · 1907</div>
+      </div>
+      <div class="map-card" onclick="openLightbox('maps',5)">
+        <div class="map-img-wrap">
+          <img src="photos/history/maps/1907 key.jpeg" alt="Map key, 1907" loading="lazy">
+        </div>
+        <div class="map-caption">Map Key · 1907</div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     covert coffee · 1643 broadway · bushwick, brooklyn · 11207
   </footer>
@@ -1568,74 +1717,84 @@
   <script>
   // ── EARLY DAYS GALLERY ────────────────────────────────
   const EARLY_PHOTOS = [
-    'photos/early days/webp/early days.webp',
-    'photos/early days/webp/1517822_10100875172763824_8811581896649551502_n.webp',
-    'photos/early days/webp/10888509_10100875172778794_8122135182119114938_n.webp',
-    'photos/early days/webp/11040398_10101114380988624_1443878349808503204_n.webp',
-    'photos/early days/webp/11267726_10100998086054604_1648789125103718406_n.webp',
-    'photos/early days/webp/11817225_10101081454922724_6267548244285099939_n.webp',
-    'photos/early days/webp/11904049_10101085941371844_831117229763057487_n.webp',
-    'photos/early days/webp/11998942_10101114380973654_9059087226865773339_n.webp',
-    'photos/early days/webp/12195836_10101150216299374_1105613124009199268_n.webp',
-    'photos/early days/webp/12316344_919803748067266_1480870731936971481_n.webp',
-    'photos/early days/webp/13502635_10101333700001564_6091817249567268934_o.webp',
-    'photos/early days/webp/14707965_10101445730965614_834634495966879104_o.webp',
-    'photos/early days/webp/15937257_10101554310875604_1774578666174758527_o.webp',
-    'photos/early days/webp/16178579_10101569560185864_7285098154539495865_o.webp',
-    'photos/early days/webp/10380748_10101138867108244_5867667160940295112_n.webp',
-    'photos/early days/webp/47e2b05540ba3d9ce7bf172d0c58e6c4e7c93d4d_573x422_crop.webp',
-    'photos/early days/webp/mocha java.webp',
-    'photos/early days/webp/411873199_18404294116037279_743683065847560319_n.webp',
+    'photos/history/v1/early days.webp',
+    'photos/history/v1/1517822_10100875172763824_8811581896649551502_n.webp',
+    'photos/history/v1/10888509_10100875172778794_8122135182119114938_n.webp',
+    'photos/history/v1/11040398_10101114380988624_1443878349808503204_n.webp',
+    'photos/history/v1/11267726_10100998086054604_1648789125103718406_n.webp',
+    'photos/history/v1/11817225_10101081454922724_6267548244285099939_n.webp',
+    'photos/history/v1/11904049_10101085941371844_831117229763057487_n.webp',
+    'photos/history/v1/11998942_10101114380973654_9059087226865773339_n.webp',
+    'photos/history/v1/12195836_10101150216299374_1105613124009199268_n.webp',
+    'photos/history/v1/12316344_919803748067266_1480870731936971481_n.webp',
+    'photos/history/v1/13502635_10101333700001564_6091817249567268934_o.webp',
+    'photos/history/v1/14707965_10101445730965614_834634495966879104_o.webp',
+    'photos/history/v1/15937257_10101554310875604_1774578666174758527_o.webp',
+    'photos/history/v1/16178579_10101569560185864_7285098154539495865_o.webp',
+    'photos/history/v1/10380748_10101138867108244_5867667160940295112_n.webp',
+    'photos/history/v1/47e2b05540ba3d9ce7bf172d0c58e6c4e7c93d4d_573x422_crop.webp',
+    'photos/history/v1/mocha java.webp',
+    'photos/history/v1/411873199_18404294116037279_743683065847560319_n.webp',
+  ];
+
+  // ── MAPS ─────────────────────────────────────────────
+  const MAPS = [
+    'photos/history/maps/sanborn map 1880.jpeg',
+    'photos/history/maps/1888 Sanborn Vol 9.jpeg',
+    'photos/history/maps/1898 map.jpeg',
+    'photos/history/maps/1898 key.jpeg',
+    'photos/history/maps/1907 map.jpeg',
+    'photos/history/maps/1907 key.jpeg',
   ];
 
   // ── CLIPPINGS ─────────────────────────────────────────
   const CLIPPINGS = [
-    { src: 'photos/clippings/webp/Brooklyn_Times_Union_Sat__Oct_22__1887_.webp',     label: 'Brooklyn Times Union · Oct 22, 1887' },
-    { src: 'photos/clippings/webp/Mob Story in Bushwick - The_Brooklyn_Citizen_Sat__Aug_19__1893_.webp', label: 'Mob Story in Bushwick · Aug 19, 1893' },
-    { src: 'photos/clippings/webp/Brooklyn_Times_Union_Tue__Oct_30__1894_.webp',     label: 'Cool Burglar · Oct 30, 1894' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Fri__Jul_10__1896_.webp', label: 'Brooklyn Daily Eagle · Jul 10, 1896' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Fri__Jan_18__1901_.webp', label: 'For Sale: 1643 Broadway · Jan 18, 1901' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Mon__Feb_29__1892_.webp', label: 'Brooklyn Daily Eagle · Feb 29, 1892' },
-    { src: 'photos/clippings/webp/Boy Fooled Uncle Sam The_Brooklyn_Daily_Eagle_Thu__Oct_8__1903_.webp', label: 'Boy Fooled Uncle Sam · Oct 8, 1903' },
-    { src: 'photos/clippings/webp/The_Chat_Sat__Mar_21__1903_.webp',                 label: 'The Chat · Mar 21, 1903' },
-    { src: 'photos/clippings/webp/The_Chat_Sat__Nov_21__1903_.webp',                 label: 'The Chat · Nov 21, 1903' },
-    { src: 'photos/clippings/webp/Raid on The L The_Chat_Sat__Mar_26__1904_.webp',   label: 'Raid on The L · Mar 26, 1904' },
-    { src: 'photos/clippings/webp/The_Chat_Sat__Apr_4__1908_.webp',                  label: 'The Chat · Apr 4, 1908' },
-    { src: 'photos/clippings/webp/Cooper St was always noisy, The_Chat_Sat__Oct_3__1908_.webp', label: 'Cooper St Was Always Noisy · Oct 3, 1908' },
-    { src: 'photos/clippings/webp/Brooklyn_Times_Union_Fri__Jun_25__1909_.webp',     label: 'Brooklyn Times Union · Jun 25, 1909' },
-    { src: 'photos/clippings/webp/The_Chat_Sat__Apr_9__1910_.webp',                  label: 'The Chat · Apr 9, 1910' },
-    { src: 'photos/clippings/webp/The_Chat_Sat__Jan_6__1912_.webp',                  label: 'The Chat · Jan 6, 1912' },
-    { src: 'photos/clippings/webp/Bohacks Honeymoon The_Chat_Sat__May_23__1914_.webp', label: "Bohack's Honeymoon · May 23, 1914" },
-    { src: 'photos/clippings/webp/The_Chat_Sat__May_20__1916_.webp',                 label: 'The Chat · May 20, 1916' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Mar_6__1921_.webp',  label: 'Brooklyn Daily Eagle · Mar 6, 1921' },
-    { src: 'photos/clippings/webp/Christmas on Broadway Brooklyn_Times_Union_Fri__Dec_16__1921_.webp', label: 'Christmas on Broadway · Dec 16, 1921' },
-    { src: 'photos/clippings/webp/life on covertBrooklyn_Times_Union_Fri__Apr_28__1922_.webp', label: 'Life on Covert St · Apr 28, 1922' },
-    { src: 'photos/clippings/webp/The_Chat_Sat__Sep_25__1926_.webp',                 label: 'The Chat · Sep 25, 1926' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Fri__Apr_6__1928_.webp',  label: 'Brooklyn Daily Eagle · Apr 6, 1928' },
-    { src: 'photos/clippings/webp/7 Covert St The_Chat_Sat__Mar_30__1929_.webp',     label: '7 Covert St · Mar 30, 1929' },
-    { src: 'photos/clippings/webp/7 Covert The_Chat_Fri__Oct_25__1929_.webp',        label: '7 Covert · Oct 25, 1929' },
-    { src: 'photos/clippings/webp/7 Covert The_Chat_Sat__Nov_8__1924_.webp',         label: '7 Covert · Nov 8, 1924' },
-    { src: 'photos/clippings/webp/Kidnapped and Robbed at Halsey The_Standard_Union_Sat__Dec_19__1931_.webp', label: 'Kidnapped at Halsey · Dec 19, 1931' },
-    { src: 'photos/clippings/webp/Chauncey Vending Machine Looted Brooklyn_Times_Union_Mon__Jul_24__1933_.webp', label: 'Chauncey Vending Machine Looted · Jul 24, 1933' },
-    { src: 'photos/clippings/webp/Burguin_s Letter The_Brooklyn_Daily_Eagle_Sun__Nov_20__1938_.webp', label: "Burguin's Letter · Nov 20, 1938" },
-    { src: 'photos/clippings/webp/Bushwick_s Close to My Heart Memory The_Brooklyn_Daily_Eagle_Sun__Nov_19__1939_.webp', label: "Bushwick's Close to My Heart · Nov 19, 1939" },
-    { src: 'photos/clippings/webp/Remembering The Corener The_Brooklyn_Daily_Eagle_Sun__Nov_5__1939_.webp', label: 'Remembering The Corner · Nov 5, 1939' },
-    { src: 'photos/clippings/webp/Good Memories The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.webp', label: 'Good Memories · Jan 21, 1940' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.webp', label: 'Brooklyn Daily Eagle · Jan 21, 1940' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Aug_20__1944_.webp', label: 'Brooklyn Daily Eagle · Aug 20, 1944' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Feb_25__1945_.webp', label: 'Brooklyn Daily Eagle · Feb 25, 1945' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Jul_22__1945_.webp', label: 'Brooklyn Daily Eagle · Jul 22, 1945' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Dec_15__1946_.webp', label: 'Brooklyn Daily Eagle · Dec 15, 1946' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Jun_12__1949_.webp', label: 'Brooklyn Daily Eagle · Jun 12, 1949' },
-    { src: 'photos/clippings/webp/The_Brooklyn_Daily_Eagle_Sun__Oct_11__1903_.webp', label: 'Brooklyn Daily Eagle · Oct 11, 1903' },
-    { src: 'photos/clippings/webp/Puerto Ricans The_Williamsburg_News_Fri__Sep_20__1957_.webp', label: 'Puerto Ricans · Williamsburg News · Sep 20, 1957' },
-    { src: 'photos/clippings/webp/Kings_County_Chronicle_Tue__Sep_30__1958_.webp',   label: "Kings County Chronicle · Sep 30, 1958" },
-    { src: 'photos/clippings/webp/Lucy_s Lunch Health Code Violation Daily_News_Tue__Feb_4__1975_.webp', label: "Lucy's Lunch · Daily News · Feb 4, 1975" },
+    { src: 'photos/history/clippings/Brooklyn_Times_Union_Sat__Oct_22__1887_.webp',     label: 'Brooklyn Times Union · Oct 22, 1887' },
+    { src: 'photos/history/clippings/Mob Story in Bushwick - The_Brooklyn_Citizen_Sat__Aug_19__1893_.webp', label: 'Mob Story in Bushwick · Aug 19, 1893' },
+    { src: 'photos/history/clippings/Brooklyn_Times_Union_Tue__Oct_30__1894_.webp',     label: 'Cool Burglar · Oct 30, 1894' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Fri__Jul_10__1896_.webp', label: 'Brooklyn Daily Eagle · Jul 10, 1896' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Fri__Jan_18__1901_.webp', label: 'For Sale: 1643 Broadway · Jan 18, 1901' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Mon__Feb_29__1892_.webp', label: 'Brooklyn Daily Eagle · Feb 29, 1892' },
+    { src: 'photos/history/clippings/Boy Fooled Uncle Sam The_Brooklyn_Daily_Eagle_Thu__Oct_8__1903_.webp', label: 'Boy Fooled Uncle Sam · Oct 8, 1903' },
+    { src: 'photos/history/clippings/The_Chat_Sat__Mar_21__1903_.webp',                 label: 'The Chat · Mar 21, 1903' },
+    { src: 'photos/history/clippings/The_Chat_Sat__Nov_21__1903_.webp',                 label: 'The Chat · Nov 21, 1903' },
+    { src: 'photos/history/clippings/Raid on The L The_Chat_Sat__Mar_26__1904_.webp',   label: 'Raid on The L · Mar 26, 1904' },
+    { src: 'photos/history/clippings/The_Chat_Sat__Apr_4__1908_.webp',                  label: 'The Chat · Apr 4, 1908' },
+    { src: 'photos/history/clippings/Cooper St was always noisy, The_Chat_Sat__Oct_3__1908_.webp', label: 'Cooper St Was Always Noisy · Oct 3, 1908' },
+    { src: 'photos/history/clippings/Brooklyn_Times_Union_Fri__Jun_25__1909_.webp',     label: 'Brooklyn Times Union · Jun 25, 1909' },
+    { src: 'photos/history/clippings/The_Chat_Sat__Apr_9__1910_.webp',                  label: 'The Chat · Apr 9, 1910' },
+    { src: 'photos/history/clippings/The_Chat_Sat__Jan_6__1912_.webp',                  label: 'The Chat · Jan 6, 1912' },
+    { src: 'photos/history/clippings/Bohacks Honeymoon The_Chat_Sat__May_23__1914_.webp', label: "Bohack's Honeymoon · May 23, 1914" },
+    { src: 'photos/history/clippings/The_Chat_Sat__May_20__1916_.webp',                 label: 'The Chat · May 20, 1916' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Mar_6__1921_.webp',  label: 'Brooklyn Daily Eagle · Mar 6, 1921' },
+    { src: 'photos/history/clippings/Christmas on Broadway Brooklyn_Times_Union_Fri__Dec_16__1921_.webp', label: 'Christmas on Broadway · Dec 16, 1921' },
+    { src: 'photos/history/clippings/life on covertBrooklyn_Times_Union_Fri__Apr_28__1922_.webp', label: 'Life on Covert St · Apr 28, 1922' },
+    { src: 'photos/history/clippings/The_Chat_Sat__Sep_25__1926_.webp',                 label: 'The Chat · Sep 25, 1926' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Fri__Apr_6__1928_.webp',  label: 'Brooklyn Daily Eagle · Apr 6, 1928' },
+    { src: 'photos/history/clippings/7 Covert St The_Chat_Sat__Mar_30__1929_.webp',     label: '7 Covert St · Mar 30, 1929' },
+    { src: 'photos/history/clippings/7 Covert The_Chat_Fri__Oct_25__1929_.webp',        label: '7 Covert · Oct 25, 1929' },
+    { src: 'photos/history/clippings/7 Covert The_Chat_Sat__Nov_8__1924_.webp',         label: '7 Covert · Nov 8, 1924' },
+    { src: 'photos/history/clippings/Kidnapped and Robbed at Halsey The_Standard_Union_Sat__Dec_19__1931_.webp', label: 'Kidnapped at Halsey · Dec 19, 1931' },
+    { src: 'photos/history/clippings/Chauncey Vending Machine Looted Brooklyn_Times_Union_Mon__Jul_24__1933_.webp', label: 'Chauncey Vending Machine Looted · Jul 24, 1933' },
+    { src: 'photos/history/clippings/Burguin_s Letter The_Brooklyn_Daily_Eagle_Sun__Nov_20__1938_.webp', label: "Burguin's Letter · Nov 20, 1938" },
+    { src: 'photos/history/clippings/Bushwick_s Close to My Heart Memory The_Brooklyn_Daily_Eagle_Sun__Nov_19__1939_.webp', label: "Bushwick's Close to My Heart · Nov 19, 1939" },
+    { src: 'photos/history/clippings/Remembering The Corener The_Brooklyn_Daily_Eagle_Sun__Nov_5__1939_.webp', label: 'Remembering The Corner · Nov 5, 1939' },
+    { src: 'photos/history/clippings/Good Memories The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.webp', label: 'Good Memories · Jan 21, 1940' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Jan_21__1940_.webp', label: 'Brooklyn Daily Eagle · Jan 21, 1940' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Aug_20__1944_.webp', label: 'Brooklyn Daily Eagle · Aug 20, 1944' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Feb_25__1945_.webp', label: 'Brooklyn Daily Eagle · Feb 25, 1945' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Jul_22__1945_.webp', label: 'Brooklyn Daily Eagle · Jul 22, 1945' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Dec_15__1946_.webp', label: 'Brooklyn Daily Eagle · Dec 15, 1946' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Jun_12__1949_.webp', label: 'Brooklyn Daily Eagle · Jun 12, 1949' },
+    { src: 'photos/history/clippings/The_Brooklyn_Daily_Eagle_Sun__Oct_11__1903_.webp', label: 'Brooklyn Daily Eagle · Oct 11, 1903' },
+    { src: 'photos/history/clippings/Puerto Ricans The_Williamsburg_News_Fri__Sep_20__1957_.webp', label: 'Puerto Ricans · Williamsburg News · Sep 20, 1957' },
+    { src: 'photos/history/clippings/Kings_County_Chronicle_Tue__Sep_30__1958_.webp',   label: "Kings County Chronicle · Sep 30, 1958" },
+    { src: 'photos/history/clippings/Lucy_s Lunch Health Code Violation Daily_News_Tue__Feb_4__1975_.webp', label: "Lucy's Lunch · Daily News · Feb 4, 1975" },
   ];
 
   const EIGHTIES_PHOTOS = [
-    { src: 'photos/clippings/webp/1980s.webp',           label: '1980s · Broadway-Bushwick corridor' },
-    { src: 'photos/clippings/webp/1980s up close.webp',  label: '1980s · up close' },
+    { src: 'photos/history/clippings/1980s.webp',           label: '1980s · Broadway-Bushwick corridor' },
+    { src: 'photos/history/clippings/1980s up close.webp',  label: '1980s · up close' },
   ];
 
   // ── BUILD EARLY DAYS ──────────────────────────────────
@@ -1728,13 +1887,14 @@
 
   function getLbArray() {
     if (lbGallery === 'early') return EARLY_PHOTOS;
+    if (lbGallery === 'maps') return MAPS;
     if (lbGallery === 'eighties') return EIGHTIES_PHOTOS;
     return CLIPPINGS;
   }
 
   function updateLightboxImg() {
     const arr = getLbArray();
-    document.getElementById('lb-img').src = (lbGallery === 'early') ? arr[lbIdx] : arr[lbIdx].src;
+    document.getElementById('lb-img').src = (lbGallery === 'early' || lbGallery === 'maps') ? arr[lbIdx] : arr[lbIdx].src;
   }
 
   document.getElementById('lb-close').addEventListener('click', closeLightbox);
@@ -1814,12 +1974,25 @@
     const c = document.getElementById('drawer-nav-links');
     if (!c) return;
     links.forEach(link => {
-      const a = document.createElement('a');
-      a.className = 'drawer-link';
-      a.href = link.href;
-      a.textContent = link.label;
-      if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
-      c.appendChild(a);
+      if (link.label === 'Wholesale') {
+        const wrap = document.createElement('div');
+        wrap.className = 'drawer-dropdown';
+        wrap.innerHTML = `
+          <button class="drawer-dropdown-toggle">Wholesale <span class="dd-arrow">›</span></button>
+          <div class="drawer-dropdown-content">
+            <div class="dd-line" style="font-style:italic;">Coming soon!</div>
+            <div class="dd-line"><a href="tel:+17184841555">(718) 484-1555</a></div>
+          </div>`;
+        wrap.querySelector('.drawer-dropdown-toggle').onclick = () => wrap.classList.toggle('open');
+        c.appendChild(wrap);
+      } else {
+        const a = document.createElement('a');
+        a.className = 'drawer-link';
+        a.href = link.href;
+        a.textContent = link.label;
+        if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
+        c.appendChild(a);
+      }
     });
   });
   </script>

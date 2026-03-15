@@ -2,6 +2,7 @@
   { "label": "Visit", "href": "index.html" },
   { "label": "History", "href": "history.html" },
   { "label": "Parks & Gardens", "href": "parks.html" },
+  { "label": "Reading", "href": "reading.html" },
   { "label": "Instagram", "href": "https://www.instagram.com/covertcoffeebk/", "external": true },
   { "label": "Wholesale", "href": "https://www.covert.coffee", "external": true }
 ]

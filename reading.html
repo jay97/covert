@@ -136,6 +136,56 @@
     .drawer-link:hover { opacity: 1; }
     .drawer-link:last-child { border-bottom: none; }
 
+    /* wholesale dropdown in drawer */
+    .drawer-dropdown { border-bottom: 1px solid rgba(92,74,56,0.07); }
+    .drawer-dropdown-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: "IM Fell French Canon", serif;
+      font-size: 1.1rem;
+      color: var(--espresso);
+      text-align: left;
+      padding: 10px 0;
+      cursor: pointer;
+      opacity: 0.78;
+      transition: opacity 0.15s;
+    }
+    .drawer-dropdown-toggle:hover { opacity: 1; }
+    .drawer-dropdown-toggle .dd-arrow {
+      font-size: 0.7rem;
+      opacity: 0.4;
+      transition: transform 0.25s ease;
+    }
+    .drawer-dropdown.open .dd-arrow { transform: rotate(90deg); }
+    .drawer-dropdown-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 0 0 4px;
+    }
+    .drawer-dropdown.open .drawer-dropdown-content {
+      max-height: 120px;
+      padding: 0 0 12px 4px;
+    }
+    .drawer-dropdown-content .dd-line {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.88rem;
+      color: var(--espresso);
+      opacity: 0.55;
+      line-height: 1.6;
+    }
+    .drawer-dropdown-content .dd-line a {
+      color: var(--espresso);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(92,74,56,0.25);
+    }
+    .drawer-dropdown-content .dd-line a:hover { opacity: 1; }
+
     /* ── PAGE HEADER ── */
     .page-header {
       padding: 60px 28px 40px;
@@ -241,6 +291,15 @@
       letter-spacing: 0.04em;
       color: var(--espresso);
       opacity: 0.32;
+      margin-bottom: 8px;
+    }
+    .book-rec {
+      font-family: var(--mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.04em;
+      color: var(--espresso);
+      opacity: 0.4;
+      font-style: italic;
       margin-bottom: 16px;
     }
     .book-links {
@@ -326,8 +385,9 @@
       </div>
       <div class="book-title">War Against All Puerto Ricans</div>
       <div class="book-author">Nelson A. Denis · 2015</div>
-      <div class="book-desc">Revolution and terror in America's colony. In 1950, Puerto Rico's Nationalist Party staged an armed insurrection following decades of military occupation and colonial rule. The uprising triggered widespread violence across the island, including assassination attempts on President Truman and armed clashes in multiple towns.</div>
+      <div class="book-desc">In 1950, after over fifty years of military occupation and colonial rule, the Nationalist Party of Puerto Rico staged an unsuccessful armed insurrection against the United States. Violence swept through the island: assassins were sent to kill President Harry Truman, gunfights roared in eight towns, police stations and post offices were burned down. In order to suppress this uprising, the US Army deployed thousands of troops and bombarded two towns, marking the first time in history that the US government bombed its own citizens. Through oral histories, personal interviews, eyewitness accounts, congressional testimony, and recently declassified FBI files, War Against All Puerto Ricans tells the story of a forgotten revolution and its context in Puerto Rico's history, from the US invasion in 1898 to the modern-day struggle for self-determination.</div>
       <div class="book-details">400 pages · Nation Books</div>
+      <div class="book-rec">recommended by Aaron Mounier</div>
       <div class="book-links">
         <a class="book-link" href="https://www.goodreads.com/book/show/22928891-war-against-all-puerto-ricans" target="_blank" rel="noopener">↗ goodreads</a>
       </div>
@@ -343,8 +403,9 @@
       </div>
       <div class="book-title">The Great Bridge</div>
       <div class="book-author">David McCullough · 1972</div>
-      <div class="book-desc">The epic story of the building of the Brooklyn Bridge. This work chronicles how the Brooklyn Bridge was constructed between 1869 and 1883, transforming from an impossibility destined to fail into an engineering triumph. The narrative follows chief engineer Washington Roebling and his wife Emily as they navigate both technical obstacles and political corruption to complete this iconic American structure.</div>
+      <div class="book-desc">Built to join the rapidly expanding cities of New York and Brooklyn, the Brooklyn Bridge was thought by many at the start to be an impossibility destined to fail if not from insurmountable technical problems then from political corruption. The narrative encompasses the engineering marvel's conception through completion between 1869 and 1883. Central figures include designer John Roebling and his son Washington, who served as chief engineer despite suffering debilitating illness. Washington's wife Emily became instrumental to the project's success. McCullough presents the bridge as representing American achievement during the Industrial Revolution, balancing engineering specifics with human drama, exploring how ordinary workers and extraordinary leaders collaborated to create an iconic structure that transformed metropolitan New York.</div>
       <div class="book-details">608 pages · Simon &amp; Schuster</div>
+      <div class="book-rec">recommended by Jay Miner</div>
       <div class="book-links">
         <a class="book-link" href="https://www.goodreads.com/book/show/2369.The_Great_Bridge" target="_blank" rel="noopener">↗ goodreads</a>
       </div>
@@ -366,12 +427,25 @@
     const c = document.getElementById('drawer-nav-links');
     if (!c) return;
     links.forEach(link => {
-      const a = document.createElement('a');
-      a.className = 'drawer-link';
-      a.href = link.href;
-      a.textContent = link.label;
-      if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
-      c.appendChild(a);
+      if (link.label === 'Wholesale') {
+        const wrap = document.createElement('div');
+        wrap.className = 'drawer-dropdown';
+        wrap.innerHTML = `
+          <button class="drawer-dropdown-toggle">Wholesale <span class="dd-arrow">›</span></button>
+          <div class="drawer-dropdown-content">
+            <div class="dd-line" style="font-style:italic;">Coming soon!</div>
+            <div class="dd-line"><a href="tel:+17184841555">(718) 484-1555</a></div>
+          </div>`;
+        wrap.querySelector('.drawer-dropdown-toggle').onclick = () => wrap.classList.toggle('open');
+        c.appendChild(wrap);
+      } else {
+        const a = document.createElement('a');
+        a.className = 'drawer-link';
+        a.href = link.href;
+        a.textContent = link.label;
+        if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
+        c.appendChild(a);
+      }
     });
   });
   </script>

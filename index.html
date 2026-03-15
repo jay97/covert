@@ -162,6 +162,57 @@
     }
     .drawer-link:hover { opacity: 1; }
     .drawer-link:last-child { border-bottom: none; }
+
+    /* wholesale dropdown in drawer */
+    .drawer-dropdown { border-bottom: 1px solid rgba(92,74,56,0.07); }
+    .drawer-dropdown-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: "IM Fell French Canon", serif;
+      font-size: 1.1rem;
+      color: var(--espresso);
+      text-align: left;
+      padding: 10px 0;
+      cursor: pointer;
+      opacity: 0.78;
+      transition: opacity 0.15s;
+    }
+    .drawer-dropdown-toggle:hover { opacity: 1; }
+    .drawer-dropdown-toggle .dd-arrow {
+      font-size: 0.7rem;
+      opacity: 0.4;
+      transition: transform 0.25s ease;
+    }
+    .drawer-dropdown.open .dd-arrow { transform: rotate(90deg); }
+    .drawer-dropdown-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 0 0 4px;
+    }
+    .drawer-dropdown.open .drawer-dropdown-content {
+      max-height: 120px;
+      padding: 0 0 12px 4px;
+    }
+    .drawer-dropdown-content .dd-line {
+      font-family: "Averia Serif Libre", serif;
+      font-weight: 300;
+      font-size: 0.88rem;
+      color: var(--espresso);
+      opacity: 0.55;
+      line-height: 1.6;
+    }
+    .drawer-dropdown-content .dd-line a {
+      color: var(--espresso);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(92,74,56,0.25);
+    }
+    .drawer-dropdown-content .dd-line a:hover { opacity: 1; }
+
     .drawer-book {
       font-family: "Averia Serif Libre", serif;
       font-weight: 300;
@@ -454,15 +505,16 @@
     }
     .hours-sign td {
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.62rem;
       font-weight: 300;
       color: var(--espresso);
       padding: 3px 0;
       line-height: 1.4;
+      white-space: nowrap;
     }
     .hours-sign td:first-child {
       opacity: 0.4;
-      padding-right: 20px;
+      padding-right: 14px;
       letter-spacing: 0.05em;
     }
     .hours-sign td:last-child {
@@ -1406,9 +1458,9 @@
 
     /* bigger menu button */
     .menu-btn-hero {
-      font-size: 0.82rem;
+      font-size: 0.64rem;
       letter-spacing: 0.04em;
-      padding: 11px 24px;
+      padding: 7px 14px;
       border-color: rgba(92,74,56,0.3);
       opacity: 0.78;
     }
@@ -1489,7 +1541,6 @@
       </div>
       <div class="shop-dots" id="shop-dots"></div>
     </div>
-    <div class="shop-thumbs" id="shop-thumbs"></div>
 
 
     <div class="info-table">
@@ -1913,9 +1964,9 @@
         if (c === 3) return '●';
         if (c >= 45 && c <= 48) return '≋';
         if (c >= 51 && c <= 57) return '·';
-        if (c >= 61 && c <= 67) return '⌇';
+        if (c >= 61 && c <= 67) return '░';
         if (c >= 71 && c <= 77) return '*';
-        if (c >= 80 && c <= 82) return '⌇';
+        if (c >= 80 && c <= 82) return '░';
         if (c >= 85 && c <= 86) return '*';
         if (c >= 95) return '↯';
         return '●';
@@ -2358,12 +2409,11 @@
 
   // ── Homepage gallery — auto-pull from folder ──────────
   const GALLERY_PHOTOS = [
-    'photos/homepage gallery/webp/1.webp',
-    'photos/homepage gallery/webp/3.webp',
-    'photos/homepage gallery/webp/4.webp',
-    'photos/homepage gallery/webp/5.webp',
-    'photos/homepage gallery/webp/6.webp',
-    'photos/homepage gallery/webp/9.webp',
+    'photos/homepage gallery/1.webp',
+    'photos/homepage gallery/2.webp',
+    'photos/homepage gallery/3.webp',
+    'photos/homepage gallery/4.webp',
+    'photos/homepage gallery/5.webp',
   ];
 
   (function buildGallery() {
@@ -2377,7 +2427,6 @@
       img.src = src;
       img.alt = '';
       img.loading = i < 2 ? 'eager' : 'lazy';
-      img.onload = function() { if (this.naturalWidth >= this.naturalHeight) this.classList.add('landscape'); };
       div.appendChild(img);
       slides.appendChild(div);
 
@@ -2511,17 +2560,31 @@
     const c = document.getElementById('drawer-nav-links');
     if (!c) return;
     links.forEach(link => {
-      const a = document.createElement('a');
-      a.className = 'drawer-link';
-      a.textContent = link.label;
-      if (link.href === 'index.html') {
-        a.href = '#top';
-        a.onclick = () => document.getElementById('nav-drawer').classList.remove('open');
+      if (link.label === 'Wholesale') {
+        // Render as a dropdown instead of a link
+        const wrap = document.createElement('div');
+        wrap.className = 'drawer-dropdown';
+        wrap.innerHTML = `
+          <button class="drawer-dropdown-toggle">Wholesale <span class="dd-arrow">›</span></button>
+          <div class="drawer-dropdown-content">
+            <div class="dd-line" style="font-style:italic;">Coming soon!</div>
+            <div class="dd-line"><a href="tel:+17184841555">(718) 484-1555</a></div>
+          </div>`;
+        wrap.querySelector('.drawer-dropdown-toggle').onclick = () => wrap.classList.toggle('open');
+        c.appendChild(wrap);
       } else {
-        a.href = link.href;
+        const a = document.createElement('a');
+        a.className = 'drawer-link';
+        a.textContent = link.label;
+        if (link.href === 'index.html') {
+          a.href = '#top';
+          a.onclick = () => document.getElementById('nav-drawer').classList.remove('open');
+        } else {
+          a.href = link.href;
+        }
+        if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
+        c.appendChild(a);
       }
-      if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
-      c.appendChild(a);
     });
   });
   </script>
