@@ -1334,7 +1334,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       filter: saturate(0.45) sepia(0.35) brightness(0.88) contrast(1.08);
       pointer-events: none;
       user-select: none;
@@ -2011,7 +2011,7 @@
   const BUS_STOPS = {
     b20: { N: '302019', S: '302018' },  // N=toward Williamsburg, S=toward Spring Creek
     q24: { N: '302193', S: '302194' },  // N=toward Flushing, S=toward Jamaica
-    b60: { N: '304978', S: '304979' },  // N=toward Williamsburg, S=toward Canarsie
+    b60: { N: '304978', S: '305057' },  // N=toward Williamsburg (Rockaway/Broadway), S=toward Canarsie (Cooper/Broadway)
   };
 
   // ── Protobuf parser (minimal, inline) ──────────────────
