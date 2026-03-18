@@ -370,12 +370,20 @@
     var c = document.getElementById('drawer-nav-links');
     if (!c) return;
     links.forEach(function(link) {
-      var a = document.createElement('a');
-      a.className = 'drawer-link';
-      a.href = link.href;
-      a.textContent = link.label;
-      if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
-      c.appendChild(a);
+      if (link.label === 'Wholesale') {
+        var wrap = document.createElement('div');
+        wrap.className = 'drawer-dropdown';
+        wrap.innerHTML = '<button class="drawer-dropdown-toggle">Wholesale <span class="dd-arrow">\u203a</span></button><div class="drawer-dropdown-content"><div class="dd-line" style="font-style:italic;">Coming soon!</div><div class="dd-line"><a href="tel:+17184841555">(718) 484-1555</a></div></div>';
+        wrap.querySelector('.drawer-dropdown-toggle').onclick = function() { wrap.classList.toggle('open'); };
+        c.appendChild(wrap);
+      } else {
+        var a = document.createElement('a');
+        a.className = 'drawer-link';
+        a.href = link.href;
+        a.textContent = link.label;
+        if (link.external) { a.target = '_blank'; a.rel = 'noopener'; }
+        c.appendChild(a);
+      }
     });
   });
   </script>
