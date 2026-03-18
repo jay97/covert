@@ -76,7 +76,7 @@
   </script>
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23594A3C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M17 8h1a4 4 0 0 1 0 8h-1'/><path d='M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z'/><line x1='6' y1='2' x2='6' y2='4'/><line x1='10' y1='2' x2='10' y2='4'/><line x1='14' y1='2' x2='14' y2='4'/></svg>">
 
   <!-- Security -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -1346,6 +1346,15 @@
       margin-top: 4px;
       margin-bottom: 20px;
     }
+    .bar-card-roast {
+      font-family: var(--mono);
+      font-size: 0.56rem;
+      letter-spacing: 0.08em;
+      color: var(--espresso);
+      opacity: 0.5;
+      text-align: center;
+      margin-bottom: 16px;
+    }
     .bar-card-rule {
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(92,74,56,0.18), transparent);
@@ -1703,51 +1712,13 @@
       <div class="bar-card-header">on bar today</div>
       <div class="bar-card-bean" id="bar-card-bean">—</div>
       <div class="bar-card-roaster" id="bar-card-roaster"></div>
+      <div class="bar-card-roast" id="bar-roast"></div>
       <div class="bar-card-rule"></div>
-
-      <div class="bar-section-label">☕ origin</div>
-      <div id="bar-origin-details"></div>
-
-      <div class="bar-section-label">⚙ dial-in</div>
-      <div id="bar-shot-details"></div>
 
       <div class="bar-notes" id="bar-notes"></div>
 
-      <div class="bar-card-rule" style="margin-top:20px;"></div>
-      <div class="bar-section-label">☕ barista's guide</div>
-
-      <div class="coffee-guide">
-        <div class="guide-block">
-          <div class="guide-title">espresso</div>
-          <div class="guide-row"><span>dose</span><span>18 g</span></div>
-          <div class="guide-row"><span>yield</span><span>36 g (1:2 ratio)</span></div>
-          <div class="guide-row"><span>time</span><span>25 – 30 s</span></div>
-        </div>
-
-        <div class="guide-block">
-          <div class="guide-title">milk drinks</div>
-          <div class="guide-row"><span>cortado</span><span>~60 ml · 2 oz</span></div>
-          <div class="guide-row"><span>flat white</span><span>~150 ml · 5 oz</span></div>
-          <div class="guide-row"><span>latte</span><span>~240 ml · 8 oz</span></div>
-          <div class="guide-row"><span>oat latte</span><span>~300 ml · 10 oz</span></div>
-        </div>
-
-        <div class="guide-block">
-          <div class="guide-title">milk steaming</div>
-          <div class="guide-row"><span>temp</span><span>55 – 65 °C · 131 – 149 °F</span></div>
-          <div class="guide-row"><span>texture</span><span>microfoam · wet paint sheen</span></div>
-          <div class="guide-row"><span>oat milk</span><span>steam cooler: 55 °C max</span></div>
-          <div class="guide-row"><span>stretch</span><span>½ – 1 s hiss, then roll</span></div>
-        </div>
-
-        <div class="guide-block">
-          <div class="guide-title">brew ratios</div>
-          <div class="guide-row"><span>ristretto</span><span>1 : 1.5</span></div>
-          <div class="guide-row"><span>espresso</span><span>1 : 2</span></div>
-          <div class="guide-row"><span>lungo</span><span>1 : 3</span></div>
-          <div class="guide-row"><span>pour over</span><span>1 : 15 – 1 : 17</span></div>
-        </div>
-      </div>
+      <div class="bar-section-label">dial-in</div>
+      <div id="bar-shot-details"></div>
     </div>
   </div>
 
@@ -1927,18 +1898,9 @@
       if (cardBean) cardBean.textContent = d.bean;
       if (cardRoaster) cardRoaster.textContent = d.roaster ? 'roasted by ' + d.roaster : '';
 
-      // Origin details
-      const originDetails = document.getElementById('bar-origin-details');
-      if (originDetails) {
-        originDetails.innerHTML = [
-          d.origin   && barRow('◉', 'Origin',   d.origin),
-          d.variety  && barRow('❋', 'Variety',  d.variety),
-          d.altitude && barRow('▲', 'Altitude', d.altitude),
-          d.process  && barRow('◎', 'Process',  d.process),
-          d.roast    && barRow('●', 'Roast',    d.roast),
-          d.harvest  && barRow('⌘', 'Harvest',  d.harvest),
-        ].filter(Boolean).join('');
-      }
+      // Roast
+      const roastEl = document.getElementById('bar-roast');
+      if (roastEl && d.roast) roastEl.textContent = d.roast + ' roast';
 
       // Shot details
       const shotDetails = document.getElementById('bar-shot-details');
@@ -1947,18 +1909,18 @@
         shotDetails.innerHTML = [
           s.dose         && barRow('⊙', 'Dose',         s.dose),
           s.yield        && barRow('⊕', 'Yield',        s.yield),
-          s.ratio        && barRow('÷', 'Ratio',        s.ratio),
           s.time         && barRow('◷', 'Time',         s.time),
-          s.temp         && barRow('△', 'Temp',         s.temp),
+          s.grind        && barRow('⌀', 'Grind',        s.grind),
+          s.temp         && barRow('△', 'Brew temp',     s.temp),
           s.pressure     && barRow('⬡', 'Pressure',     s.pressure),
           s.preinfusion  && barRow('≈', 'Pre-infusion', s.preinfusion),
-          s.grind        && barRow('⌀', 'Grind',        s.grind),
+          s.ratio        && barRow('÷', 'Ratio',        s.ratio),
         ].filter(Boolean).join('');
       }
 
       // Tasting notes
       const notesEl = document.getElementById('bar-notes');
-      if (notesEl && d.notes) notesEl.textContent = '⌇ ' + d.notes + ' ⌇';
+      if (notesEl && d.notes) notesEl.textContent = d.notes;
 
     } catch(e) {
       console.warn('bar-today:', e);
