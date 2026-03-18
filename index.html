@@ -1210,6 +1210,13 @@
     .footer-glyph:hover { opacity: 0.3; }
     .footer-glyph svg { display: inline; vertical-align: -2px; }
 
+    /* screen-reader only (visually hidden but accessible) */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
     /* ══════════════════════════════
        ANIMATIONS
     ══════════════════════════════ */
@@ -1620,6 +1627,7 @@
 
   <!-- INFO -->
   <div class="section section-first reveal" id="top">
+    <h1 class="sr-only">Covert Coffee — Specialty Coffee Shop in Bushwick, Brooklyn</h1>
 
     <!-- PHOTO GALLERY -->
     <div class="gallery">
@@ -1903,8 +1911,8 @@
 
   function barRow(glyph, key, val) {
     return `<div class="bar-detail-row">
-      <span class="bar-detail-key"><span class="bar-detail-glyph">${glyph}</span>${key}</span>
-      <span class="bar-detail-val">${val}</span>
+      <span class="bar-detail-key"><span class="bar-detail-glyph">${esc(glyph)}</span>${esc(key)}</span>
+      <span class="bar-detail-val">${esc(val)}</span>
     </div>`;
   }
 
@@ -2532,7 +2540,8 @@
 
   // Transit: lazy-load on easter egg double-click (not on boot)
   let transitLoaded = false;
-  document.getElementById('transit-icons').addEventListener('dblclick', () => {
+  var _ti = document.getElementById('transit-icons');
+  _ti && _ti.addEventListener('dblclick', () => {
     document.getElementById('transit-lightbox').classList.add('open');
     if (!transitLoaded) {
       transitLoaded = true;
@@ -2595,7 +2604,7 @@
         c.appendChild(a);
       }
     });
-  });
+  }).catch(e => console.warn('nav.json:', e));
   </script>
 
 </body>
