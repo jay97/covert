@@ -557,6 +557,10 @@
   </script>
 
   <script>
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('nav-drawer').classList.remove('open');
+  });
+
   fetch('nav.json').then(r => r.json()).then(links => {
     const c = document.getElementById('drawer-nav-links');
     if (!c) return;
@@ -581,7 +585,7 @@
         c.appendChild(a);
       }
     });
-  });
+  }).catch(e => console.warn('nav.json:', e));
   </script>
 
 </body>

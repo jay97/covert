@@ -322,7 +322,7 @@
   <nav>
     <a class="nav-logo" href="index.html"><img src="logo.png" alt="Covert"></a>
     <div class="nav-right">
-      <button class="hamburger" onclick="document.getElementById('nav-drawer').classList.add('open')">
+      <button class="hamburger" onclick="document.getElementById('nav-drawer').classList.add('open')" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -367,7 +367,7 @@
       html += '</div>';
       return html;
     }).join('');
-  });
+  }).catch(function(e) { console.warn('menu.json:', e); });
 
   fetch('nav.json').then(function(r) { return r.json(); }).then(function(links) {
     var c = document.getElementById('drawer-nav-links');
@@ -388,7 +388,7 @@
         c.appendChild(a);
       }
     });
-  });
+  }).catch(function(e) { console.warn('nav.json:', e); });
   </script>
 
 </body>
