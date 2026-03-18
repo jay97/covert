@@ -1,7 +1,23 @@
 [
-  { "label": "Home", "href": "index.html" },
-  { "label": "Menu", "href": "menu.html" },
-  { "label": "History", "href": "history.html" },
-  { "label": "Contact", "href": "contact.html" },
-  { "label": "Wholesale", "href": "https://www.covert.coffee", "external": true }
+  {
+    "label": "Home",
+    "href": "index.html"
+  },
+  {
+    "label": "Menu",
+    "href": "menu.html"
+  },
+  {
+    "label": "History",
+    "href": "history.html"
+  },
+  {
+    "label": "Contact",
+    "href": "contact.html"
+  },
+  {
+    "label": "Wholesale",
+    "href": "https://www.covert.coffee",
+    "external": true
+  }
 ]

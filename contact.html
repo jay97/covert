@@ -289,19 +289,29 @@
     }
     .map-link:hover { background: rgba(92,74,56,0.08); border-color: rgba(92,74,56,0.38); }
 
-    .hours-table {
-      font-family: "Averia Serif Libre", serif;
+    .hours-sign { border-collapse: collapse; }
+    .hours-sign td {
+      font-family: var(--mono);
+      font-size: 0.62rem;
       font-weight: 300;
-      font-size: 0.82rem;
       color: var(--espresso);
-      border-collapse: collapse;
+      padding: 3px 0;
+      line-height: 1.4;
+      white-space: nowrap;
     }
-    .hours-table td {
-      padding: 4px 0;
+    .hours-sign td:first-child {
+      opacity: 0.52;
+      padding-right: 14px;
+      letter-spacing: 0.05em;
     }
-    .hours-table td:first-child {
-      padding-right: 24px;
-      opacity: 0.6;
+    .hours-sign td:last-child {
+      opacity: 0.88;
+      letter-spacing: 0.03em;
+    }
+    .hours-divider {
+      height: 1px;
+      background: rgba(92,74,56,0.1);
+      margin: 5px 0;
     }
 
     @media (max-width: 600px) {
@@ -370,18 +380,13 @@
     <div class="contact-row">
       <span class="contact-key">hours</span>
       <div class="contact-val">
-        <table class="hours-table">
+        <table class="hours-sign">
           <tr><td>Mon – Fri</td><td>8:00 am – 5:00 pm</td></tr>
+          <tr><td colspan="2"><div class="hours-divider"></div></td></tr>
           <tr><td>Saturday</td><td>8:00 am – 5:00 pm</td></tr>
+          <tr><td colspan="2"><div class="hours-divider"></div></td></tr>
           <tr><td>Sunday</td><td>9:00 am – 5:00 pm</td></tr>
         </table>
-      </div>
-    </div>
-
-    <div class="contact-row">
-      <span class="contact-key">wholesale</span>
-      <div class="contact-val">
-        <a href="https://www.covert.coffee" target="_blank" rel="noopener">covert.coffee</a>
       </div>
     </div>
 

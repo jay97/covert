@@ -119,10 +119,6 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 160px;
     }
-
-    /* ══════════════════════════════
-       NAV — minimal top bar
-    ══════════════════════════════ */
     nav {
       position: relative;
       top: 0; left: 0; right: 0;
@@ -311,19 +307,11 @@
       display: block;
       margin-top: 2px;
     }
-
-    /* ══════════════════════════════
-       DIVIDER
-    ══════════════════════════════ */
     .section-divider {
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(92,74,56,0.14), transparent);
       margin: 0 32px;
     }
-
-    /* ══════════════════════════════
-       SHARED SECTION SHELL
-    ══════════════════════════════ */
     .section {
       max-width: 660px;
       margin: 0 auto;
@@ -362,10 +350,6 @@
       opacity: 0.72;
     }
     .body-text + .body-text { margin-top: 1em; }
-
-    /* ══════════════════════════════
-       FIND US
-    ══════════════════════════════ */
     .address-display {
       margin-bottom: 20px;
     }
@@ -794,10 +778,6 @@
       padding-bottom: 6px;
       line-height: 1.6;
     }
-
-    /* ══════════════════════════════
-       TRANSIT
-    ══════════════════════════════ */
     .transit-wrap {
       max-width: 660px;
       margin: 0 auto;
@@ -1090,10 +1070,6 @@
     .transit-refresh:hover { opacity: 0.7; }
 
     /* bus-dir removed — bus dropdowns now use dirs-grid layout */
-
-    /* ══════════════════════════════
-       QUOTE BLOCK
-    ══════════════════════════════ */
     .quote-block {
       max-width: 660px;
       margin: 0 auto;
@@ -1120,10 +1096,6 @@
       margin-top: 10px;
       display: block;
     }
-
-    /* ══════════════════════════════
-       ARCHIVE CTA — dark strip
-    ══════════════════════════════ */
     .archive-strip {
       background: var(--ink);
       position: relative;
@@ -1168,10 +1140,6 @@
     }
     .btn-outline .arr { transition: transform 0.2s; display: inline-block; }
     .btn-outline:hover .arr { transform: translateX(3px); }
-
-    /* ══════════════════════════════
-       FOOTER
-    ══════════════════════════════ */
     footer {
       padding: 36px 32px calc(36px + env(safe-area-inset-bottom));
       text-align: center;
@@ -1200,25 +1168,20 @@
       margin-left: 6px;
     }
     .footer-glyph {
-      opacity: 0.12;
+      opacity: 0.25;
       color: var(--espresso);
       transition: opacity 0.15s;
       display: inline;
       margin: 0 3px;
     }
-    .footer-glyph:hover { opacity: 0.3; }
+    .footer-glyph:hover { opacity: 0.5; }
     .footer-glyph svg { display: inline; vertical-align: -2px; }
 
-    /* screen-reader only (visually hidden but accessible) */
     .sr-only {
       position: absolute; width: 1px; height: 1px;
       padding: 0; margin: -1px; overflow: hidden;
       clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
-
-    /* ══════════════════════════════
-       ANIMATIONS
-    ══════════════════════════════ */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -1234,13 +1197,6 @@
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
     .reveal.in { opacity: 1; transform: none; }
-
-    /* ══════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════ */
-    /* ══════════════════════════════
-       WEATHER TICKER
-    ══════════════════════════════ */
     .weather-bar {
       height: 26px;
       background: var(--linen);
@@ -1450,10 +1406,6 @@
       opacity: 0.72;
       text-align: right;
     }
-
-    /* ══════════════════════════════
-       PHOTO GALLERY — scroll-snap
-    ══════════════════════════════ */
     .gallery {
       position: relative;
       margin-bottom: 36px;
@@ -1513,10 +1465,6 @@
     .info-inline-sep {
       opacity: 0.3;
     }
-
-    /* ══════════════════════════════
-       NEON SIGN
-    ══════════════════════════════ */
     .neon-sign {
       font-family: var(--mono);
       font-size: 0.56rem;
@@ -1601,7 +1549,6 @@
 <body>
   <noscript><div style="padding:20px;text-align:center;font-family:sans-serif;background:#f0e8dc;color:#594a3c;">Covert Coffee · 1643 Broadway, Bushwick Brooklyn · (718) 484-1555 · Mon–Sat 8am–5pm, Sun 9am–5pm</div></noscript>
 
-  <!-- NAV -->
   <nav aria-label="Main navigation">
     <a class="nav-logo" href="#top">
       <img src="logo.png" alt="Covert Coffee" width="120" height="22">
@@ -1624,7 +1571,6 @@
     </div>
   </div>
 
-  <!-- WEATHER TICKER -->
   <div class="weather-bar" id="weather-bar">
     <div class="weather-item"><span class="weather-val" id="wx-temp">—</span></div>
     <div class="weather-sep"></div>
@@ -1637,7 +1583,6 @@
   <div class="section section-first reveal" id="top">
     <h1 class="sr-only">Covert Coffee — Specialty Coffee Shop in Bushwick, Brooklyn</h1>
 
-    <!-- PHOTO GALLERY -->
     <div class="gallery">
       <div class="gallery-scroll" id="gallery-scroll"></div>
     </div>
@@ -1692,7 +1637,6 @@
     </div>
   </div>
 
-  <!-- MENU LIGHTBOX -->
   <div class="menu-lightbox" id="menu-lightbox" onclick="if(event.target===this)this.classList.remove('open')">
     <div class="menu-card">
       <button class="menu-card-close" onclick="document.getElementById('menu-lightbox').classList.remove('open')">✕ close</button>
@@ -1705,7 +1649,6 @@
     </div>
   </div>
 
-  <!-- BAR TODAY LIGHTBOX -->
   <div class="bar-lightbox" id="bar-lightbox" onclick="if(event.target===this)this.classList.remove('open')">
     <div class="bar-card">
       <button class="bar-card-close" onclick="document.getElementById('bar-lightbox').classList.remove('open')">✕ close</button>
@@ -1729,7 +1672,6 @@
   <div class="transit-wrap">
     <div class="transit-box">
 
-      <!-- SUBWAY: J/Z at Halsey St -->
       <div class="transit-subway">
         <div class="transit-row-head">
           <span class="route-bullet">J</span>
@@ -1753,7 +1695,6 @@
         </div>
       </div>
 
-      <!-- SUBWAY: J at Chauncey St -->
       <div class="transit-subway">
         <div class="transit-row-head">
           <span class="route-bullet">J</span>
@@ -1776,7 +1717,6 @@
         </div>
       </div>
 
-      <!-- BUSES — clickable route row with dropdown -->
       <div class="bus-route-row">
         <button class="bus-route-btn" onclick="toggleBusDropdown('b20',this)">
           <span class="route-tag">B20</span>
@@ -1831,7 +1771,6 @@
         </div>
       </div>
 
-      <!-- CITI BIKE (live via GBFS) -->
       <div class="transit-bike">
         <div class="bike-row-head">
           <span class="bike-logo">Citi Bike</span>
@@ -1863,7 +1802,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <img class="footer-logo" src="logo.png" alt="Covert Coffee">
     <p class="footer-line">© covert coffee · brooklyn · <a href="https://www.covert.nyc">covert.nyc</a></p>
@@ -1871,13 +1809,9 @@
   </footer>
 
   <script>
-  // Prevent browser scroll restoration from moving the page
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
-  // ═══════════════════════════════════════════════════════
-  // ON BAR TODAY — loads from bar-today.json
-  // ═══════════════════════════════════════════════════════
 
   function barRow(glyph, key, val) {
     return `<div class="bar-detail-row">
@@ -1892,17 +1826,14 @@
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       const d = await resp.json();
 
-      // Lightbox header
       const cardBean = document.getElementById('bar-card-bean');
       const cardRoaster = document.getElementById('bar-card-roaster');
       if (cardBean) cardBean.textContent = d.bean;
       if (cardRoaster) cardRoaster.textContent = d.roaster ? 'roasted by ' + d.roaster : '';
 
-      // Roast
       const roastEl = document.getElementById('bar-roast');
       if (roastEl && d.roast) roastEl.textContent = d.roast + ' roast';
 
-      // Shot details
       const shotDetails = document.getElementById('bar-shot-details');
       if (shotDetails && d.shot) {
         const s = d.shot;
@@ -1918,7 +1849,6 @@
         ].filter(Boolean).join('');
       }
 
-      // Tasting notes
       const notesEl = document.getElementById('bar-notes');
       if (notesEl && d.notes) notesEl.textContent = d.notes;
 
@@ -1929,10 +1859,6 @@
 
   loadBarToday();
 
-  // ═══════════════════════════════════════════════════════
-  // WEATHER — wttr.in JSONP (works from file://, no key)
-  // Zip 11207, Brooklyn NY
-  // ═══════════════════════════════════════════════════════
 
   function windArrow(deg) {
     const dirs = ['↑','↗','→','↘','↓','↙','←','↖'];
@@ -1963,7 +1889,6 @@
       const wind = Math.round(cur.wind_speed_10m);
       const windDir = cur.wind_direction_10m;
 
-      // WMO weather code → description & icon
       function wmoDesc(c) {
         if (c === 0) return 'clear';
         if (c <= 3) return ['mainly clear','partly cloudy','overcast'][c - 1];
@@ -2007,36 +1932,23 @@
     }
   }
 
-  // ═══════════════════════════════════════════════════════
-  // MTA GTFS-RT SUBWAY — direct fetch, no proxy, no key
-  // URL encoding: %2F instead of / in path (required)
-  // ═══════════════════════════════════════════════════════
 
   const SUBWAY_FEED = 'https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-jz';
-  // Halsey St: J27N = Manhattan-bound, J27S = Jamaica-bound
   const STOP_N = 'J27N';
   const STOP_S = 'J27S';
-  // Chauncey St: J28N = Manhattan-bound, J28S = Jamaica-bound
   const STOP_CHAUNCEY_N = 'J28N';
   const STOP_CHAUNCEY_S = 'J28S';
 
-  // MTA BusTime SIRI API (free developer key)
   const BUS_API  = 'https://bustime.mta.info/api/siri/stop-monitoring.json';
   const BUS_KEY  = '53062abc-6f6a-47a7-a95a-56dfe9e1d0ab';
 
-  // Bus stop IDs — two directions per line (N = one end, S = other end)
-  // B20: Schaefer St/Broadway — toward Williamsburg (N) or Spring Creek (S)
-  // Q24: Broadway/Schaefer St — toward Flushing (N) or Jamaica (S)
-  // B60: Rockaway Av/Broadway — toward Williamsburg (N) or Canarsie (S)
   const BUS_STOPS = {
     b20: { N: '302019', S: '302018' },  // N=toward Williamsburg, S=toward Spring Creek
     q24: { N: '302193', S: '302194' },  // N=toward Flushing, S=toward Jamaica
     b60: { N: '304978', S: '305057' },  // N=toward Williamsburg (Rockaway/Broadway), S=toward Canarsie (Cooper/Broadway)
   };
 
-  // ── Protobuf parser (minimal, inline) ──────────────────
 
-  // varint: read byte first, then check MSB — p increments exactly once per byte
   function varint(b, p) {
     let v = 0, s = 0, byte_;
     do { byte_ = b[p++]; v |= (byte_ & 0x7f) << s; s += 7; } while (byte_ & 0x80);
@@ -2072,7 +1984,6 @@
     return { v: Number(n), p };
   }
 
-  // StopTimeUpdate: stop_id=f4, arrival=f1, departure=f2; StopTimeEvent: time=f2
   function parseSTU(b, end) {
     let p = 0, stopId = null, t = null;
     while (p < end) {
@@ -2135,7 +2046,6 @@
     return out;
   }
 
-  // ── Format time ────────────────────────────────────────
 
   function fmt(epochSec) {
     const d = epochSec - Math.floor(Date.now() / 1000);
@@ -2144,7 +2054,6 @@
     return { txt: Math.round(d / 60) + ' min', now: false };
   }
 
-  // Sanitize text for safe innerHTML insertion
   function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
   function renderArrivals(id, items) {
@@ -2173,7 +2082,6 @@
     if (el) el.innerHTML = `<span class="arr-empty">${msg}</span>`;
   }
 
-  // ── Lightbox keyboard dismiss ──────────────────────────
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       document.getElementById('menu-lightbox').classList.remove('open');
@@ -2183,24 +2091,17 @@
     }
   });
 
-  // ── Bus dropdown toggle ────────────────────────────
 
   function toggleBusDropdown(line, btn) {
     const drop = document.getElementById('bus-drop-' + line);
     const isOpen = drop.classList.contains('open');
-    // close all
     document.querySelectorAll('.bus-dropdown').forEach(d => d.classList.remove('open'));
     document.querySelectorAll('.bus-route-btn').forEach(b => b.classList.remove('active'));
-    // open if wasn't open
     if (!isOpen) {
       drop.classList.add('open');
       btn.classList.add('active');
     }
   }
-
-  // busTab removed — directions now shown side by side like subway
-
-  // ── Subway fetch ────────────────────────────────────────
 
   async function fetchSubway() {
     try {
@@ -2218,7 +2119,6 @@
       renderArrivals('arr-S', S);
       setDot('dot-subway', N.length || S.length);
 
-      // Reuse same feed data for Chauncey St (same J/Z feed, already parsed)
       const CN = future.filter(a => a.stopId === STOP_CHAUNCEY_N).sort((a,b) => a.t - b.t).slice(0,3);
       const CS = future.filter(a => a.stopId === STOP_CHAUNCEY_S).sort((a,b) => a.t - b.t).slice(0,3);
       renderArrivals('arr-chauncey-N', CN);
@@ -2235,8 +2135,6 @@
     }
   }
 
-  // ── Bus fetch (MTA BusTime SIRI, direct with API key) ───
-  // Fetches both directions for a line and populates both dir panels
 
   async function fetchBusLine(line) {
     const stops = BUS_STOPS[line];
@@ -2277,19 +2175,10 @@
     return soonest;
   }
 
-  // ── Citi Bike fetch (GBFS — public, no key needed) ────
-  // Station list: station_information.json (name, lat/lon, capacity)
-  // Live status:  station_status.json (num_bikes_available, num_docks_available, is_renting)
-  //
-  // Requested station IDs (verified against live feed on first load):
-  //   5380 — Broadway & Cooper St
-  //   7059 — Thomas S. Boyland St & Macon St
 
   const GBFS_INFO   = 'https://gbfs.citibikenyc.com/gbfs/en/station_information.json';
   const GBFS_STATUS = 'https://gbfs.citibikenyc.com/gbfs/en/station_status.json';
 
-  // Station UUIDs — verified against live GBFS feed 2026-03-08
-  // Lyft migrated from numeric IDs to UUIDs; old IDs 5380 / 7059 no longer work
   const BIKE_STATIONS = [
     { id: 'fd081854-3f37-420a-9785-ea63c09c12ad', label: 'Halsey St & Broadway',           el: 0 },
     { id: '7779e057-b33e-46a7-8a1e-8c28bcd9a558', label: 'Thomas S. Boyland St & Macon St', el: 1 },
@@ -2312,7 +2201,6 @@
 
   async function fetchBike() {
     try {
-      // Fetch both feeds in parallel
       const [infoResp, statusResp] = await Promise.all([
         fetch(GBFS_INFO,   { cache: 'no-store' }),
         fetch(GBFS_STATUS, { cache: 'no-store' }),
@@ -2324,7 +2212,6 @@
         statusResp.json(),
       ]);
 
-      // Build lookup maps
       const infoMap   = {};
       const statusMap = {};
       (infoData?.data?.stations   || []).forEach(s => infoMap[s.station_id]   = s);
@@ -2333,7 +2220,6 @@
       let anyLive = false;
 
       BIKE_STATIONS.forEach(({ id, label, el: idx }) => {
-        // Update station label from live feed name (stays current if Lyft renames)
         const info = infoMap[id];
         if (info) {
           const nameEl = document.querySelector(`#bike-station-${idx} .bike-station-name`);
@@ -2349,8 +2235,6 @@
           return;
         }
 
-        // GBFS v2: num_bikes_available may include ebikes; num_ebikes_available is separate
-        // Subtract ebikes from total bikes to get classic count, floor at 0
         const totalBikes = st.num_bikes_available   ?? 0;
         const ebikes     = st.num_ebikes_available  ?? 0;
         const classic    = Math.max(0, totalBikes - ebikes);
@@ -2373,7 +2257,6 @@
     }
   }
 
-  // ── Timestamp ──────────────────────────────────────────
 
   function tick() {
     const el = document.getElementById('transit-ts');
@@ -2382,7 +2265,6 @@
     el.textContent = 'updated ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase();
   }
 
-  // ── Refresh all ────────────────────────────────────────
 
   let refreshTimer;
   let refreshing = false;
@@ -2392,7 +2274,6 @@
     refreshing = true;
     const ts = document.getElementById('transit-ts');
     if (ts) ts.textContent = 'updating…';
-    // Reset all dots while refreshing
     ['dot-subway', 'dot-subway-chauncey', 'dot-b20', 'dot-q24', 'dot-b60', 'dot-bike'].forEach(id => setDot(id, false));
 
     const busResults = {};
@@ -2404,13 +2285,11 @@
       fetchBike(),
     ]);
 
-    // Auto-open the bus with the soonest arrival
     let soonestLine = null, soonestTime = Infinity;
     for (const [line, t] of Object.entries(busResults)) {
       if (t < soonestTime) { soonestTime = t; soonestLine = line; }
     }
     if (soonestLine) {
-      // Close all, then open soonest
       document.querySelectorAll('.bus-dropdown').forEach(d => d.classList.remove('open'));
       document.querySelectorAll('.bus-route-btn').forEach(b => b.classList.remove('active'));
       const drop = document.getElementById('bus-drop-' + soonestLine);
@@ -2426,7 +2305,6 @@
     refreshTimer = setTimeout(doRefresh, 45000);
   }
 
-  // ── Scroll reveal ──────────────────────────────────────
 
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -2435,7 +2313,6 @@
   }, { threshold: 0.06 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ── Homepage gallery ──────────────────────────────────
   (function() {
     const el = document.getElementById('gallery-scroll');
     if (!el) return;
@@ -2449,13 +2326,10 @@
       img.width = 800; img.height = 600;
       el.appendChild(img);
     });
-    // Ensure first image is visible on every load
     el.scrollLeft = 0;
     window.addEventListener('pageshow', () => { el.scrollLeft = 0; });
   })();
 
-  // ── Neon OPEN / CLOSED sign (EST/EDT) ──────────────────
-  // Hours: Mon–Sat 8am–5pm, Sun 9am–5pm
   const HOURS = {
     0: { open: 9,  close: 17 }, // Sun
     1: { open: 8,  close: 17 }, // Mon
@@ -2470,7 +2344,6 @@
     const sign = document.getElementById('neon-sign');
     if (!sign) return;
     try {
-      // Get NY time parts reliably using Intl
       const ny = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
       const nyDate = new Date(ny);
       const dayIdx = nyDate.getDay();    // 0=Sun
@@ -2494,12 +2367,9 @@
   updateNeonSign();
   setInterval(updateNeonSign, 30 * 1000); // recheck every 30 s
 
-  // ── Boot ───────────────────────────────────────────────
-  // Weather: fire immediately, independently of transit
   setTimeout(() => fetchWeather().catch(e => console.warn('wx boot:', e)), 0);
   setInterval(() => fetchWeather().catch(() => {}), 10 * 60 * 1000);
 
-  // Transit: lazy-load on easter egg double-click (not on boot)
   let transitLoaded = false;
   var _ti = document.getElementById('transit-icons');
   _ti && _ti.addEventListener('dblclick', () => {
@@ -2510,7 +2380,6 @@
     }
   });
 
-  // ── Load menu from menu.json into lightbox ──
   function renderMenuHTML(sections) {
     return sections.map(function(s) {
       var html = '<div class="menu-section"><div class="menu-category">' + s.category + '</div>';
@@ -2540,7 +2409,6 @@
     if (!c) return;
     links.forEach(link => {
       if (link.label === 'Wholesale') {
-        // Render as a dropdown instead of a link
         const wrap = document.createElement('div');
         wrap.className = 'drawer-dropdown';
         wrap.innerHTML = `
