@@ -236,6 +236,18 @@
     }
     .contact-val a:hover { opacity: 0.7; }
 
+    .usps-address {
+      display: flex;
+      flex-direction: column;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      line-height: 1.8;
+      color: var(--espresso);
+      font-style: normal;
+      text-transform: uppercase;
+    }
+
     .address-big {
       font-family: "IM Fell French Canon", serif;
       font-size: 1.3rem;
@@ -329,8 +341,11 @@
     <div class="contact-row">
       <span class="contact-key">location</span>
       <div class="contact-val">
-        <div class="address-big">1643 Broadway</div>
-        <div class="address-note">Brooklyn, NY 11207</div>
+        <address class="usps-address">
+          <span>COVERT COFFEE</span>
+          <span>1643 BROADWAY</span>
+          <span>BROOKLYN NY 11207-3807</span>
+        </address>
         <div class="map-links">
           <a class="map-link" href="https://maps.apple/p/2WMFaQ0~o0tfPP" target="_blank" rel="noopener">apple maps</a>
           <a class="map-link" href="https://maps.app.goo.gl/FcmQHCoEsRMNnDzM9" target="_blank" rel="noopener">google maps</a>
