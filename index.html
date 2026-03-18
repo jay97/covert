@@ -3,7 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Covert Coffee — Brooklyn</title>
+  <title>Covert Coffee — Bushwick Brooklyn Coffee Shop | 1643 Broadway</title>
+  <meta name="description" content="Covert Coffee is a specialty coffee shop at 1643 Broadway in Bushwick, Brooklyn. Fresh sandwiches, bagels, breakfast tacos, and craft coffee. Open daily.">
+  <meta name="keywords" content="coffee shop, bushwick, brooklyn, bed-stuy, specialty coffee, covert coffee, 1643 broadway, breakfast, sandwiches, bagels">
+  <meta name="author" content="Covert Coffee">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://www.covert.nyc/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="restaurant">
+  <meta property="og:title" content="Covert Coffee — Bushwick Brooklyn">
+  <meta property="og:description" content="Specialty coffee shop at 1643 Broadway in Bushwick, Brooklyn. Fresh sandwiches, bagels, breakfast tacos, and craft coffee. Open daily.">
+  <meta property="og:url" content="https://www.covert.nyc/">
+  <meta property="og:site_name" content="Covert Coffee">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://www.covert.nyc/photos/homepage%20gallery/1.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:alt" content="Covert Coffee storefront at 1643 Broadway, Bushwick Brooklyn">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Covert Coffee — Bushwick Brooklyn">
+  <meta name="twitter:description" content="Specialty coffee shop at 1643 Broadway in Bushwick, Brooklyn. Open daily.">
+  <meta name="twitter:image" content="https://www.covert.nyc/photos/homepage%20gallery/1.webp">
+
+  <!-- Geo / Local SEO -->
+  <meta name="geo.region" content="US-NY">
+  <meta name="geo.placename" content="Bushwick, Brooklyn">
+  <meta name="geo.position" content="40.6896;-73.9197">
+  <meta name="ICBM" content="40.6896, -73.9197">
+
+  <!-- Structured Data: LocalBusiness + CoffeeShop -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Covert Coffee",
+    "url": "https://www.covert.nyc",
+    "telephone": "+1-718-484-1555",
+    "image": "https://www.covert.nyc/photos/homepage%20gallery/1.webp",
+    "logo": "https://www.covert.nyc/logo.png",
+    "description": "Specialty coffee shop in Bushwick, Brooklyn serving craft coffee, sandwiches, bagels, and breakfast tacos.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1643 Broadway",
+      "addressLocality": "Brooklyn",
+      "addressRegion": "NY",
+      "postalCode": "11207",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.6896,
+      "longitude": -73.9197
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "08:00", "closes": "17:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "09:00", "closes": "17:00" }
+    ],
+    "priceRange": "$",
+    "servesCuisine": ["Coffee", "Sandwiches", "Bagels", "Breakfast"],
+    "sameAs": [
+      "https://www.instagram.com/covertcoffeebk/"
+    ],
+    "hasMenu": "https://www.covert.nyc/menu.html",
+    "areaServed": [
+      { "@type": "City", "name": "Brooklyn" },
+      { "@type": "Place", "name": "Bushwick" },
+      { "@type": "Place", "name": "Bed-Stuy" }
+    ]
+  }
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+
+  <!-- Security -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IM+Fell+French+Canon:ital@0;1&family=Averia+Serif+Libre:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -1504,11 +1584,12 @@
   </style>
 </head>
 <body>
+  <noscript><div style="padding:20px;text-align:center;font-family:sans-serif;background:#f0e8dc;color:#594a3c;">Covert Coffee · 1643 Broadway, Bushwick Brooklyn · (718) 484-1555 · Mon–Sat 8am–5pm, Sun 9am–5pm</div></noscript>
 
   <!-- NAV -->
-  <nav>
+  <nav aria-label="Main navigation">
     <a class="nav-logo" href="#top">
-      <img src="logo.png" alt="Covert Coffee">
+      <img src="logo.png" alt="Covert Coffee" width="120" height="22">
     </a>
     <div class="nav-right">
       <span class="neon-sign" id="neon-sign"></span>
@@ -2094,6 +2175,9 @@
     return { txt: Math.round(d / 60) + ' min', now: false };
   }
 
+  // Sanitize text for safe innerHTML insertion
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
   function renderArrivals(id, items) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -2104,8 +2188,8 @@
     el.innerHTML = items.slice(0, 3).map(item => {
       const { txt, now } = fmt(item.t);
       return `<div class="arr-row">
-        <span class="arr-route">${item.r || ''}</span>
-        <span class="arr-time${now ? ' now' : ''}">${txt}</span>
+        <span class="arr-route">${esc(item.r || '')}</span>
+        <span class="arr-time${now ? ' now' : ''}">${esc(txt)}</span>
       </div>`;
     }).join('');
   }
@@ -2332,8 +2416,11 @@
   // ── Refresh all ────────────────────────────────────────
 
   let refreshTimer;
+  let refreshing = false;
 
   async function doRefresh() {
+    if (refreshing) return; // debounce
+    refreshing = true;
     const ts = document.getElementById('transit-ts');
     if (ts) ts.textContent = 'updating…';
     // Reset all dots while refreshing
@@ -2365,6 +2452,7 @@
     }
 
     tick();
+    refreshing = false;
     clearTimeout(refreshTimer);
     refreshTimer = setTimeout(doRefresh, 45000);
   }
@@ -2382,11 +2470,14 @@
   (function() {
     const el = document.getElementById('gallery-scroll');
     if (!el) return;
+    var alts = ['Covert Coffee storefront on Broadway, Bushwick Brooklyn','Interior of Covert Coffee with espresso bar','Coffee and pastries at Covert Coffee','Covert Coffee seating area','Bushwick streetscape near Covert Coffee'];
     ['1','2','3','4','5'].forEach((n, i) => {
       const img = document.createElement('img');
       img.src = 'photos/homepage%20gallery/' + n + '.webp';
-      img.alt = '';
+      img.alt = alts[i] || 'Covert Coffee Brooklyn';
       img.loading = i < 2 ? 'eager' : 'lazy';
+      img.decoding = 'async';
+      img.width = 800; img.height = 600;
       el.appendChild(img);
     });
     // Ensure first image is visible on every load
@@ -2467,10 +2558,10 @@
       return html;
     }).join('');
   }
-  fetch('menu.json').then(function(r) { return r.json(); }).then(function(sections) {
+  fetch('menu.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function(sections) {
     var c = document.getElementById('menu-lightbox-content');
     if (c) c.innerHTML = renderMenuHTML(sections);
-  });
+  }).catch(function(e) { console.warn('menu.json:', e); });
   </script>
 
   <script>
