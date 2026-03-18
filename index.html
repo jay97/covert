@@ -305,20 +305,23 @@
       margin-top: 7px;
     }
 
-    /* transit icon row (easter egg) */
+    /* transit icon row (easter egg) — inline with address */
     .transit-icons {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
+      display: inline-flex;
+      gap: 6px;
       align-items: center;
+      margin-left: 8px;
+      vertical-align: middle;
     }
     .transit-icon {
       cursor: default;
-      opacity: 0.22;
+      opacity: 0.5;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+      display: inline-flex;
+      align-items: center;
     }
-    .transit-icon svg { display: block; }
+    .transit-icon img, .transit-icon svg { display: block; height: 14px; width: auto; }
 
     /* transit lightbox */
     .transit-lightbox {
@@ -337,6 +340,10 @@
       max-width: 660px;
       margin: 0 auto;
       padding: 40px 20px 80px;
+    }
+    .transit-lightbox .transit-box {
+      background: var(--linen);
+      border-color: rgba(92,74,56,0.2);
     }
     .transit-lightbox-close {
       display: block;
@@ -392,6 +399,7 @@
       border-bottom: 1px solid rgba(92,74,56,0.07);
       align-items: baseline;
     }
+    .info-row:last-child { border-bottom: none; }
     .info-key {
       font-family: var(--mono);
       font-size: 0.56rem;
@@ -1109,18 +1117,18 @@
       border-bottom: 1px solid rgba(92,74,56,0.15);
     }
     .footer-glyphs {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 12px;
+      display: inline;
+      margin-left: 6px;
     }
     .footer-glyph {
       opacity: 0.12;
       color: var(--espresso);
       transition: opacity 0.15s;
+      display: inline;
+      margin: 0 3px;
     }
     .footer-glyph:hover { opacity: 0.3; }
-    .footer-glyph svg { display: block; }
+    .footer-glyph svg { display: inline; vertical-align: -2px; }
 
     /* ══════════════════════════════
        ANIMATIONS
@@ -1573,11 +1581,8 @@
         <span class="info-key">location</span>
         <span class="info-val">
           <div class="address-big">1643 Broadway</div>
-          <div class="address-note">Brooklyn, NY 11207</div>
-          <div class="transit-icons" id="transit-icons">
-            <span class="transit-icon" title="J train"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.2"/><text x="9" y="13" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" font-weight="700" fill="currentColor">J</text></svg></span>
-            <span class="transit-icon" title="MTA bus"><svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="18" height="10" rx="2"/><circle cx="5" cy="12" r="1.2" fill="currentColor"/><circle cx="15" cy="12" r="1.2" fill="currentColor"/><line x1="6" y1="1" x2="6" y2="7"/><line x1="12" y1="1" x2="12" y2="7"/></svg></span>
-            <span class="transit-icon" title="Citi Bike"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="3.5"/><circle cx="13" cy="12" r="3.5"/><path d="M5 12L8 4h2l3 8"/><line x1="7" y1="8" x2="11" y2="8"/></svg></span>
+          <div class="address-note">Brooklyn, NY 11207
+            <span class="transit-icons" id="transit-icons"><span class="transit-icon" title="J train"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#996633"/><text x="7" y="10.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="9" font-weight="700" fill="#fff">J</text></svg></span><span class="transit-icon" title="MTA bus"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#1D5DA8"/><text x="7" y="10.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="6.5" font-weight="700" fill="#fff">BUS</text></svg></span><span class="transit-icon" title="Citi Bike"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#0073CF"/><text x="7" y="10.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="5" font-weight="700" fill="#fff">BIKE</text></svg></span></span>
           </div>
           <div class="map-links">
             <a class="map-link" href="https://maps.apple.com/?address=1643+Broadway,Brooklyn,NY+11207&ll=40.6896,-73.9197&q=Covert+Coffee" target="_blank" rel="noopener">apple maps</a>
@@ -1834,11 +1839,7 @@
   <footer>
     <img class="footer-logo" src="logo.png" alt="Covert Coffee">
     <p class="footer-line">© covert coffee · brooklyn · <a href="https://www.covert.nyc">covert.nyc</a></p>
-    <p class="footer-line" style="margin-top:6px;"><a href="https://www.covert.coffee" target="_blank">wholesale → covert.coffee</a></p>
-    <div class="footer-glyphs">
-      <a class="footer-glyph" href="reading.html" title=""><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2h4.5c.8 0 1.5.7 1.5 1.5V14c0-.8-.7-1-1.5-1H2z"/><path d="M14 2H9.5C8.7 2 8 2.7 8 3.5V14c0-.8.7-1 1.5-1H14z"/></svg></a>
-      <a class="footer-glyph" href="parks.html" title=""><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5c-2.5 2-5 4.5-5 7.5a5 5 0 0 0 10 0c0-3-2.5-5.5-5-7.5z"/><line x1="8" y1="8" x2="8" y2="15"/><path d="M8 8c-1.2-1-2-2.5-2-2.5"/><path d="M8 10c1.2-1 2-2.5 2-2.5"/></svg></a>
-    </div>
+    <p class="footer-line" style="margin-top:6px;"><a href="https://www.covert.coffee" target="_blank">wholesale → covert.coffee</a><span class="footer-glyphs"><a class="footer-glyph" href="reading.html" title=""><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2h4.5c.8 0 1.5.7 1.5 1.5V14c0-.8-.7-1-1.5-1H2z"/><path d="M14 2H9.5C8.7 2 8 2.7 8 3.5V14c0-.8.7-1 1.5-1H14z"/></svg></a><a class="footer-glyph" href="parks.html" title=""><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5c-2.5 2-5 4.5-5 7.5a5 5 0 0 0 10 0c0-3-2.5-5.5-5-7.5z"/><line x1="8" y1="8" x2="8" y2="15"/><path d="M8 8c-1.2-1-2-2.5-2-2.5"/><path d="M8 10c1.2-1 2-2.5 2-2.5"/></svg></a></span></p>
   </footer>
 
   <script>
