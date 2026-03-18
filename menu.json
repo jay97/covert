@@ -1,0 +1,29 @@
+[
+  {
+    "category": "sandwiches",
+    "items": [
+      { "name": "PEC", "price": "8", "desc": "Crispy prosciutto, egg, cheddar, tomato, carrot aioli on an everything bagel." },
+      { "name": "Avocado", "price": "14", "desc": "Avocado, arugula, pickled red onion, jalapeño aioli on seeded multigrain pullman." },
+      { "name": "Hummus", "price": "14", "desc": "Hummus, arugula, roasted carrots, tomato, caramelized onion on seeded multigrain pullman." },
+      { "name": "Prosciutto", "price": "15", "desc": "Prosciutto, arugula, shaved parmesan, jalapeño aioli on seeded multigrain pullman." }
+    ]
+  },
+  {
+    "category": "breakfast",
+    "items": [
+      { "name": "Breakfast Taco", "price": "5", "desc": "Egg, crisped prosciutto, cheese & potatoes — or — refried beans, poblano, sautéed onion & potatoes. Both on flour tortilla." }
+    ]
+  },
+  {
+    "category": "bagels",
+    "types": ["Everything", "Classic", "Whole Wheat"],
+    "seasonal": ["Cinnamon Raisin"],
+    "items": [
+      { "name": "Cream Cheese", "price": "5" },
+      { "name": "Veggies", "price": "6" },
+      { "name": "Vegan", "price": "6" },
+      { "name": "Spicy Prosciutto", "price": "6.50" },
+      { "name": "Lox, Tomato, Capers & Red Onion", "price": "12" }
+    ]
+  }
+]

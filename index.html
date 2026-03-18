@@ -1603,38 +1603,7 @@
       <div class="menu-card-title">Covert</div>
       <div class="menu-card-rule"></div>
 
-      <div class="menu-section">
-        <div class="menu-category">sandwiches</div>
-        <div class="menu-item"><span class="menu-name">PEC</span><span class="menu-price">8</span></div>
-        <div class="menu-desc">Crispy prosciutto, egg, cheddar, tomato, carrot aioli on an everything bagel.</div>
-        <div class="menu-item"><span class="menu-name">Avocado</span><span class="menu-price">14</span></div>
-        <div class="menu-desc">Avocado, arugula, pickled red onion, jalapeño aioli on seeded multigrain pullman.</div>
-        <div class="menu-item"><span class="menu-name">Hummus</span><span class="menu-price">14</span></div>
-        <div class="menu-desc">Hummus, arugula, roasted carrots, tomato, caramelized onion on seeded multigrain pullman.</div>
-        <div class="menu-item"><span class="menu-name">Prosciutto</span><span class="menu-price">15</span></div>
-        <div class="menu-desc">Prosciutto, arugula, shaved parmesan, jalapeño aioli on seeded multigrain pullman.</div>
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-category">breakfast</div>
-        <div class="menu-item"><span class="menu-name">Breakfast Taco</span><span class="menu-price">5</span></div>
-        <div class="menu-desc">Egg, crisped prosciutto, cheese &amp; potatoes — or — refried beans, poblano, sautéed onion &amp; potatoes. Both on flour tortilla.</div>
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-category">bagels</div>
-        <div class="menu-bagel-types">
-          <span class="bagel-type">Everything</span>
-          <span class="bagel-type">Classic</span>
-          <span class="bagel-type">Whole Wheat</span>
-          <span class="bagel-type seasonal">Cinnamon Raisin <span class="seasonal-tag">seasonal</span></span>
-        </div>
-        <div class="menu-item"><span class="menu-name">Cream Cheese</span><span class="menu-price">5</span></div>
-        <div class="menu-item"><span class="menu-name">Veggies</span><span class="menu-price">6</span></div>
-        <div class="menu-item"><span class="menu-name">Vegan</span><span class="menu-price">6</span></div>
-        <div class="menu-item"><span class="menu-name">Spicy Prosciutto</span><span class="menu-price">6.50</span></div>
-        <div class="menu-item"><span class="menu-name">Lox, Tomato, Capers &amp; Red Onion</span><span class="menu-price">12</span></div>
-      </div>
+      <div id="menu-lightbox-content"></div>
 
     </div>
   </div>
@@ -2478,6 +2447,29 @@
       transitLoaded = true;
       doRefresh();
     }
+  });
+
+  // ── Load menu from menu.json into lightbox ──
+  function renderMenuHTML(sections) {
+    return sections.map(function(s) {
+      var html = '<div class="menu-section"><div class="menu-category">' + s.category + '</div>';
+      if (s.types) {
+        html += '<div class="menu-bagel-types">';
+        s.types.forEach(function(t) { html += '<span class="bagel-type">' + t + '</span>'; });
+        if (s.seasonal) s.seasonal.forEach(function(t) { html += '<span class="bagel-type seasonal">' + t + ' <span class="seasonal-tag">seasonal</span></span>'; });
+        html += '</div>';
+      }
+      s.items.forEach(function(item) {
+        html += '<div class="menu-item"><span class="menu-name">' + item.name + '</span><span class="menu-price">' + item.price + '</span></div>';
+        if (item.desc) html += '<div class="menu-desc">' + item.desc + '</div>';
+      });
+      html += '</div>';
+      return html;
+    }).join('');
+  }
+  fetch('menu.json').then(function(r) { return r.json(); }).then(function(sections) {
+    var c = document.getElementById('menu-lightbox-content');
+    if (c) c.innerHTML = renderMenuHTML(sections);
   });
   </script>
 
